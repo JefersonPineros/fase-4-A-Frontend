@@ -1,0 +1,54 @@
+/*
+	consultar inventario de los productos con su categoria y en su detalle visualizar valor inicial y valor mas iva
+	
+*/
+select 
+pro.id_productos,
+pro.nombre_producto,
+inv.nombre_empresa as inventario_Grupo,
+cp.tipo_categoria,
+dp.valor_inicial,
+dp.valor_mas_iva,
+dp.descripcion_producto
+from productos pro
+	join inventario inv On inv.id_inventario = pro.inventario_id_inventario
+	join categoria_producto cp On cp.id_categoria_producto = pro.categoria_producto_id_categoria_producto
+	join detalle_productos dp On dp.productos_inventario_id_inventario = pro.id_productos
+
+/*
+	Consultar que usuario realizo el pedido, la mesa, productos solicitados, total en unidades y valor 
+    a pagar. 
+*/
+select
+ us.nombreUsuario,
+ us.apellidoUsuario,
+ pe.idPedidos,
+ pe.mesa,
+ pe.numeroPedido,
+ dtp.producto,
+ dtp.valorApagar,
+ dtp.cantidadProducto as total_unidades,
+ ep.State_id,
+ ep.descripcion
+ from usuario us
+	join pedidos pe ON pe.Usuario_idUsuarios = us.idUsuarios
+	join detallepedido dtp ON dtp.iddetallePedido = pe.detallePedido_iddetallePedido
+	join estado_pedido ep ON ep.Estado_pedidos_idPedidos = pe.idPedidos
+
+
+/*
+	usario administrador que realizó la creación de un al su genero y sus respectivas canciones.
+*/    
+
+select
+	us.nombreUsuario,
+    us.apellidoUsuario,
+    am.nombre_album,
+    am.autor_album,
+    ge.descripción as genero,
+    ca.nombre_cancion,
+    ca.duracion
+from usuario us
+	join album_musical am On am.Usuario_idUsuarios = us.idUsuarios
+	join genero ge On ge.id_genero = am.genero_id_genero
+	join cancion ca On ca.id_cancion = am.cancion_id_cancion
