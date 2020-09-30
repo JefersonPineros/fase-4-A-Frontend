@@ -1,0 +1,72 @@
+<div class="row">
+    <div class="col-lg-6">
+        <div class="containerPro">
+            <div>
+                <h4>
+                    Creación de eventos
+                </h4>
+            </div>
+            <form [formGroup]="formEvent" (ngSubmit)="onSubmit()">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="fechaE">Fecha del evento</label>
+                        <input type="date" 
+                        name="dateEvent" #dateEvent="ngModel" [(ngModel)]="createEvent.eventDate" [ngModelOptions]="{standalone:true}"
+                        class="form-control" id="fechaE" required>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="nombreEvento">Nombre del evento</label>
+                        <input type="text" name="nameEvent" #nameEvent="ngModel" [(ngModel)]="createEvent.nameEvent"
+                        [ngModelOptions]="{standalone:true}"
+                        pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+"
+                        [style.border]="nameEvent.touched && !nameEvent.valid?'solid red 1px':nameEvent.touched && nameEvent.valid?'solid green 1px':!nameEvent.touched?'solid grey 1px':''"
+                        class="form-control" id="nombreEvento" placeholder="Nombre evento" required>
+                        <span class="validForm" *ngIf="nameEvent.touched && !nameEvent.errors?.required">Correcto</span>
+                        <span class="errorForm" *ngIf="nameEvent.touched && nameEvent.errors?.required">El campo está vacío o no es valido.</span>
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="autorEvento">Responsable del evento</label>
+                        <input type="text" 
+                        name="autorEvent" #autorEvent="ngModel" [(ngModel)]="createEvent.resposableEvent" [ngModelOptions]="{standalone:true}"
+                        pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+"
+                        [style.border]="autorEvent.touched && !autorEvent.valid?'solid red 1px':autorEvent.touched && autorEvent.valid?'solid green 1px':!autorEvent.touched?'solid grey 1px':''"
+                        class="form-control" id="autorEvento" placeholder="Responsable evento">
+                        <span class="validForm" *ngIf="autorEvent.touched && !autorEvent.errors?.required">Correcto</span>
+                        <span class="errorForm" *ngIf="autorEvent.touched && autorEvent.errors?.required">El campo está vacío o no es valido.</span>
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="inputState">Tipo de evento</label>
+                        <select id="inputState" formControlName="typeEvent"
+                        [style.border]="typeEvent.touched && !typeEvent.valid?'solid red 1px':typeEvent.touched && typeEvent.valid?'solid green 1px':!typeEvent.touched?'solid grey 1px':''"
+                        class="form-control" required>
+                            <option [ngValue]="null" selected>Tipo de evento</option>
+                            <option *ngFor="let value of evento" [ngValue]="value.id">{{value.tipo}}</option>
+                        </select>
+                        <span class="validForm" *ngIf="typeEvent.touched && !typeEvent.errors?.required">Correcto</span>
+                        <span class="errorForm" *ngIf="typeEvent.touched && typeEvent.errors?.required">El campo está vacío o no es valido.</span>    
+                    </div>
+                    <div class="form-group col-12">
+                        <label for="servioO">Servicio ofrecido</label>
+                        <textarea class="form-control" 
+                        name="serviceEvent" #serviceEvent="ngModel" [(ngModel)]="createEvent.serviceOferedEvent" [ngModelOptions]="{standalone:true}"
+                        pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+"
+                        [style.border]="serviceEvent.touched && !serviceEvent.valid?'solid red 1px':serviceEvent.touched && serviceEvent.valid?'solid green 1px':!serviceEvent.touched?'solid grey 1px':''"
+                        id="servioO" placeholder="Servicio ofrecido" rows="3"></textarea>
+                        <span class="validForm" *ngIf="serviceEvent.touched && !serviceEvent.errors?.required">Correcto</span>
+                        <span class="errorForm" *ngIf="serviceEvent.touched && serviceEvent.errors?.required">El campo está vacío o no es valido.</span>
+                    </div>
+                    <div class="custom-file mb-3">
+                        <input type="file" name="imagen" (change)="updateFile($event)" id="validatedCustomFile">
+                        <span></span>
+                    </div>
+                    <div class="col-lg-12 imagenP">
+                        <img src="" alt="">
+                        <span>No hay ninguna imagen cargada.</span>
+                    </div>
+                    <button type="submit" [disabled]="formEvent.errors?.valid" class="btn  btn-outline-dark btn-block">Crear evento</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

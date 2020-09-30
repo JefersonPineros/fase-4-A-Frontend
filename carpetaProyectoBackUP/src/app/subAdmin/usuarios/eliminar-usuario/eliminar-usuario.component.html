@@ -1,0 +1,34 @@
+<div class="">
+    <div class="table tableC">
+        <div class="titleTable">
+            <h4>Eliminar usuario</h4>
+        </div>
+
+        <table datatable class="row-border hover">
+            <thead>
+                <tr>
+                    <td></td>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">X/A</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr *ngFor="let user of listUsuarios; let indice= index">
+                    <td>{{user.id}}</td>
+                    <th>{{user.nombre}}</th>
+                    <td>{{user.apellidos}}</td>
+                    <td>{{user.correo}}</td>
+                    <td>{{user.tipo == "1"? 'Administrador': 'Bartender'}}</td>
+                    <td>
+                        <button type="button" class="btn btn-outline-danger buttonMar">X</button><button type="button"
+                            class="btn btn-outline-success buttonMar" (click)="actualizarTabla(indice)">A</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

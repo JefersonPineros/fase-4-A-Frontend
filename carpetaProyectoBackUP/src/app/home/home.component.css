@@ -1,0 +1,27 @@
+aside {
+    background: url("../../assets/imagenes/fondoPrincipal2.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    padding: 15px;
+}
+.sesionM{
+    margin-top: 15px;
+}
+
+div .eventos{
+    margin-top: 20px;
+}
+div .ubicacion{
+    margin-top: 15px;
+}
+div .ubicacion img{
+    width: 100%;
+}
+div .bottomapa{
+    margin-top: 15px;
+}
+.comoLlegar{
+    background-color: rgb(111, 136, 224);
+    color: white;
+}

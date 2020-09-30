@@ -1,0 +1,17 @@
+.containerAlbum{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 2%;
+    border: solid black 1px;
+    border-radius: 10px;
+}
+.errorForm{
+    color: red;
+    font-size: 13px;
+    border-radius: 5px;
+}
+.validForm{
+    color: green;
+    font-size: 13px;
+    border-radius: 5px;
+}

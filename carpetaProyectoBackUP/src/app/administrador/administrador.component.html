@@ -1,0 +1,85 @@
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-lg-2">
+            <div class="list-group botonesLista">
+                <button type="button" class="list-group-item  actionb" (click)="modulo('1')">Gestion usuarios</button>
+                <button type="button" class="list-group-item  actionb" (click)="modulo('2')">Gestor productos</button>
+                <button type="button" class="list-group-item  actionb" (click)="modulo('3')">Gestor pedidos</button>
+                <button type="button" class="list-group-item  actionb" (click)="modulo('4')">Gestion de musica</button>
+                <button type="button" class="list-group-item  actionb" (click)="modulo('5')">Gestion de eventos</button>
+                <button type="button" class="list-group-item  actionb" (click)="modulo('6')">Reportes</button>
+            </div>
+        </div>
+        <div class="col-lg-10">
+            <div [ngSwitch]='rutasAdmin'>
+                <div *ngSwitchCase='1'>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <app-eliminar-usuario></app-eliminar-usuario>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <app-crear-usuario></app-crear-usuario>
+                                </div>
+                                <div class="col-lg-6">
+                                    <app-update-usuario></app-update-usuario>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+                <div *ngSwitchCase='2'>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <app-eliminar-productos></app-eliminar-productos>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <app-crear-productos></app-crear-productos>
+                        </div>
+                        <div class="col-lg-6">
+                            <app-actualizar-productos></app-actualizar-productos>
+                        </div>
+                    </div>
+                </div>
+                <div *ngSwitchCase='3'>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <app-gestor-pedido></app-gestor-pedido>
+                        </div>
+                    </div>
+                </div>
+                <div *ngSwitchCase='4'>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <app-crear-album></app-crear-album>
+                        </div>
+                        <div class="col-lg-6">
+                            <app-eliminar-album></app-eliminar-album>
+                        </div>
+                    </div>
+                </div>
+                <div *ngSwitchCase='5'>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <app-gestor-eventos></app-gestor-eventos>
+                        </div>
+                    </div>
+                </div>
+                <div *ngSwitchCase='6'>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <app-reportes></app-reportes>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

@@ -1,0 +1,78 @@
+<div class="modal-header">
+    <div [ngSwitch]="idiomaSelected">
+        <ng-container *ngSwitchCase="'espanol'">
+            <h5 class="modal-title" id="exampleModalLabel">Carrito de compras</h5>
+            
+        </ng-container>
+        <ng-container *ngSwitchCase="'ingles'">
+            <h5 class="modal-title" id="exampleModalLabel">Shopping cart</h5>
+            
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+            <h5 class="modal-title" id="exampleModalLabel">Carrito de compras</h5>
+            
+        </ng-container>
+        
+    </div>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="col-lg-12">
+        <div [ngSwitch]="idiomaSelected">
+            <ng-container *ngSwitchCase="'espanol'">
+                <div class="row">
+                    <h6>Seleccione cantidad a pedir</h6>
+                </div>
+                <br>
+            </ng-container>
+            <ng-container *ngSwitchCase="'ingles'">
+                <div class="row">
+                    <h6>
+                        Select quantity to order
+                    </h6>
+                </div>
+                <br>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+                <div class="row">
+                    <h6>Seleccione cantidad a pedir</h6>
+                </div>
+                <br>
+            </ng-container>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <form>
+                    <div *ngFor="let item of pedidos">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-3 col-form-label">{{item.nombrePro}}</label>
+                            <div class="col-sm-5">
+                                <input type="number" class="form-control" value="0">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div [ngSwitch]="idiomaSelected">
+        <ng-container *ngSwitchCase="'espanol'">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="enviarPedido()">Enviar Pedido</button>
+        </ng-container>
+        <ng-container *ngSwitchCase="'ingles'">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="enviarPedido()">Send the order</button>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="enviarPedido()">Enviar Pedido</button>
+        </ng-container>
+    </div>
+    
+</div>

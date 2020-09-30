@@ -1,0 +1,96 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="containerPro">
+            <div>
+                <h4>Crear producto</h4>
+            </div>
+            <form #formProducts="ngForm" (ngSubmit)="onSubmit()">
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="nombrePro">Nombre producto</label>
+                        <input type="text" class="form-control" 
+                        name="productName" #productName="ngModel" [(ngModel)]="createProduct.nombreProducto"
+                        pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"
+                        [style.border]="productName.touched && !productName.valid?'solid red 1px':productName.touched && productName.valid?'solid green 1px':!productName.touched?'solid grey 1px':''"
+                        id="nombrePro" placeholder="Nombre producto" required>
+                        <span class="validForm" *ngIf="productName.touched && !productName.errors?.required">Correcto</span>
+                        <span class="errorForm" *ngIf="productName.touched && productName.errors?.required">El campo está vacío o no es valido.</span>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="CodProducto">Codigo del Producto</label>
+                        <input type="text" class="form-control" 
+                        name="coProduct" #coProduct="ngModel" [(ngModel)]="createProduct.codigoProducto"
+                        pattern="[a-zA-Z0-9àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+"
+                        [style.border]="coProduct.touched && !coProduct.valid?'solid red 1px':coProduct.touched && coProduct.valid?'solid green 1px':!coProduct.touched?'solid grey 1px':''"
+                        id="CodProducto" placeholder="Codigo Producto" required>
+                        <span class="validForm" *ngIf="coProduct.touched && !coProduct.errors?.required">Correcto</span>
+                        <span class="errorForm" *ngIf="coProduct.touched && coProduct.errors?.required">El campo está vacío o no es valido.</span>
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="cantProducto">Cantidad inicial del producto</label>
+                        <input type="text" class="form-control" 
+                        name="cantProductForm" #cantProductForm="ngModel" [(ngModel)]="createProduct.cantidadProducto"
+                        pattern="[0-9]+" [style.border]="cantProductForm.touched && !cantProductForm.valid?'solid red 1px':cantProductForm.touched && !cantProductForm.errors?.required?'solid green 1px':!cantProductForm.touched?'solid grey 1px':''"
+                        id="cantProducto" placeholder="cantida producto" required>
+                        <span class="validForm" *ngIf="cantProductForm.touched && cantProductForm.valid">Correcto</span>
+                        <span class="errorForm" *ngIf="cantProductForm.touched && !cantProductForm.valid">El campo está vacío o no es valido.</span>
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="valorInicial">valor neto producto U/N</label>
+                        <input type="text" class="form-control" 
+                        name="netoProduct" #netoProduct="ngModel" [(ngModel)]="createProduct.valor_inicial"
+                        pattern="[0-9]+" [style.border]="netoProduct.touched && !netoProduct.valid?'solid red 1px':netoProduct.touched && !netoProduct.errors?.required?'solid green 1px':!netoProduct.touched?'solid grey 1px':''"
+                        id="valorInicial" placeholder="$" required>
+                        <span class="validForm" *ngIf="netoProduct.touched && netoProduct.valid">Correcto</span>
+                        <span class="errorForm" *ngIf="netoProduct.touched && !netoProduct.valid">El campo está vacío o no es valido.</span>
+                    </div>
+                    <div class="form-group col-12">
+                        <label for="exampleFormControlTextarea1">Descripción producto</label>
+                        <textarea class="form-control" 
+                        name="descriptionProduct" #descriptionProduct="ngModel" [(ngModel)]="createProduct.descripcion_producto"
+                        pattern="[a-zA-Z0-9àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+"
+                        [style.border]="descriptionProduct.touched && !descriptionProduct.valid?'solid red 1px':descriptionProduct.touched && !descriptionProduct.errors?.required?'solid green 1px':!descriptionProduct.touched?'solid grey 1px':''"
+                        id="exampleFormControlTextarea1" placeholder="Descripción..."
+                            rows="3" required></textarea>
+                            <span class="validForm" *ngIf="descriptionProduct.touched && descriptionProduct.valid">Correcto</span>
+                            <span class="errorForm" *ngIf="descriptionProduct.touched && !descriptionProduct.valid">El campo está vacío o no es valido.</span>
+                        
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="inputState">Categoría de producto</label>
+                        <select id="inputState" 
+                        name="tipoProducto" #tipoProducto="ngModel" [(ngModel)]="createProduct.categoria_producto_id_categoria_producto"
+                        [style.border]="tipoProducto.touched && !tipoProducto.valid?'solid red 1px':tipoProducto.touched && !tipoProducto.errors?.required?'solid green 1px':!tipoProducto.touched?'solid grey 1px':''"
+                        class="form-control" required>
+                            <option *ngFor="let value of tipoProduct;" [ngValue]="value.id">{{value.tipo}}</option>
+                        </select>
+                        <span class="validForm" *ngIf="tipoProducto.touched && tipoProducto.valid">Correcto</span>
+                        <span class="errorForm" *ngIf="tipoProducto.touched && !tipoProducto.valid">El campo está vacío o no es valido.</span>
+                    </div>
+                    <!-- <div class="form-group col-12">
+                        <label for="nombreProveedor">Nombre del proveedor</label>
+                        <input type="text" class="form-control" id="nombreProveedor"
+                        pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+"
+                        [style.border]="nameProvider.touched && !nameProvider.valid?'solid red 1px':nameProvider.touched && !nameProvider.errors?.required?'solid green 1px':!nameProvider.touched?'solid grey 1px':''"
+                        name="nameProvider" #nameProvider="ngModel" [(ngModel)]="createProduct.nameProvider"
+                        placeholder="Nombre proveedor" required>
+                        <span class="validForm" *ngIf="nameProvider.touched && nameProvider.valid">Correcto</span>
+                        <span class="errorForm" *ngIf="nameProvider.touched && !nameProvider.valid">El campo está vacío o no es valido.</span>
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="ContactoPro">Número contacto</label>
+                        <input type="tel" class="form-control" id="ContactoPro"
+                        pattern="[0-9]+"
+                        name="contactProvider" #contactProvider="ngModel" [(ngModel)]="createProduct.contacProvider"
+                        [style.border]="contactProvider.touched && !contactProvider.valid?'solid red 1px':contactProvider.touched && !contactProvider.errors?.required?'solid green 1px':!contactProvider.touched?'solid grey 1px':''"
+                        placeholder="Contacto proveedor" required>
+                        <span class="validForm" *ngIf="contactProvider.touched && contactProvider.valid">Correcto</span>
+                        <span class="errorForm" *ngIf="contactProvider.touched && !contactProvider.valid">El campo está vacío o no es valido.</span>
+                    </div> -->
+                    <button type="submit" [disabled]="!formProducts.form.valid" class="btn  btn-outline-danger btn-block">Crear producto</button>
+                </div>
+            </form>
+        </div>
+        
+    </div>
+</div>

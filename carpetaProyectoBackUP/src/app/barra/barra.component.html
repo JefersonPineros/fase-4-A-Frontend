@@ -1,0 +1,189 @@
+<div [ngSwitch]="idiomaSeleccionado" >
+    <div *ngSwitchCase="'espanol'">
+        <nav class="navbar navbar-expand-lg ">
+            <a class="navbar-brand" href="#">
+                <img src="../../assets/imagenes/powerletter.png" width="120" height="80 " class="d-inline-block align-top"
+                    loading="lazy" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"><i class="fas fa-cogs"></i></span>
+            </button>
+            
+            <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" routerLink="/home" routerLinkActive="active" href="#"><i
+                                class="fas fa-home"></i> Inicio <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/musica" routerLinkActive="active" href="#"><i class="fas fa-play"></i>
+                            Musica <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/productos" href="#"><i class="fas fa-beer"></i> Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/nosotros" routerLinkActive="active" ><i
+                                class="fas fa-marker"></i> Nosotros</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" data-toggle="modal" data-target="#modalIdiomas"><i class="fas fa-beer"></i>Idioma</a>
+                    </li>
+                </ul>
+                <div [ngSwitch]="tipoUsuario" *ngIf="ingreso" class="">
+                    <div *ngSwitchCase="1">
+                        <ul class="nav navbar-nav flex-row flex-wrap">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"><i class="far fa-user-circle fa-2x"></i>
+                                    Administrador</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" routerLink="/admin" >Menu</a>
+                                    <a class="dropdown-item " type="button" (click)="clearSesion()">Cerrar
+                                        sesion</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#modalIdiomas">Idiomas</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <!-- <div class="navbar-text mt-1 w-50 text-right order-1 order-md-last">
+                            <a class="nav-link" routerLink="/admin" href="#">Administrador</a>
+                            <a type="button" class="cerrarSesion" (click)="clearSesion()">Cerrar sesion</a>
+                        </div> -->
+                    </div>
+                    <div *ngSwitchCase="2">
+                        <ul class="nav navbar-nav flex-row flex-nowrap">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"><i class="far fa-user-circle fa-2x"></i>
+                                    {{usuario}}</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item " type="button" (click)="clearSesion()">Cerrar
+                                        sesion</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#modalIdiomas">Idiomas</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div *ngSwitchCase="3">
+                        <div class="navbar-text mt-1 w-50 text-right order-1 order-md-last">
+                            <a class="nav-link" routerLink="" href="#">Bartender</a>
+                            <span><a type="button" class="cerrarSesion" (click)="clearSesion()">cerrar Sesion</a></span>
+                            <a class="dropdown-item" data-toggle="modal" data-target="#modalIdiomas">Idiomas</a>
+                        </div>
+                    </div>
+                    <div *ngSwitchDefault>
+        
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div *ngSwitchCase="'ingles'">
+        <nav class="navbar navbar-expand-lg ">
+            <a class="navbar-brand" href="#">
+                <img src="../../assets/imagenes/powerletter.png" width="120" height="80 " class="d-inline-block align-top"
+                    loading="lazy" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"><i class="fas fa-cogs"></i></span>
+            </button>
+            
+            <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" routerLink="/home" routerLinkActive="active" href="#"><i
+                                class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/musica" routerLinkActive="active" href="#"><i class="fas fa-play"></i>
+                            Music <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/productos" href="#"><i class="fas fa-beer"></i> Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/nosotros" routerLinkActive="active" ><i
+                                class="fas fa-marker"></i> US</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" data-toggle="modal" data-target="#modalIdiomas"><i class="fas fa-beer"></i> Language</a>
+                    </li>
+                </ul>
+                <div [ngSwitch]="tipoUsuario" *ngIf="ingreso" class="">
+                    <div *ngSwitchCase="1">
+                        <ul class="nav navbar-nav flex-row flex-wrap">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"><i class="far fa-user-circle fa-2x"></i>
+                                    Administrator</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" routerLink="/admin" >Menu</a>
+                                    <a class="dropdown-item " type="button" (click)="clearSesion()">logout</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#modalIdiomas">Language</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <!-- <div class="navbar-text mt-1 w-50 text-right order-1 order-md-last">
+                            <a class="nav-link" routerLink="/admin" href="#">Administrador</a>
+                            <a type="button" class="cerrarSesion" (click)="clearSesion()">Cerrar sesion</a>
+                        </div> -->
+                    </div>
+                    <div *ngSwitchCase="2">
+                        <ul class="nav navbar-nav flex-row flex-nowrap">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"><i class="far fa-user-circle fa-2x"></i>
+                                    {{usuario}}</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item " type="button" (click)="clearSesion()">logout</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#modalIdiomas">Language</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div *ngSwitchCase="3">
+                        <div class="navbar-text mt-1 w-50 text-right order-1 order-md-last">
+                            <a class="nav-link" routerLink="" href="#">Bartender</a>
+                            <span><a type="button" class="cerrarSesion" (click)="clearSesion()">logout</a></span>
+                            <a class="dropdown-item" data-toggle="modal" data-target="#modalIdiomas">Language</a>
+                        </div>
+                    </div>
+                    <div *ngSwitchDefault>
+        
+                    </div>
+                </div>
+            </div>
+            
+        </nav>
+    </div>
+</div>
+
+
+<!-- Modal Idioma -->
+<div class="modal fade" id="modalIdiomas" tabindex="-1" role="dialog" aria-labelledby="modalIdiomasLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalIdiomasLabel">Seleccione un idioma</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="col-lg-12">
+            <div class="row idiomaCol">
+                <div class="col-lg-6 text-center">
+                    
+                    <a type="button" (click)="selectIdioma('espanol')"><img class="imagenID" src="../../assets/imagenes/idiomas/col.jpg"  data-dismiss="modal" alt="español"></a>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <a type="button" (click)="selectIdioma('ingles')"><img class="imagenID" src="../../assets/imagenes/idiomas/Inglaterra.png"  data-dismiss="modal" alt="ingles"></a>
+                </div>  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

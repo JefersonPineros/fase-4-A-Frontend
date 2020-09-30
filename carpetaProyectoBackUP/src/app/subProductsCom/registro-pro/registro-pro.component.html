@@ -1,0 +1,62 @@
+<form #formNewUsuarioF="ngForm" (ngSubmit)="newUserSubmit()">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="recipient-name" class="col-form-label">Primer nombre*:</label>
+            <input type="text" name="firstNameF" #firstNameF="ngModel" [(ngModel)]="newUser.firstName"
+                pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"
+                [style.border]="firstNameF.touched && !firstNameF.valid?'solid red 1px':firstNameF.touched && firstNameF.valid?'solid green 1px':!firstNameF.touched?'solid grey 1px':''"
+                class="form-control" id="recipient-name" placeholder="Primer nombre*" required>
+            <span class="validForm" *ngIf="firstNameF.touched && firstNameF.valid ">Correcto</span>
+            <span class="errorForm" *ngIf="firstNameF.touched && !firstNameF.valid ">El campo esta vacío o mal
+                escrito</span>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="recipient-name" class="col-form-label">Segundo nombre*:</label>
+            <input type="text" class="form-control" name="lastNamef" #lastNamef="ngModel" [(ngModel)]="newUser.lastName"
+                pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"
+                [style.border]="lastNamef.touched && !lastNamef.valid?'solid red 1px':lastNamef.touched && lastNamef.valid?'solid green 1px':!lastNamef.touched?'solid grey 1px':''"
+                id="recipient-name" placeholder="Segundo nombre" required>
+            <span class="validForm" *ngIf="lastNamef.touched && lastNamef.valid ">Correcto</span>
+            <span class="errorForm" *ngIf="lastNamef.touched && !lastNamef.valid ">El campo esta vacío o mal
+                escrito</span>
+        </div>
+        <div class="form-group col-md-12">
+            <label for="CorreoUsu" class="col-form-label  ">Correo electronico:</label>
+            <input type="email" class="form-control" id="CorreoUsu" placeholder="Correo electronico @ *"
+                [style.border]="newEmailF.touched && !newEmailF.valid?'solid red 1px':newEmailF.touched && newEmailF.valid?'solid green 1px':!newEmailF.touched?'solid grey 1px':''"
+                name="newEmailF" #newEmailF="ngModel" [(ngModel)]="newUser.email"
+                pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required>
+            <span class="validForm" *ngIf="newEmailF.touched && newEmailF.valid ">Correcto</span>
+            <span class="errorForm" *ngIf="newEmailF.touched && !newEmailF.valid ">El campo esta vacío o mal
+                escrito</span>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="recipient-name" class="col-form-label">Contraseña*</label>
+            <input type="password" class="form-control" id="recipient-name" placeholder="Segundo nombre"
+                pattern="[a-zA-Z0-9#$%&’*+/=?^_`-]+" name="newPassF" #newPassF="ngModel" [(ngModel)]="newUser.pass"
+                [style.border]="newPassF.touched && !newPassF.valid?'solid red 1px':newPassF.touched && newPassF.valid?'solid green 1px':!newPassF.touched?'solid grey 1px':''"
+                required>
+            <span class="validForm" *ngIf="newPassF.touched && newPassF.valid ">Correcto</span>
+            <span class="errorForm" *ngIf="newPassF.touched && !newPassF.valid ">El campo esta vacío o mal
+                escrito</span>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="recipient-name" class="col-form-label">Confirmar contraseña</label>
+            <input type="password" appConfirmEqualsValidator="newPassF" class="form-control" id="recipient-name"
+                placeholder="Segundo nombre" pattern="[a-zA-Z0-9#$%&’*+/=?^_`-]+" name="confirmPass"
+                #confirmPassF="ngModel" [(ngModel)]="newUser.confirmPass"
+                [style.border]="confirmPassF.touched && !confirmPassF.valid?'solid red 1px':confirmPassF.touched && confirmPassF.valid ?'solid green 1px':!confirmPassF.touched?'solid grey 1px':''"
+                required>
+            <span class="validForm" *ngIf="confirmPassF.touched && confirmPassF.valid ">Correcto</span>
+            <span class="errorForm" *ngIf="confirmPassF.touched && confirmPassF.errors?.required ">Por favor ingrese
+                una contraseña</span>
+            <span class="errorForm"
+                *ngIf="confirmPassF.touched && !confirmPassF.errors?.required && confirmPassF.errors?.notEquals">Las
+                contraseñas deben coincidir</span>
+        </div>
+    </div>
+</form>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+    <button type="submit" [disabled]="!formNewUsuarioF.form.valid " class="btn btn-primary">Crear usuario</button>
+</div>

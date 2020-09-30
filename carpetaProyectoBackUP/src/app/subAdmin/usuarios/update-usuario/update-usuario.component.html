@@ -1,0 +1,46 @@
+<div class="updateUser">
+    <div class="title">
+        <h4>Actualizar usuario</h4>
+    </div>
+    <hr>  
+    <div *ngIf="selected;then thenBlock else elseBlock"></div>
+    <ng-template #thenBlock>
+        <form #formUpdate="ngForm" (ngSubmit)="onSubmit()">
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label for="">Nombre</label>    
+                    <input type="text" class="form-control" name="updateName" #updateName="ngModel" [(ngModel)]="updateUserMode.firstName">
+                </div>
+                <div class="form-group col-6">
+                    <label for="">Apellidos</label>
+                    <input type="text" class="form-control" name="updateLastName" #updateLastName="ngModel" [(ngModel)]="updateUserMode.lastName">
+                </div>
+                <div class="form-group col-12">
+                    <label for="">Cedula</label>
+                    <input type="text" class="form-control" name="updateDocument" #updateDocument="ngModel" [(ngModel)]="updateUserMode.document">
+                </div>
+                <div class="form-group col-12">
+                    <label for="">Correo electronico</label>
+                    <input type="text" class="form-control" name="updateEmail" #updateEmail="ngModel" [(ngModel)]="updateUserMode.email">
+                </div>
+                <div class="form-group col-6">
+                    <label for="">Tipo de usuario</label>
+                    <select id="inputState" name="tipoUser" #tipoUser="ngModel" [(ngModel)]="updateUserMode.typeUser" class="form-control">
+                        <option [ngValue]="null" disabled>Seleccione un tipo</option>
+                        <option *ngFor="let item of userType" [ngValue]="item.id">{{item.tipo}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-12">
+                    <label for="">Cambiar contraseña</label>
+                    <input type="password" class="form-control" name="updatePassword" #updatePassword="ngModel" [(ngModel)]="updateUserMode.pass">
+                </div>
+                
+            </div>
+            <button type="submit"  class="btn  btn-outline-danger btn-block">Actualizar usuario</button>
+        </form>
+    </ng-template>
+    <ng-template #elseBlock>
+        <h5>¡No ha seleccionado ningun usuario!</h5>
+    </ng-template>
+</div>
+

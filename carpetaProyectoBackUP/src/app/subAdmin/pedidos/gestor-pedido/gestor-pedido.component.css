@@ -1,0 +1,8 @@
+.errorPage{
+    background-attachment: fixed;
+    background-position: center;
+    background-image: url("../../../../assets/imagenes/500InternalServerError.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+
+}
