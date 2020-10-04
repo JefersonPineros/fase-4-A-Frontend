@@ -3,29 +3,33 @@
         <div class="titleTable">
             <h4>Productos Stock</h4>
         </div>
-
-        <table datatable class="table table-hover tableW">
-            <thead>
-                <tr>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Código</th>
-                    <th scope="col">Valor + iva</th>
-                    <th scope="col">Stock</th>
-                    <th scope="col">Tipo</th>
-                    <th scope="col">X/A</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of listaProductos; let itemSelected=index">
-                    <th scope="row">{{item.nombreProducto}}</th>
-                    <td>{{item.codigoProducto}}</td>
-                    <td>${{item.valor_mas_iva}}</td>
-                    <td>{{item.cantidadProducto}}</td>
-                    <td>{{item.tipo_categoria}}</td>
-                    <td><button type="button" class="btn btn-outline-danger buttonMar" (click)="eliminarProducto(itemSelected)">X</button><button type="button"
-                            class="btn btn-outline-success buttonMar" (click)="actualizarProducto(itemSelected)">A</button></td>
-                </tr>
-            </tbody>
-        </table>
+        <div *ngIf="listaProductos.length > 0; else dataNoDisponible">
+            <table datatable class="table table-hover tableW">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Código</th>
+                        <th scope="col">Valor + iva</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">X/A</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of listaProductos; let itemSelected=index">
+                        <th scope="row">{{item.nombreProducto}}</th>
+                        <td>{{item.codigoProducto}}</td>
+                        <td>${{item.valor_mas_iva}}</td>
+                        <td>{{item.cantidadProducto}}</td>
+                        <td>{{item.tipo_categoria}}</td>
+                        <td><button type="button" class="btn btn-outline-danger buttonMar" (click)="eliminarProducto(itemSelected)">X</button><button type="button"
+                                class="btn btn-outline-success buttonMar" (click)="actualizarProducto(itemSelected)">A</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <ng-template #dataNoDisponible>
+            <h2>No hay data disponibles</h2>
+        </ng-template>
     </div>
 </div>

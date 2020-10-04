@@ -107,7 +107,7 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="recipient-name" class="col-form-label">Nombres *:</label>
-              <input type="text" name="firstName" #firstName="ngModel" [(ngModel)]="newUser.firstName"
+              <input type="text" name="firstName" #firstName="ngModel" [(ngModel)]="newUser.nombreUsuario"
                 pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"
                 [style.border]="firstName.touched && !firstName.valid?'solid red 1px':firstName.touched && firstName.valid?'solid green 1px':!firstName.touched?'solid grey 1px':''"
                 class="form-control" id="recipient-name" placeholder="Primer nombre*" required>
@@ -117,7 +117,7 @@
             </div>
             <div class="form-group col-md-6">
               <label for="recipient-name" class="col-form-label">Apellidos *:</label>
-              <input type="text" class="form-control" name="lastName" #lastName="ngModel" [(ngModel)]="newUser.lastName"
+              <input type="text" class="form-control" name="lastName" #lastName="ngModel" [(ngModel)]="newUser.apellidoUsuario"
                 pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"
                 [style.border]="lastName.touched && !lastName.valid?'solid red 1px':lastName.touched && lastName.valid?'solid green 1px':!lastName.touched?'solid grey 1px':''"
                 id="recipient-name" placeholder="Segundo nombre" required>
@@ -129,7 +129,7 @@
               <label for="CorreoUsu" class="col-form-label  ">Correo electronico:</label>
               <input type="email" class="form-control" id="CorreoUsu" placeholder="Correo electronico @ *"
                 [style.border]="newEmail.touched && !newEmail.valid?'solid red 1px':newEmail.touched && newEmail.valid?'solid green 1px':!newEmail.touched?'solid grey 1px':''"
-                name="newEmail" #newEmail="ngModel" [(ngModel)]="newUser.email"
+                name="newEmail" #newEmail="ngModel" [(ngModel)]="newUser.emailUsuario"
                 pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required>
               <span class="validForm" *ngIf="newEmail.touched && newEmail.valid ">Correcto</span>
               <span class="errorForm" *ngIf="newEmail.touched && !newEmail.valid ">El campo esta vacío o mal
@@ -138,7 +138,7 @@
             <div class="form-group col-md-6">
               <label for="recipient-name" class="col-form-label">Contraseña*</label>
               <input type="password" class="form-control" id="recipient-name" placeholder="Segundo nombre"
-                pattern="[a-zA-Z0-9#$%&’*+/=?^_`-]+" name="newPass" #newPass="ngModel" [(ngModel)]="newUser.pass"
+                pattern="[a-zA-Z0-9#$%&’*+/=?^_`-]+" name="newPass" #newPass="ngModel" [(ngModel)]="newUser.passwordUsuario"
                 [style.border]="newPass.touched && !newPass.valid?'solid red 1px':newPass.touched && newPass.valid?'solid green 1px':!newPass.touched?'solid grey 1px':''"
                 required>
               <span class="validForm" *ngIf="newPass.touched && newPass.valid ">Correcto</span>
@@ -149,7 +149,7 @@
               <label for="recipient-name" class="col-form-label">Confirmar contraseña</label>
               <input type="password" appConfirmEqualsValidator="newPass" class="form-control" id="recipient-name"
                 placeholder="Segundo nombre" pattern="[a-zA-Z0-9#$%&’*+/=?^_`-]+" name="confirmPass"
-                #confirmPass="ngModel" [(ngModel)]="newUser.confirmPass"
+                #confirmPass="ngModel" [(ngModel)]="newUser.passwordUsuario"
                 [style.border]="confirmPass.touched && !confirmPass.valid?'solid red 1px':confirmPass.touched && confirmPass.valid ?'solid green 1px':!confirmPass.touched?'solid grey 1px':''"
                 required>
               <span class="validForm" *ngIf="confirmPass.touched && confirmPass.valid ">Correcto</span>

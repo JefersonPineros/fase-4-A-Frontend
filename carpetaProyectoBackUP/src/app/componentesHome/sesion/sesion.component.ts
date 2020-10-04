@@ -3,11 +3,15 @@ import { FormsModule, NgForm, FormGroup } from '@angular/forms';
 import { Sesion } from './Models/sesion';
 import { NewUser } from './Models/newUser';
 import { LoginService } from '../../services/login.service';
-import { LoginController } from '../../Controller/login.controller'
+import { LoginController } from '../../Controller/login.controller';
 import * as Cookie from 'js-cookie';
 import Swal from 'sweetalert2';
 import { IdiomaServiceService } from '../../services/idioma-service.service';
 import { UserModel } from 'src/app/Models/userModel';
+import { UsuarioService } from '../../services/admin/usuario.service';
+import { from } from 'rxjs';
+import { RespuestasServices } from 'src/app/Models/respuestasServices';
+import { Location } from '@angular/common';
 declare let alertify: any;
 @Component({
   selector: 'app-sesion',
@@ -22,11 +26,16 @@ export class SesionComponent extends LoginController implements OnInit {
   public idiomaSelected: string;
   public formSesion: FormGroup;
   public userLogin: UserModel;
-  constructor(private loginState: LoginService, private idiomaService: IdiomaServiceService) {
+  public respuestaSer: RespuestasServices;
+  constructor(
+    private loginState: LoginService,
+    private idiomaService: IdiomaServiceService,
+    private usuarioService: UsuarioService,
+    private location: Location
+    ) {
     super();
     this.sesion = new Sesion();
-    this.newUser = new NewUser('', '', '', '', '');
-    //this.loginController = new LoginController(); 
+    this.newUser = new NewUser(null, '', '', '', '', '', null, '', '', '', null, null);
   }
 
   ngOnInit(): void {
@@ -41,7 +50,7 @@ export class SesionComponent extends LoginController implements OnInit {
         accessConfirm = true;
       }
       let tipoParce = parseInt(tipoAC);
-      this.loginState.sendLogin([{ tipo: tipoParce, acceso: accessConfirm, user: uG }])
+      this.loginState.sendLogin([{ tipo: tipoParce, acceso: accessConfirm, user: uG }]);
     }
     // if(this.validacion){
     //   this.loginState.sendLogin(this.typeValidation);
@@ -79,11 +88,16 @@ export class SesionComponent extends LoginController implements OnInit {
     this.loginState.solicitarAcceso(this.sesion.getEmail(), this.sesion.getPass()).subscribe(
       (res) => {
         this.userLogin = res;
+        if (this.userLogin.tipoUsuario === 1 || this.userLogin.tipoUsuario === 3){
+          this.location.replaceState('/admin');
+          window.location.reload();
+        }
         this.comprobarAcceso();
       },
       (error) => {
         this.userLogin = null;
         console.log(error);
+
         Swal.fire({
           icon: 'error',
           title: 'Acceso no permitido',
@@ -114,15 +128,32 @@ export class SesionComponent extends LoginController implements OnInit {
   }
 
   newUserSubmit() {
-
-    Swal.fire({
-      icon: 'success',
-      title: 'Usuario almacenado correctamente',
-      text: '¡Muchas gracias!, ahora inicia sesion. ',
-      onClose: () => {
-        location.reload();
+    this.newUser.inventarioIdInventario = 1;
+    let fecha = new Date(Date.now());
+    this.newUser.creacionUsuario = fecha;
+    this.newUser.tipoUsuario =  2;
+    this.usuarioService.crearUsuario(this.newUser).subscribe(
+      resp => {
+        this.respuestaSer = resp;
+        if (this.respuestaSer.codigo === '001'){
+          Swal.fire({
+            icon: 'success',
+            title: 'Usuario almacenado correctamente',
+            text: '¡Muchas gracias!, ahora inicia sesion. ',
+            onClose: () => {
+              location.reload();
+            }
+          });
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Error al crear el usuario',
+            footer: 'El correo ya existe o se presento algún error.'
+          });
+        }
       }
-    })
+    );
     console.log(this.newUser);
   }
 

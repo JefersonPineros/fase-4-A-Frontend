@@ -66,11 +66,19 @@
                         </ul>
                     </div>
                     <div *ngSwitchCase="3">
-                        <div class="navbar-text mt-1 w-50 text-right order-1 order-md-last">
-                            <a class="nav-link" routerLink="" href="#">Bartender</a>
-                            <span><a type="button" class="cerrarSesion" (click)="clearSesion()">cerrar Sesion</a></span>
-                            <a class="dropdown-item" data-toggle="modal" data-target="#modalIdiomas">Idiomas</a>
-                        </div>
+                        <ul class="nav navbar-nav flex-row flex-wrap">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"><i class="far fa-user-circle fa-2x"></i>
+                                    Bartender</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" routerLink="/admin" >Menu</a>
+                                    <a class="dropdown-item " type="button" (click)="clearSesion()">Cerrar
+                                        sesion</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#modalIdiomas">Idiomas</a>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                     <div *ngSwitchDefault>
         
@@ -144,11 +152,18 @@
                         </ul>
                     </div>
                     <div *ngSwitchCase="3">
-                        <div class="navbar-text mt-1 w-50 text-right order-1 order-md-last">
-                            <a class="nav-link" routerLink="" href="#">Bartender</a>
-                            <span><a type="button" class="cerrarSesion" (click)="clearSesion()">logout</a></span>
-                            <a class="dropdown-item" data-toggle="modal" data-target="#modalIdiomas">Language</a>
-                        </div>
+                        <ul class="nav navbar-nav flex-row flex-wrap">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"><i class="far fa-user-circle fa-2x"></i>
+                                    Bartender</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" routerLink="/admin" >Menu</a>
+                                    <a class="dropdown-item " type="button" (click)="clearSesion()">logout</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#modalIdiomas">Language</a>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                     <div *ngSwitchDefault>
         

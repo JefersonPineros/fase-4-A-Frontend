@@ -9,13 +9,13 @@ import { NewUser } from '../../componentesHome/sesion/Models/newUser'
 })
 export class RegistroProComponent implements OnInit {
   public newUser: NewUser;
-  constructor() { 
-    this.newUser =new NewUser("","","","",""); 
+  constructor() {
+    this.newUser = new NewUser(null, '', '', '', '', '', null, '', '', '', null, null);
   }
 
   ngOnInit(): void {
   }
-  newUserSubmit(){
-    console.log(this.newUser)    
+  newUserSubmit() {
+    console.log(this.newUser);
   }
 }
