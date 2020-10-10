@@ -11,6 +11,7 @@ import com.SkillexBackend.SkillexBackendDemo.repository.UsuarioRepository;
 import com.SkillexBackend.SkillexBackendDemo.vo.RespuestaOperaciones;
 import com.SkillexBackend.SkillexBackendDemo.vo.UsuarioVO;
 import static com.jayway.jsonpath.internal.function.ParamType.JSON;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -36,16 +37,6 @@ public class UsuarioDaoImpl implements UsuarioDao {
     private UsuarioRepository usuarioRepo;
 
     @Override
-    public Iterable<Usuario> findAll() {
-        return usuarioRepo.findAll();
-    }
-
-    @Override
-    public Optional<Usuario> findById(Integer idUsuario) {
-        return usuarioRepo.findById(idUsuario);
-    }
-
-    @Override
     public Object save(UsuarioVO usuario) {
         UsuarioVO user = usuario;
         EntityManagerFactory emf;
@@ -64,7 +55,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
                 resp.setRespuesta("Este usuario ya existe");
                 return resp;
             } else {
-                
+
                 try {
                     EntityManager emt = emf.createEntityManager();
                     emt.getTransaction().begin();
@@ -108,8 +99,26 @@ public class UsuarioDaoImpl implements UsuarioDao {
     }
 
     @Override
-    public void deleteById(Integer id) {
-        usuarioRepo.deleteById(id);
+    public Object deleteById(Integer id) {
+        emf = Persistence.createEntityManagerFactory("com.miUnidadDePersistencia");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        RespuestaOperaciones resp = new RespuestaOperaciones();
+        try {
+            String sql = "delete From usuario where idUsuarios = :id";
+            Query query = em.createNativeQuery(sql);
+            query.setParameter("id", id);
+            query.executeUpdate();
+            em.getTransaction().commit();
+            resp.setCodigo("001");
+            resp.setRespuesta("OK");
+            return resp;
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            resp.setCodigo("002");
+            resp.setRespuesta("Error al eliminar el usuario");
+            return resp;
+        }
     }
 
     @Override
@@ -185,10 +194,99 @@ public class UsuarioDaoImpl implements UsuarioDao {
         return userReponse;
     }
 
-    private static class ObjectImpl extends Object {
+    @Override
+    public List<UsuarioVO> findAll() {
+        emf = Persistence.createEntityManagerFactory("com.miUnidadDePersistencia");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        UsuarioVO userReponse = new UsuarioVO();
+        List<UsuarioVO> listResponse = new ArrayList<UsuarioVO>();
+        try {
+            String sql = "Select * from usuario";
+            Query query = em.createNativeQuery(sql);
+            List<Object> res = query.getResultList();
+            if (res.size() > 0) {
+                Iterator it = res.iterator();
+                while (it.hasNext()) {
+                    Object[] line = (Object[]) it.next();
+                    Integer id = (Integer) line[0];
+                    String nombre = (String) line[1];
+                    String apellido = (String) line[2];
+                    String email2 = (String) line[3];
+                    String pass3 = (String) line[4];
+                    String tienda = (String) line[5];
+                    Date fecha = (Date) line[6];
+                    String fechaLogin = (String) line[7];
+                    String turnos = (String) line[8];
+                    String cedula = (String) line[9];
+                    Integer tipo = (Integer) line[10];
+                    Integer inv = (Integer) line[11];
 
-        public ObjectImpl() {
+                    userReponse = new UsuarioVO(id, nombre, apellido, email2, pass3, tienda, fecha, fechaLogin, turnos, cedula, tipo, inv);
+                    listResponse.add(userReponse);
+                    userReponse = new UsuarioVO();
+                }
+                return listResponse;
+            } else {
+                userReponse = null;
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return null;
         }
+        return null;
     }
 
+    @Override
+    public UsuarioVO findById(Integer idUsuario) {
+
+        return null;
+    }
+
+    @Override
+    public Object updateUser(UsuarioVO usuario) {
+        emf = Persistence.createEntityManagerFactory("com.miUnidadDePersistencia");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        UsuarioVO user = usuario;
+        RespuestaOperaciones resp = new RespuestaOperaciones();
+        try {
+            if (user.getIdUsuarios() != null) {
+                String sql = "update usuario "
+                        + "set nombreUsuario = :nombre,"
+                        + "apellidoUsuario = :apellido,"
+                        + "passwordUsuario = :pass,"
+                        + "tienda = :tienda,"
+                        + "turnos_laborales = :turnos,"
+                        + "cedula_ciudadania = :documento "
+                        + "where idUsuarios = :id";
+                Query query = em.createNativeQuery(sql);
+                query.setParameter("nombre", user.getNombreUsuario());
+                query.setParameter("apellido", user.getApellidoUsuario());
+                query.setParameter("pass", user.getPasswordUsuario());
+                query.setParameter("tienda", user.getTienda());
+                query.setParameter("turnos", user.getTurnosLaborales());
+                query.setParameter("documento", user.getCedulaCiudadania());
+                query.setParameter("id", user.getIdUsuarios());
+
+                query.executeUpdate();
+                em.getTransaction().commit();
+                em.close();
+
+                resp.setCodigo("001");
+                resp.setRespuesta("OK");
+                return resp;
+            } else {
+                resp.setCodigo("003");
+                resp.setRespuesta("El id usuario esta vacio ");
+                return resp;
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            resp.setCodigo("002");
+            resp.setRespuesta("Se presento un problema al actualizar el usuario");
+            return resp;
+        }
+    }
 }
