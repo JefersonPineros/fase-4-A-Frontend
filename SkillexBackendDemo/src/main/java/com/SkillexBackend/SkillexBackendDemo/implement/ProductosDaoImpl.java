@@ -61,7 +61,7 @@ public class ProductosDaoImpl implements ProductosDao {
                     + "p.estado_producto,"
                     + "p.cantidad_producto,"
                     + "p.fecha_ingreso,"
-                    + "dp.id_detalle_productos,"
+                    + "dp.id_detalle_productos,"    
                     + "dp.valor_inicial,"
                     + "dp.valor_mas_iva,"
                     + "dp.descripcion_producto,"
@@ -225,7 +225,7 @@ public class ProductosDaoImpl implements ProductosDao {
     public void ProductoDAO() {
         emf = Persistence.createEntityManagerFactory("com.SkillexBackend_SkillexBackendDemo_jar_0.0.1-SNAPSHOTPU");
     }
-
+    // ACTUALIZAR PRODUCTOS
     @Override
     public Object updateProducto(ProductosVO producto) {
         ProductosVO proUp = producto;
