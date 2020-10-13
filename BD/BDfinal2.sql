@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `skillexBD`.`Usuario` (
   `creacion_usuario` DATE NULL,
   `fecha_login` VARCHAR(45) NULL,
   `turnos_laborales` VARCHAR(45) NULL,
-  `cedula_ciudadania` BIGINT NULL,
+  `cedula_ciudadania` varchar(45) NULL,
   `tipoUsuario_idTipoUsuario` INT NOT NULL,
   inventario_idInventario INT NOT NULL,
   FOREIGN KEY (tipoUsuario_idTipoUsuario) REFERENCES tipoUsuario(idTipoUsuario),
@@ -72,9 +72,10 @@ DROP TABLE IF EXISTS `skillexBD`.`detallePedido` ;
 
 CREATE TABLE IF NOT EXISTS `skillexBD`.`detallePedido` (
   `iddetallePedido` INT NOT NULL AUTO_INCREMENT,
-  `valorApagar` BIGINT NULL,
+  `valorApagar` int NULL,
   `producto` VARCHAR(45) NULL,
   `cantidadProducto` INT NULL,
+  fecha_pedido date null,
   PRIMARY KEY (`iddetallePedido`))
 ENGINE = InnoDB;
 
@@ -88,8 +89,7 @@ CREATE TABLE IF NOT EXISTS `skillexBD`.`pedidos` (
   `idPedidos` INT NOT NULL AUTO_INCREMENT,
   `estadoPedido` VARCHAR(45) NOT NULL,
   `mesa` INT NOT NULL,
-  `numeroPedido` BIGINT NOT NULL,
-  fecha_pedido Date not null,
+  `numeroPedido` INT NOT NULL,
   `detallePedido_iddetallePedido` INT NOT NULL,
   `Usuario_idUsuarios` INT NOT NULL,
   estado_pedido_ID int NOT NULL,
@@ -227,7 +227,6 @@ CREATE TABLE IF NOT EXISTS `skillexBD`.`productos` (
   `estado_producto` VARCHAR(45) NULL,
   `cantidad_producto` INT NULL,
   `fecha_ingreso` DATE NULL,
-  `productoscol` VARCHAR(45) NULL,
   `inventario_id_inventario` INT NOT NULL,
   `categoria_producto_id_categoria_producto` INT NOT NULL,
   PRIMARY KEY (`id_productos`),
@@ -243,11 +242,12 @@ DROP TABLE IF EXISTS `skillexBD`.`detalle_productos` ;
 
 CREATE TABLE IF NOT EXISTS `skillexBD`.`detalle_productos` (
   `id_detalle_productos` INT NOT NULL AUTO_INCREMENT,
-  `valor_inicial` VARCHAR(45) NULL,
-  `valor_mas_iva` VARCHAR(45) NULL,
+  `valor_inicial` INT NULL,
+  `valor_mas_iva` INT NULL,
   `descripcion_producto` VARCHAR(45) NULL,
   descripcion_producto_in varchar(45),
   `productos_id_productos` INT NOT NULL,
+  url_imagen varchar(45) null,
   PRIMARY KEY (`id_detalle_productos`),
   FOREIGN KEY (productos_id_productos) REFERENCES productos (id_productos)
 );
@@ -363,7 +363,8 @@ DROP TABLE IF EXISTS `skillexBD`.`pedidos_has_productos` ;
 CREATE TABLE IF NOT EXISTS `skillexBD`.`pedidos_has_productos` (
   `pedidos_idPedidos` INT NOT NULL,
   `productos_id_productos` INT NOT NULL,
-   FOREIGN KEY(pedidos_idPedidos) REFERENCES pedidos(idPedidos),
+	cantidad_producto_pedido INT NULL,
+  FOREIGN KEY(pedidos_idPedidos) REFERENCES pedidos(idPedidos),
    FOREIGN KEY(productos_id_productos) REFERENCES productos(id_productos)
   
 );
