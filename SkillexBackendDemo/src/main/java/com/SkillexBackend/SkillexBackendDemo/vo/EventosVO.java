@@ -1,11 +1,17 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.SkillexBackend.SkillexBackendDemo.vo;
 
 import java.io.Serializable;
 
-
+/**
+ *
+ * @author jefer
+ */
 public class EventosVO implements Serializable {
-    
     private static final long serialVersionUID = 1L;
     
     private Integer idEventos;
@@ -124,7 +130,4 @@ public class EventosVO implements Serializable {
     public void setImagen_evento(String imagen_evento) {
         this.imagen_evento = imagen_evento;
     }
-    
-    
-    
 }

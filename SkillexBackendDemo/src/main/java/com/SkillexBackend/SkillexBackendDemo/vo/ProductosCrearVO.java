@@ -8,6 +8,10 @@ package com.SkillexBackend.SkillexBackendDemo.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ *
+ * @author jefer
+ */
 public class ProductosCrearVO implements Serializable {
     private static final long serialVersionUID = 1L;
     

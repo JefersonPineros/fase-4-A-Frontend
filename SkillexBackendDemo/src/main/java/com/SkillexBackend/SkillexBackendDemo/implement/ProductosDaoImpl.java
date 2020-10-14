@@ -6,9 +6,7 @@
 package com.SkillexBackend.SkillexBackendDemo.implement;
 
 import com.SkillexBackend.SkillexBackendDemo.dao.ProductosDao;
-import com.SkillexBackend.SkillexBackendDemo.models.Inventario;
 import com.SkillexBackend.SkillexBackendDemo.models.Productos;
-import com.SkillexBackend.SkillexBackendDemo.repository.InventarioRepository;
 import com.SkillexBackend.SkillexBackendDemo.repository.ProductosRepository;
 import com.SkillexBackend.SkillexBackendDemo.vo.ProductosCrearVO;
 import com.SkillexBackend.SkillexBackendDemo.vo.ProductosVO;
@@ -20,7 +18,6 @@ import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.LockModeType;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class ProductosDaoImpl implements ProductosDao {
-
+    private String upload_imagen = ".//src//main//resource//imagenes//";
     private EntityManagerFactory emf;
     @Autowired
     private ProductosRepository productosRespository;
@@ -44,7 +41,7 @@ public class ProductosDaoImpl implements ProductosDao {
     @Transactional(readOnly = true)
     //SERVICIO LISTAR PRODUCTOS
     public List<ProductosVO> mostrar_productos() {
-
+        
         ProductosVO pro = new ProductosVO();
         List<ProductosVO> responseProductos = new ArrayList<ProductosVO>();
 
@@ -61,7 +58,7 @@ public class ProductosDaoImpl implements ProductosDao {
                     + "p.estado_producto,"
                     + "p.cantidad_producto,"
                     + "p.fecha_ingreso,"
-                    + "dp.id_detalle_productos,"    
+                    + "dp.id_detalle_productos,"
                     + "dp.valor_inicial,"
                     + "dp.valor_mas_iva,"
                     + "dp.descripcion_producto,"
@@ -225,7 +222,7 @@ public class ProductosDaoImpl implements ProductosDao {
     public void ProductoDAO() {
         emf = Persistence.createEntityManagerFactory("com.SkillexBackend_SkillexBackendDemo_jar_0.0.1-SNAPSHOTPU");
     }
-    // ACTUALIZAR PRODUCTOS
+
     @Override
     public Object updateProducto(ProductosVO producto) {
         ProductosVO proUp = producto;

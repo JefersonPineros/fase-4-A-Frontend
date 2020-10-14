@@ -142,5 +142,4 @@ public class UsuarioVO implements Serializable {
     public void setCreacionUsuario(Date creacionUsuario) {
         this.creacionUsuario = creacionUsuario;
     }
-    
 }

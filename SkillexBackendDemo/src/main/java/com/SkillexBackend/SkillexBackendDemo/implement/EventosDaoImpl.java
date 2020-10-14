@@ -1,8 +1,11 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.SkillexBackend.SkillexBackendDemo.implement;
 
 import com.SkillexBackend.SkillexBackendDemo.dao.EventosDao;
-import com.SkillexBackend.SkillexBackendDemo.models.Eventos;
-import com.SkillexBackend.SkillexBackendDemo.repository.EventosRepository;
 import com.SkillexBackend.SkillexBackendDemo.vo.EventosVO;
 import com.SkillexBackend.SkillexBackendDemo.vo.RespuestaOperaciones;
 import java.util.ArrayList;
@@ -13,18 +16,17 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ *
+ * @author jefer
+ */
 @Service
 public class EventosDaoImpl implements EventosDao {
 
     private EntityManagerFactory emf;
-
-    @Autowired
-    private EventosRepository eventosRepository;
 
 //SERVICIO LISTAR EVENTOS
     @Override
@@ -72,11 +74,6 @@ public class EventosDaoImpl implements EventosDao {
             System.out.println(e.toString());
             return responseEventos;
         }
-    }
-
-    @Override
-    public Page<Eventos> findAll(Pageable pageable) {
-        return null;
     }
 
 // SERVICIO ACTUALIZAR EVENTOS
@@ -246,3 +243,4 @@ public class EventosDaoImpl implements EventosDao {
     }
 
 }
+
