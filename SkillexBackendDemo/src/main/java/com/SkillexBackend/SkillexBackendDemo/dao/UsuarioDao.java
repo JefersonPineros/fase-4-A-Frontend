@@ -5,12 +5,10 @@
  */
 package com.SkillexBackend.SkillexBackendDemo.dao;
 
-import com.SkillexBackend.SkillexBackendDemo.models.Inventario;
-import com.SkillexBackend.SkillexBackendDemo.models.Usuario;
 import com.SkillexBackend.SkillexBackendDemo.vo.UsuarioVO;
 import java.util.List;
-import java.util.Optional;
-import org.json.JSONObject;
+
+import javax.mail.MessagingException;
 
 
 /**
@@ -26,4 +24,5 @@ public interface UsuarioDao {
     public UsuarioVO login(String email,String pass);
     public Object recuperarContrasena(String email);
     public Object updateUser(UsuarioVO usuario);
+    public void correoMasivoSend(String mensaje, String asunto) throws MessagingException;
 }

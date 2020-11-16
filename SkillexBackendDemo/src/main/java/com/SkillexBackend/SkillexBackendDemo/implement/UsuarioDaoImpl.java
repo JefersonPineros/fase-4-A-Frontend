@@ -18,6 +18,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -242,6 +244,17 @@ public class UsuarioDaoImpl implements UsuarioDao {
         return null;
     }
 
+    @Override
+    public void correoMasivoSend(String mensaje , String asunto) throws MessagingException {
+    	List<UsuarioVO> listaUsuarios = this.findAll();
+    	for (UsuarioVO item: listaUsuarios) {
+    		String nombres = item.getNombreUsuario();
+    		String apellidos = item.getApellidoUsuario();
+    		String correoUs = item.getEmailUsuario();
+    		
+    		this.email.correoMasivo("skillex.gaes@gmail.com",correoUs, asunto, nombres, apellidos,mensaje);
+    	}
+    }
     @Override
     public UsuarioVO findById(Integer idUsuario) {
 
