@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as Cookie from 'js-cookie';
+import { SendCorreoServiceService } from '../services/correos/send-correo-service.service';
 import { IdiomaServiceService } from '../services/idioma-service.service';
 import { LoginService } from '../services/login.service';
+declare let alertify: any;
 @Component({
   selector: 'app-administrador',
   templateUrl: './administrador.component.html',
@@ -11,7 +13,12 @@ export class AdministradorComponent implements OnInit,  OnDestroy {
 
   public rutasAdmin: string;
   public idiomaSelected: string;
-  constructor( private loginState: LoginService, private idiomaService: IdiomaServiceService) {
+  public asunto: string;
+  public mensaje: string;
+  constructor( private loginState: LoginService,
+    private idiomaService: IdiomaServiceService,
+    private mensajesService: SendCorreoServiceService
+  ) {
     this.rutasAdmin = '1';
   }
 
@@ -52,6 +59,22 @@ export class AdministradorComponent implements OnInit,  OnDestroy {
   modulo(indice: string) {
     let indi: string = indice;
     this.rutasAdmin = indi;
+  }
+  enviarCorreoMasivo(asunto: string, mensaje: string): void{
+    console.log(asunto);
+    console.log(mensaje);
+    this.mensajesService.correoMasivo(asunto, mensaje).subscribe(
+      resp => {
+        if (resp.codigo === '001') {
+          alertify.success('Mensaje enviado correctamente');
+        } else {
+          alertify.error('Se ha presentado un error');
+        }
+      },
+      error => {
+        alertify.error('Se ha presentado un error');
+      }
+    );
   }
 
 }

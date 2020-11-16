@@ -29,6 +29,7 @@ export class SesionComponent extends LoginController implements OnInit {
   public respuestaSer: RespuestasServices;
   public accessSession: boolean;
   public emailRecuperar: string;
+
   constructor(
     private loginState: LoginService,
     private idiomaService: IdiomaServiceService,
@@ -49,7 +50,11 @@ export class SesionComponent extends LoginController implements OnInit {
     if (uG !== undefined) {
       let accessConfirm;
       if (access === 'true') {
+        console.log(access)
+        this.accessSession = true;
         accessConfirm = true;
+      } else {
+        this.accessSession = false;
       }
       let tipoParce = parseInt(tipoAC);
       this.loginState.sendLogin([{ tipo: tipoParce, acceso: accessConfirm, user: uG }]);
@@ -79,6 +84,7 @@ export class SesionComponent extends LoginController implements OnInit {
     } else {
       return false;
     }
+
   }
 
   onSubmit() {

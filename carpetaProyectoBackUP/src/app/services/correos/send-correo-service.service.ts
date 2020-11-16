@@ -13,4 +13,7 @@ export class SendCorreoServiceService {
   public recuperar(email: string): Observable<RespuestasServices> {
     return this.httpClient.get<RespuestasServices>('/api/usuario/recuperar/email=' + email);
   }
+  public correoMasivo(asunto: string, mensaje: string): Observable<RespuestasServices> {
+    return this.httpClient.get<RespuestasServices>('/api/usuario/correoMasivo/asunto=' + asunto + '&mensaje=' + mensaje);
+  }
 }

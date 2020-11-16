@@ -9,8 +9,13 @@ import com.SkillexBackend.SkillexBackendDemo.dao.UsuarioDao;
 import com.SkillexBackend.SkillexBackendDemo.vo.RespuestaOperaciones;
 import com.SkillexBackend.SkillexBackendDemo.vo.UsuarioVO;
 import java.util.List;
+
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -85,6 +90,19 @@ public class UsuarioService {
     	RespuestaOperaciones resp = (RespuestaOperaciones) UsDao.recuperarContrasena(email);
     	return ResponseEntity.ok(resp);
     }
-    
+    @GetMapping("/correoMasivo/asunto={asunto}&mensaje={mensaje}")
+    public ResponseEntity<?> correoMasivoEnviar(@PathVariable String asunto, @PathVariable String mensaje) throws MessagingException {
+    	RespuestaOperaciones resp = new RespuestaOperaciones();
+    	try {
+    		this.UsDao.correoMasivoSend(mensaje, asunto);
+    		resp.setCodigo("001");
+    		resp.setRespuesta("Correo enviado exitosamente");
+    		return ResponseEntity.ok(resp);
+		} catch (Exception e) {
+			resp.setCodigo("002");
+    		resp.setRespuesta("No se pudo completar la operación");
+			return ResponseEntity.ok(resp);
+		}
+    }
     
 }
