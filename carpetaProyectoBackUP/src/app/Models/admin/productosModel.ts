@@ -5,7 +5,7 @@ export class ProductosModel {
         public nombreProductoIn: string,
         public codigoProducto: string,
         public estadoProducto: string,
-        public cantidadProducto: string,
+        public cantidadProducto: number,
         public fechaIngreso: Date,
         public id_detalle_productos: number,
         public valor_inicial: number,

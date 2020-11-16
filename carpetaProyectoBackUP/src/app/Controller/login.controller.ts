@@ -10,7 +10,7 @@ export class LoginController {
     public sesion: Sesion;
     comprobarUser(values: UserModel): any[] {
         this.userLogin = new UserModel(
-            values.idUsuario,
+            values.idUsuarios,
             values.nombreUsuario,
             values.apellidoUsuario,
             values.emailUsuario,
@@ -26,7 +26,7 @@ export class LoginController {
 
         if (this.userLogin !== null) {
             console.log(this.userLogin);
-            this.acceso = [{ tipo: this.userLogin.getTipoUsuario(), acceso: true, user: this.userLogin.getEmailUsuario() }];
+            this.acceso = [{ tipo: this.userLogin.tipoUsuario, acceso: true, user: this.userLogin.emailUsuario }];
             return this.acceso;
         } else {
             console.log(this.userLogin);

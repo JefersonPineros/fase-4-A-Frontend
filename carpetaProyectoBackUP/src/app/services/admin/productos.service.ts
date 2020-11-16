@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { CreateProduct } from 'src/app/Models/model-create-productos';
 import { ProductosModel } from '../../Models/admin/productosModel';
 

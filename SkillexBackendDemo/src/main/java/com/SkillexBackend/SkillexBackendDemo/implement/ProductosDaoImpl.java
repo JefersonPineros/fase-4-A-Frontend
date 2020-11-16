@@ -178,7 +178,6 @@ public class ProductosDaoImpl implements ProductosDao {
                     String ft = (String) line[1];
 
                 }
-
                 EntityManager emD1 = emf.createEntityManager();
                 emD1.getTransaction().begin();
                 String sql3 = "insert into detalle_productos(descripcion_producto,descripcion_producto_in,valor_inicial,valor_mas_iva,productos_id_productos,url_imagen)"

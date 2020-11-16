@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable,Subject} from 'rxjs';
+import { Observable, Subject} from 'rxjs';
+import { UserModel } from '../Models/userModel';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ import { Observable,Subject} from 'rxjs';
 export class UpdateServiceService {
 
   private subject = new Subject<any>();
-  sendUser(user:any){
+  sendUser(user: UserModel){
     this.subject.next(user);
   }
   getUser(){

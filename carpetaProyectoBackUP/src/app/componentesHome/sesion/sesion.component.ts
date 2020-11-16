@@ -9,9 +9,9 @@ import Swal from 'sweetalert2';
 import { IdiomaServiceService } from '../../services/idioma-service.service';
 import { UserModel } from 'src/app/Models/userModel';
 import { UsuarioService } from '../../services/admin/usuario.service';
-import { from } from 'rxjs';
 import { RespuestasServices } from 'src/app/Models/respuestasServices';
 import { Location } from '@angular/common';
+import { SendCorreoServiceService } from '../../services/correos/send-correo-service.service';
 declare let alertify: any;
 @Component({
   selector: 'app-sesion',
@@ -27,19 +27,21 @@ export class SesionComponent extends LoginController implements OnInit {
   public formSesion: FormGroup;
   public userLogin: UserModel;
   public respuestaSer: RespuestasServices;
+  public accessSession: boolean;
+  public emailRecuperar: string;
   constructor(
     private loginState: LoginService,
     private idiomaService: IdiomaServiceService,
     private usuarioService: UsuarioService,
-    private location: Location
-    ) {
+    private location: Location,
+    private recuperarP: SendCorreoServiceService
+  ) {
     super();
     this.sesion = new Sesion();
     this.newUser = new NewUser(null, '', '', '', '', '', null, '', '', '', null, null);
   }
 
   ngOnInit(): void {
-
     // validacion de cookies guardadas
     let uG = Cookie.get('usuario');
     let access = Cookie.get('acceso');
@@ -52,11 +54,6 @@ export class SesionComponent extends LoginController implements OnInit {
       let tipoParce = parseInt(tipoAC);
       this.loginState.sendLogin([{ tipo: tipoParce, acceso: accessConfirm, user: uG }]);
     }
-    // if(this.validacion){
-    //   this.loginState.sendLogin(this.typeValidation);
-    // }else{
-    //   this.loginState.sendLogin(this.typeValidation);
-    // }
     this.idiomaService.getIdioma().subscribe(
       idioma => {
         if (idioma != null) {
@@ -88,7 +85,7 @@ export class SesionComponent extends LoginController implements OnInit {
     this.loginState.solicitarAcceso(this.sesion.getEmail(), this.sesion.getPass()).subscribe(
       (res) => {
         this.userLogin = res;
-        if (this.userLogin.tipoUsuario === 1 || this.userLogin.tipoUsuario === 3){
+        if (this.userLogin.tipoUsuario === 1 || this.userLogin.tipoUsuario === 3) {
           this.location.replaceState('/admin');
           window.location.reload();
         }
@@ -124,6 +121,11 @@ export class SesionComponent extends LoginController implements OnInit {
       Cookie.set('usuario', user);
       Cookie.set('tipo', tipoAc);
       alertify.success('Bienvenido');
+      if (Cookie.get('acceso') === 'true') {
+        this.accessSession = true;
+      } else {
+        this.accessSession = false;
+      }
     }
   }
 
@@ -131,11 +133,11 @@ export class SesionComponent extends LoginController implements OnInit {
     this.newUser.inventarioIdInventario = 1;
     let fecha = new Date(Date.now());
     this.newUser.creacionUsuario = fecha;
-    this.newUser.tipoUsuario =  2;
+    this.newUser.tipoUsuario = 2;
     this.usuarioService.crearUsuario(this.newUser).subscribe(
       resp => {
         this.respuestaSer = resp;
-        if (this.respuestaSer.codigo === '001'){
+        if (this.respuestaSer.codigo === '001') {
           Swal.fire({
             icon: 'success',
             title: 'Usuario almacenado correctamente',
@@ -144,7 +146,7 @@ export class SesionComponent extends LoginController implements OnInit {
               location.reload();
             }
           });
-        }else{
+        } else {
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -156,6 +158,37 @@ export class SesionComponent extends LoginController implements OnInit {
     );
     console.log(this.newUser);
   }
-
+  recuperarPass(email: string): void {
+    this.recuperarP.recuperar(email).subscribe(
+      res => {
+        this.respuestaSer = res;
+        if (this.respuestaSer.codigo === '001') {
+          Swal.fire({
+            icon: 'success',
+            title: 'Recuperación exitosa',
+            text: '¡Por favor virifique su correo',
+            onClose: () => {
+              location.reload();
+            }
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Error al recuperar la contraseña',
+            footer: 'Por favor verifique su correo.'
+          });
+        }
+      },
+      error => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Error al recuperar la contraseña',
+          footer: 'Por favor verifique su correo.'
+        });
+      }
+    );
+  }
 
 }

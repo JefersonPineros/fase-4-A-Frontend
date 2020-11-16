@@ -8,6 +8,7 @@ package com.SkillexBackend.SkillexBackendDemo.implement;
 import com.SkillexBackend.SkillexBackendDemo.dao.UsuarioDao;
 import com.SkillexBackend.SkillexBackendDemo.models.Usuario;
 import com.SkillexBackend.SkillexBackendDemo.repository.UsuarioRepository;
+import com.SkillexBackend.SkillexBackendDemo.utilidades.Email;
 import com.SkillexBackend.SkillexBackendDemo.vo.RespuestaOperaciones;
 import com.SkillexBackend.SkillexBackendDemo.vo.UsuarioVO;
 import static com.jayway.jsonpath.internal.function.ParamType.JSON;
@@ -16,6 +17,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -32,7 +34,10 @@ import org.springframework.stereotype.Service;
 public class UsuarioDaoImpl implements UsuarioDao {
 
     private EntityManagerFactory emf;
-
+    
+    @Autowired
+    private Email email;
+    
     @Autowired
     private UsuarioRepository usuarioRepo;
 
@@ -244,7 +249,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
     }
 
     @Override
-    public Object updateUser(UsuarioVO usuario) {
+    public RespuestaOperaciones updateUser(UsuarioVO usuario) {
         emf = Persistence.createEntityManagerFactory("com.miUnidadDePersistencia");
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
@@ -286,6 +291,59 @@ public class UsuarioDaoImpl implements UsuarioDao {
             System.out.println(e.toString());
             resp.setCodigo("002");
             resp.setRespuesta("Se presento un problema al actualizar el usuario");
+            return resp;
+        }
+    }
+
+    @Override
+
+    public Object recuperarContrasena(String email) {
+        emf = Persistence.createEntityManagerFactory("com.miUnidadDePersistencia");
+        EntityManager em = emf.createEntityManager();
+        RespuestaOperaciones resp = new RespuestaOperaciones();
+        String userId;
+        UsuarioVO usuarioRequest = new UsuarioVO();
+        String claveNueva = "";
+        try {
+            String sql = "SELECT * FROM usuario WHERE emailUsuario = :email";
+            Query query = em.createNativeQuery(sql);
+            query.setParameter("email", email);
+            List<Object[]> listOb = query.getResultList();
+            if (listOb.size() > 0) {
+                Iterator it = listOb.iterator();
+                while (it.hasNext()) {
+                    Object[] line = (Object[]) it.next();
+                    usuarioRequest.setIdUsuarios((Integer) line[0]);
+                    usuarioRequest.setNombreUsuario((String) line[1]);
+                    usuarioRequest.setApellidoUsuario((String) line[2]);
+                    usuarioRequest.setEmailUsuario((String) line[3]);
+                    usuarioRequest.setPasswordUsuario((String) line[4]);
+                    usuarioRequest.setTienda((String) line[5]);
+                    Date fecha = (Date) line[6];
+                    usuarioRequest.setCreacionUsuario(fecha);
+                    usuarioRequest.setFechaLogin((String) line[7]);
+                    usuarioRequest.setTurnosLaborales((String) line[8]);
+                    usuarioRequest.setCedulaCiudadania((String) line[9]);
+                    usuarioRequest.setTipoUsuario((Integer) line[10]);
+                    usuarioRequest.setInventarioIdInventario((Integer) line[11]);
+                }
+                String claveAleatoria = "";
+                for (int i = 0; i <= 10 ; i ++){
+                     claveAleatoria = claveAleatoria + String.valueOf(Math.random()*25 + 1);
+                }
+                this.email.enviarContrasena("skillex.gaes@gmail.com",usuarioRequest.getEmailUsuario(), "Recuperación de contraseña", usuarioRequest.getPasswordUsuario(),usuarioRequest.getNombreUsuario(),usuarioRequest.getApellidoUsuario() );
+                
+                resp.setCodigo("001");
+            	resp.setRespuesta("Correo enviado exitosamente");
+                return resp;
+            } else {
+            	resp.setCodigo("002");
+            	resp.setRespuesta("El correo no existe");
+                return resp;
+            }
+        } catch (Exception e) {
+        	resp.setCodigo("003");
+        	resp.setRespuesta("Se presento un error al enviar el correo");
             return resp;
         }
     }

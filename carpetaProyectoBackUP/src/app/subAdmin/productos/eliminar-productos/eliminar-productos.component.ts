@@ -10,7 +10,9 @@ import { ProductosModel } from 'src/app/Models/admin/productosModel';
 export class EliminarProductosComponent implements OnInit {
   public listaProductos: Array<ProductosModel>;
   public actPro: ProductosModel;
+  cantidadPro = false;
   constructor(private updateProductos: UpdateProductosService, private productosService: ProductosService) {
+    this.listaProductos = new Array<ProductosModel>();
   }
 
   ngOnInit(): void {
@@ -35,5 +37,14 @@ export class EliminarProductosComponent implements OnInit {
   eliminarProducto(item: number) {
     console.log('Eliminar producto', item);
   }
-
+  setColor(cantidad: string): boolean {
+    // tslint:disable-next-line: radix
+    if ( parseInt(cantidad) < 10 ){
+      console.log(parseInt(cantidad));
+      this.cantidadPro = true;
+      return this.cantidadPro;
+    } else {
+      return this.cantidadPro;
+    }
+  }
 }

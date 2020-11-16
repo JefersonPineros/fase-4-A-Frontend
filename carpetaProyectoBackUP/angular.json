@@ -79,7 +79,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "gaes5Proyect:build"
+            "browserTarget": "gaes5Proyect:build",
+            "proxyConfig":"./proxy.conf.json"
           },
           "configurations": {
             "production": {

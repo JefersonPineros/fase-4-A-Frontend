@@ -32,7 +32,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { UpdateUsuarioComponent } from './subAdmin/usuarios/update-usuario/update-usuario.component';
 import { ActualizarProductosComponent } from './subAdmin/productos/actualizar-productos/actualizar-productos.component';
 import { HttpClientModule } from '@angular/common/http';
-
+import { FileUploadModule } from 'ng2-file-upload';
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,7 +70,8 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     FullCalendarModule,
     DataTablesModule,
-    HttpClientModule
+    HttpClientModule,
+    FileUploadModule
 
   ],
   providers: [],

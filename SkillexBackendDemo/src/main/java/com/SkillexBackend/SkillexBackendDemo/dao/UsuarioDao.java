@@ -24,5 +24,6 @@ public interface UsuarioDao {
     public Object deleteById(Integer id);
     public Integer getTipeUser(Integer UserId);
     public UsuarioVO login(String email,String pass);
+    public Object recuperarContrasena(String email);
     public Object updateUser(UsuarioVO usuario);
 }

@@ -1,44 +1,93 @@
 import { Component, OnInit } from '@angular/core';
 import { UpdateServiceService } from '../../../services/update-service.service';
-import {NgForm, FormsModule } from '@angular/forms';
-import { UpdateUserModel } from '../../../Models/model-update-user';
+import { UsuarioService } from 'src/app/services/admin/usuario.service';
+import { NewUser } from 'src/app/componentesHome/sesion/Models/newUser';
+import Swal from 'sweetalert2';
+import { RespuestasServices } from 'src/app/Models/respuestasServices';
+import { IdiomaServiceService } from 'src/app/services/idioma-service.service';
+import * as Cookie from 'js-cookie';
 @Component({
   selector: 'app-update-usuario',
   templateUrl: './update-usuario.component.html',
   styleUrls: ['./update-usuario.component.css']
 })
 export class UpdateUsuarioComponent implements OnInit {
-  public usuarioUpdate: any;
+  public usuarioUpdate: NewUser;
   public selected: boolean;
-  public updateUserMode: UpdateUserModel;
-  public userType: Array<any>
-  constructor(private updateUserService:UpdateServiceService) {
-      this.selected = false;
-      this.updateUserMode = new UpdateUserModel(null,"","",null,"","","");  
-      this.userType = [
-        {id:"1",tipo:'Administrador'},
-        {id:"2",tipo:'Bartender'}
-      ];
-   }
+  public userType: Array<any>;
+  public responseS: RespuestasServices;
+  public idiomaSelected: string;
+  constructor(
+    private updateUserService: UpdateServiceService,
+    private userServices: UsuarioService,
+    private idiomaService: IdiomaServiceService) {
+    this.selected = false;
+    this.userType = [
+      { id: '1', tipo: 'Administrador' },
+      { id: '2', tipo: 'Bartender' }
+    ];
+  }
 
   ngOnInit(): void {
     this.updateUserService.getUser().subscribe(
       usuario => {
-        if(usuario != '' ){
-          this.usuarioUpdate = usuario
-          this.updateUserMode.iduser = this.usuarioUpdate.id;
-          this.updateUserMode.firstName = this.usuarioUpdate.nombre;
-          this.updateUserMode.lastName = this.usuarioUpdate.apellidos;
-          this.updateUserMode.document = this.usuarioUpdate.cedula;
-          this.updateUserMode.email = this.usuarioUpdate.correo;
-          this.updateUserMode.pass = this.usuarioUpdate.passwordUs;
+        if (usuario !== '') {
+          this.usuarioUpdate = usuario;
           this.selected = true;
         }
       }
     );
+
+    let uG = Cookie.get('usuario');
+    let access = Cookie.get('acceso');
+    let tipoAC = Cookie.get('tipo');
+    if (uG !== undefined) {
+      let accessConfirm;
+      if (access === 'true') {
+        accessConfirm = true;
+      }
+    }
+    this.idiomaService.getIdioma().subscribe(
+      idioma => {
+        if (idioma != null) {
+          this.idiomaSelected = idioma;
+        }
+      }
+    )
+    let getIdiomaCookye = Cookie.get('idioma');
+    if (getIdiomaCookye != null) {
+      if (getIdiomaCookye === 'espanol') {
+        this.idiomaSelected = getIdiomaCookye;
+      } else {
+        this.idiomaSelected = getIdiomaCookye;
+      }
+    } else {
+      this.idiomaSelected = 'espanol';
+    }
   }
-  onSubmit(){
-    console.log(this.updateUserMode);
+  onSubmit() {
+    this.userServices.updateUsuario(this.usuarioUpdate).subscribe(
+      resp => {
+        this.responseS = resp;
+        if (this.responseS.codigo === '001') {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Actualización realizada satisfact',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        } else {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'No se pudo realizar la actualización',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      }
+    );
   }
 
 }

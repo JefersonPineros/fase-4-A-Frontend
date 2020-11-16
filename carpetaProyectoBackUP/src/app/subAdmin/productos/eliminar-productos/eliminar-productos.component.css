@@ -20,3 +20,6 @@ tbody tr td{
 .buttonMar{
     margin-left: 15px;
 }
+tr:hover .hover {
+    background-color: silver;
+}

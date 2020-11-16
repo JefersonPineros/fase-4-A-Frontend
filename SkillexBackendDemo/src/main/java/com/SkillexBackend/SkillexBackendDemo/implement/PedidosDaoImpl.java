@@ -6,7 +6,6 @@
 package com.SkillexBackend.SkillexBackendDemo.implement;
 
 import com.SkillexBackend.SkillexBackendDemo.dao.PedidosDao;
-import com.SkillexBackend.SkillexBackendDemo.implement.metodos.MetodosAuxiliares;
 import com.SkillexBackend.SkillexBackendDemo.vo.ListarPedidosVO;
 import com.SkillexBackend.SkillexBackendDemo.vo.PedidosVO;
 import com.SkillexBackend.SkillexBackendDemo.vo.ProductosVO;
@@ -27,9 +26,8 @@ import org.springframework.stereotype.Service;
  * @author jefer
  */
 @Service
-public class PedidosDaoImpl extends MetodosAuxiliares implements PedidosDao {
+public class PedidosDaoImpl implements PedidosDao {
 
-    MetodosAuxiliares metodos = new MetodosAuxiliares();
     private EntityManagerFactory emf;
 
     @Override
