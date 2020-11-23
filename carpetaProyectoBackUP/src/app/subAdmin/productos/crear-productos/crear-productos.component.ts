@@ -55,6 +55,8 @@ export class CrearProductosComponent implements OnInit {
       reader.onload = (): void => {
         const base64String: string = (reader.result as string).match(/.+;base64,(.+)/)[1];
         this.createProduct.url_imagen = 'data:' + this.selectedFile.type + ';base64,' + base64String;
+        console.log(this.nameImg);
+        this.createProduct.descripcion_producto_in = this.nameImg;
       };
     }
   }

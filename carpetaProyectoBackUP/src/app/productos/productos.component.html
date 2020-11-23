@@ -126,14 +126,14 @@
           <div *ngSwitchCase="'espanol'" class="row row-cols-1 row-cols-md-3">
             <div class="col mb-4" *ngFor="let product of listaProductosESP; let productPoint=index">
               <div class="card">
-                <img src="{{product.imagen}}" class="card-img-top" alt="" style="max-height: 150px;">
+                <img src="{{product.url_imagen}}" class="card-img-top" alt="" style="max-height: 150px;">
                 <div class="card-body">
-                  <h5 class="card-title">{{product.nombrePro}}</h5>
-                  <p class="card-text">{{product.descripcionPro}}</p>
+                  <h5 class="card-title">{{product.nombreProducto}}</h5>
+                  <p class="card-text">{{product.descripcion_producto}}</p>
                 </div>
                 <div class="card-footer">
-                  <small class="text-muted">${{product.valorProdu}}</small>
-                  <a type="button" (click)="agregarProducto(product.idProducto)"><i class="fas fa-cart-plus"></i></a>
+                  <small class="text-muted">${{product.valor_mas_iva}}</small>
+                  <a type="button" (click)="agregarProducto(product.idProductos)"><i class="fas fa-cart-plus"></i></a>
                 </div>
               </div>
             </div>
@@ -141,14 +141,14 @@
           <div *ngSwitchCase="'ingles'" class="row row-cols-1 row-cols-md-3">
             <div class="col mb-4" *ngFor="let product of listaProductosIN; let productPoint=index">
               <div class="card">
-                <img src="{{product.imagen}}" class="card-img-top" alt="" style="max-height: 150px;">
+                <img src="{{product.url_imagen}}" class="card-img-top" alt="" style="max-height: 150px;">
                 <div class="card-body">
-                  <h5 class="card-title">{{product.nombrePro}}</h5>
-                  <p class="card-text">{{product.descripcionPro}}</p>
+                  <h5 class="card-title">{{product.nombreProductoIn}}</h5>
+                  <p class="card-text">{{product.descripcion_producto}}</p>
                 </div>
                 <div class="card-footer">
-                  <small class="text-muted">${{product.valorProdu}}</small>
-                  <a type="button" (click)="agregarProducto(product.idProducto)"><i class="fas fa-cart-plus"></i></a>
+                  <small class="text-muted">${{product.valor_mas_iva}}</small>
+                  <a type="button" (click)="agregarProducto(product.idProductos)"><i class="fas fa-cart-plus"></i></a>
                 </div>
               </div>
             </div>
@@ -156,14 +156,14 @@
           <div *ngSwitchDefault class="row row-cols-1 row-cols-md-3">
             <div class="col mb-4" *ngFor="let product of listaProductosESP; let productPoint=index">
               <div class="card">
-                <img src="{{product.imagen}}" class="card-img-top" alt="" style="max-height: 150px;">
+                <img src="{{product.url_imagen}}" class="card-img-top" alt="" style="max-height: 150px;">
                 <div class="card-body">
-                  <h5 class="card-title">{{product.nombrePro}}</h5>
-                  <p class="card-text">{{product.descripcionPro}}</p>
+                  <h5 class="card-title">{{product.nombreProducto}}</h5>
+                  <p class="card-text">{{product.descripcion_producto}}</p>
                 </div>
                 <div class="card-footer">
-                  <small class="text-muted">${{product.valorProdu}}</small>
-                  <a type="button" (click)="agregarProducto(product.idProducto)"><i class="fas fa-cart-plus"></i></a>
+                  <small class="text-muted">${{product.valor_mas_iva}}</small>
+                  <a type="button" (click)="agregarProducto(product.idProductos)"><i class="fas fa-cart-plus"></i></a>
                 </div>
               </div>
             </div>

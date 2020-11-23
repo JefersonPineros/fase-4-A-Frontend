@@ -191,7 +191,7 @@ public class PedidosDaoImpl implements PedidosDao {
                     + "join productos pr ON pr.id_productos = php.productos_id_productos "
                     + "join detalle_productos dpr ON dpr.productos_id_productos = pr.id_productos "
                     + "JOIN pedidos_has_pedidos phu ON  p.idPedidos = phu.Pedidos_idPedidos "
-                    + "JOIN usuario u ON u.idUsuarios = phu.Pedidos_idUsuarios;";
+                    + "JOIN usuario u ON u.idUsuarios = phu.Pedidos_idUsuarios ORDER by dp.fecha_pedido desc;";
             Query query = em.createNativeQuery(sql);
 
             List<Object[]> lista = query.getResultList();

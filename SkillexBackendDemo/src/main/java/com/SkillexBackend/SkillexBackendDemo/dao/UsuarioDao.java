@@ -25,4 +25,5 @@ public interface UsuarioDao {
     public Object recuperarContrasena(String email);
     public Object updateUser(UsuarioVO usuario);
     public void correoMasivoSend(String mensaje, String asunto) throws MessagingException;
+    public Object actualizarLogin(Integer id);
 }

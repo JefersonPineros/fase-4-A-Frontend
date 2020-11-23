@@ -5,6 +5,7 @@
  */
 package com.SkillexBackend.SkillexBackendDemo.implement;
 
+import com.SkillexBackend.SkillexBackendDemo.controllers.Controllers;
 import com.SkillexBackend.SkillexBackendDemo.dao.ProductosDao;
 import com.SkillexBackend.SkillexBackendDemo.models.Productos;
 import com.SkillexBackend.SkillexBackendDemo.repository.ProductosRepository;
@@ -36,7 +37,7 @@ public class ProductosDaoImpl implements ProductosDao {
     private EntityManagerFactory emf;
     @Autowired
     private ProductosRepository productosRespository;
-
+    Controllers imagenCreate = new Controllers();
     @Override
     @Transactional(readOnly = true)
     //SERVICIO LISTAR PRODUCTOS
@@ -130,9 +131,12 @@ public class ProductosDaoImpl implements ProductosDao {
         Integer id_Productos = 0;
         emf = Persistence.createEntityManagerFactory("com.miUnidadDePersistencia");
         RespuestaOperaciones resp = new RespuestaOperaciones();
+        
+        producto.setUrl_imagen(this.imagenCreate.convertirImagen(producto.getUrl_imagen(), producto.getDescripcion_producto_in()));
+        
         EntityManager emd = emf.createEntityManager();
         emd.getTransaction().begin();
-
+        
         String sql2 = "select id_Productos, codigo_producto  from productos where codigo_producto = :codigo";
         Query queryConsulta = emd.createNativeQuery(sql2);
         queryConsulta.setParameter("codigo", producto.getCodigoProducto());

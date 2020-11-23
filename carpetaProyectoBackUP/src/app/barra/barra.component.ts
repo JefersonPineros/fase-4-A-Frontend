@@ -71,6 +71,7 @@ export class BarraComponent implements OnInit {
     Cookie.remove('tipo');
     Cookie.remove('usuario');
     Cookie.remove('acceso');
+    Cookie.remove('idUsuario');
     location.reload();
     location.replace(this.urlHome);
   }
