@@ -244,10 +244,10 @@ CREATE TABLE IF NOT EXISTS `skillexBD`.`detalle_productos` (
   `id_detalle_productos` INT NOT NULL AUTO_INCREMENT,
   `valor_inicial` INT NULL,
   `valor_mas_iva` INT NULL,
-  `descripcion_producto` VARCHAR(45) NULL,
-  descripcion_producto_in varchar(45),
+  `descripcion_producto` VARCHAR(300) NULL,
+  descripcion_producto_in varchar(300),
   `productos_id_productos` INT NOT NULL,
-  url_imagen varchar(45) null,
+  url_imagen varchar(300) null,
   PRIMARY KEY (`id_detalle_productos`),
   FOREIGN KEY (productos_id_productos) REFERENCES productos (id_productos)
 );
