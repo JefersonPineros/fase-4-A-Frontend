@@ -1,37 +1,78 @@
 <div>
-    <div class="row">
-        <div class="col-12">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="tabla-pedido table">
-                        <table datatable>
-                            <thead>
-                                <tr>
-                                    <td scope="col">Estado pedido</td>
-                                    <td scope="col">Mesa</td>
-                                    <td scope="col">Fecha</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        1
-                                    </td>
-                                    <td>
-                                        2
-                                    </td>
-                                    <td>
-                                        2020
-                                    </td>
-                                </tr>                                
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-lg-6">
+  <div class="row">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-lg-12">
+          <ng-container class="tabla-pedido table" *ngIf="listadoPedidos.length > 0; else tablaError">
 
-                </div>
-            </div>
+            <table datatable>
+              <thead>
+                <tr>
+                  <td scope="col">Id pedido</td>
+                  <td scope="col">Estado pedido</td>
+                  <td scope="col">Mesa</td>
+                  <td scope="col">Fecha</td>
+                  <td>acciones</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor=" let item of listadoPedidos">
+                  <td>{{item.idPedidos}}</td>
+                  <td>{{item.estadoPedidos}}</td>
+                  <td>{{item.mesa}}</td>
+                  <td>{{item.fechaPedido}}</td>
+                  <td>
+                    <button class="btn btn-primary" (click)="procesarPedido(item.idPedidos)">Procesar</button>
+                    <button class="btn btn-primary" (click)="procesarPedido(item.idPedidos)">Descartar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </ng-container>
+          <ng-template #tablaError>
+            <h3>Hola mundo</h3>
+          </ng-template>
         </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <ng-container *ngIf="pedidoAProcesar.idPedidos !== null">
+            <div class="row">
+              <div class="card col-lg-6">
+                <div class="card-body">
+                  <h5 class="card-title">Pedido seleccionado</h5>
+                  <p class="card-text">Numero de pedido: {{pedidoAProcesar.idPedidos}}</p>
+                  <p class="card-text">Fecha pedido: {{pedidoAProcesar.fechaPedido}}</p>
+                  <p class="card-text">Mesa: {{pedidoAProcesar.mesa}}</p>
+                  <p class="card-text">Usuario: {{pedidoAProcesar.usuario.nombreUsuario}}
+                    {{pedidoAProcesar.usuario.apellidoUsuario}} </p>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="titulo">
+                  <h5>Productos relacionados</h5>
+                </div>
+                <div class="row row-cols-1 row-cols-2">
+
+                  <div *ngFor="let prod of pedidoAProcesar.producto">
+
+                    <div class="card mb-3 border-secondary ">
+                      <div class="card-header">
+                        <h5>Nombre: {{prod.nombreProducto}}</h5>
+                      </div>
+                      <div class="card-body">
+                        <p>Cantidad solicitada: {{prod.cantidadProducto}}</p>
+                        <p>Valor mas iva U/N: {{prod.valor_mas_iva}}</p>
+                        <p>Total producto: {{prod.valor_mas_iva * prod.cantidadProducto}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

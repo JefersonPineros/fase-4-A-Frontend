@@ -24,4 +24,7 @@ export class UsuarioService {
     console.log(usuarios);
     return this.httpClient.post<RespuestasServices>('/api/usuario/actualizar', usuarios);
   }
+  actualizaFechalogin(id: number): Observable<RespuestasServices>{
+    return this.httpClient.get<RespuestasServices>('/api/usuario/fechalogin/id=' + id);
+  }
 }

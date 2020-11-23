@@ -105,4 +105,10 @@ public class UsuarioService {
 		}
     }
     
+    @GetMapping("/fechalogin/id={id}")
+    public  ResponseEntity<?> setFechaIngreso(@PathVariable Integer id) {
+    		RespuestaOperaciones resp = (RespuestaOperaciones) UsDao.actualizarLogin(id);
+    	return ResponseEntity.ok(resp);
+    }
+    
 }
