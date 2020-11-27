@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,10 +60,10 @@ public class EventosServices {
         }
     }
     
-    @DeleteMapping
-    public ResponseEntity<?> deleteById(@RequestBody EventosVO borrar){
-        if(borrar != null){
-            Object resp = eventosDao.deleteById(borrar);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Integer id){
+        if(id != null){
+            Object resp = eventosDao.deleteById(id);
             return ResponseEntity.ok(resp);
         }else{
             return ResponseEntity.notFound().build();

@@ -16,13 +16,9 @@ export class CrearProductosComponent implements OnInit {
   public createProduct: CreateProduct;
   public tipoProduct: any[];
   public nameImg = 'No ha seleccionado una imagen';
-  public imagenPro: FileUploader = new FileUploader({
-    url: '',
-    itemAlias: 'imagenes'
-  });
   public selectedFile: File;
   constructor(private productosService: ProductosService) {
-    this.createProduct = new CreateProduct(null, '', '', '', '', null, null, null, null, null, null, null, '', '', '');
+    this.createProduct = new CreateProduct(null, '', '', '', '', null, null, null, null, null, null, null, '', '', '', '');
     this.tipoProduct = [
       { id: '1', tipo: 'Cerveza' },
       { id: '2', tipo: 'Aguardiente' },
@@ -50,13 +46,13 @@ export class CrearProductosComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       this.selectedFile = event.target.files[0];
       this.nameImg = this.selectedFile.name;
-      let  reader  = new FileReader();
+      const reader = new FileReader();
       reader.readAsDataURL(this.selectedFile);
       reader.onload = (): void => {
         const base64String: string = (reader.result as string).match(/.+;base64,(.+)/)[1];
         this.createProduct.url_imagen = 'data:' + this.selectedFile.type + ';base64,' + base64String;
         console.log(this.nameImg);
-        this.createProduct.descripcion_producto_in = this.nameImg;
+        this.createProduct.nombre_imagen = this.nameImg;
       };
     }
   }

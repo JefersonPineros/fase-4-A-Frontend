@@ -64,6 +64,7 @@ public class ProductosDaoImpl implements ProductosDao {
                     + "dp.valor_mas_iva,"
                     + "dp.descripcion_producto,"
                     + "dp.descripcion_producto_in,"
+                    + "dp.nombre_imagen,"
                     + "dp.url_imagen,"
                     + "cp.id_categoria_producto,"
                     + "cp.tipo_categoria "
@@ -91,11 +92,12 @@ public class ProductosDaoImpl implements ProductosDao {
                     Integer valor_mas_iva = (Integer) line[9];
                     String descripcion_producto = (String) line[10];
                     String descripcion_producto_in = (String) line[11];
-                    String url_imagen = (String) line[12];
-                    Integer id_categoria_producto = (Integer) line[13];
-                    String tipo_categoria = (String) line[14];
+                    String nombre_imagen = (String) line[12];
+                    String url_imagen = (String) line[13];
+                    Integer id_categoria_producto = (Integer) line[14];
+                    String tipo_categoria = (String) line[15];
 
-                    pro = new ProductosVO(id_productos, nombre_producto, nombre_producto_in, codigo_producto, estado_producto, cantidad_producto, fecha_ingreso, id_detalle_productos, valor_inicial, valor_mas_iva, descripcion_producto, descripcion_producto_in, url_imagen, id_categoria_producto, tipo_categoria, null, "", "");
+                    pro = new ProductosVO(id_productos, nombre_producto, nombre_producto_in, codigo_producto, estado_producto, cantidad_producto, fecha_ingreso, id_detalle_productos, valor_inicial, valor_mas_iva, descripcion_producto, descripcion_producto_in,nombre_imagen, url_imagen, id_categoria_producto, tipo_categoria, null, "", "");
                     responseProductos.add(pro);
                     pro = new ProductosVO();
                 }
@@ -132,7 +134,7 @@ public class ProductosDaoImpl implements ProductosDao {
         emf = Persistence.createEntityManagerFactory("com.miUnidadDePersistencia");
         RespuestaOperaciones resp = new RespuestaOperaciones();
         
-        producto.setUrl_imagen(this.imagenCreate.convertirImagen(producto.getUrl_imagen(), producto.getDescripcion_producto_in()));
+        producto.setUrl_imagen(this.imagenCreate.convertirImagen(producto.getUrl_imagen(), producto.getNombre_imagen()));
         
         EntityManager emd = emf.createEntityManager();
         emd.getTransaction().begin();
@@ -184,8 +186,8 @@ public class ProductosDaoImpl implements ProductosDao {
                 }
                 EntityManager emD1 = emf.createEntityManager();
                 emD1.getTransaction().begin();
-                String sql3 = "insert into detalle_productos(descripcion_producto,descripcion_producto_in,valor_inicial,valor_mas_iva,productos_id_productos,url_imagen)"
-                        + "values(:descripcion_producto, :descripcion_producto_in, :valor_inicial, :valor_mas_iva, :productos_id_productos, :url_imagen)";
+                String sql3 = "insert into detalle_productos(descripcion_producto,descripcion_producto_in,valor_inicial,valor_mas_iva,productos_id_productos, nombre_imagen,url_imagen)"
+                        + "values(:descripcion_producto, :descripcion_producto_in, :valor_inicial, :valor_mas_iva, :productos_id_productos,:nombreImagen, :url_imagen)";
                 Query query2 = emD1.createNativeQuery(sql3);
                 query2.setParameter("descripcion_producto", producto.getDescripcion_producto());
                 query2.setParameter("descripcion_producto_in", producto.getDescripcion_producto_in());
@@ -193,6 +195,7 @@ public class ProductosDaoImpl implements ProductosDao {
                 double valorIva = producto.getValor_inicial() + (producto.getValor_inicial() * 0.16);
                 query2.setParameter("valor_mas_iva",(float) valorIva);
                 query2.setParameter("productos_id_productos", id_Productos);
+                query2.setParameter("nombreImagen", producto.getNombre_imagen());
                 query2.setParameter("url_imagen", producto.getUrl_imagen());
 
                 query2.executeUpdate();
@@ -258,6 +261,7 @@ public class ProductosDaoImpl implements ProductosDao {
                         + "set descripcion_producto = :descripcion, "
                         + "valor_inicial = :valorInicial, "
                         + "valor_mas_iva = :valorIva, "
+                        + "nombre_imagen = :nombreImagen,"
                         + "url_imagen = :url "
                         + "where productos_id_productos = :proId";
                 Query query2 = emd2.createNativeQuery(sql2);
@@ -266,6 +270,7 @@ public class ProductosDaoImpl implements ProductosDao {
                 double valIva = proUp.getValor_inicial() + (proUp.getValor_inicial() * 0.16);
                 
                 query2.setParameter("valorIva", (Integer) Math.round((float) valIva));
+                query2.setParameter("nombreImagen", proUp.getNombre_imagen());
                 query2.setParameter("url", proUp.getUrl_imagen());
                 query2.setParameter("proId",proUp.getIdProductos());
                 

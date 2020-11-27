@@ -6,6 +6,8 @@
 package com.SkillexBackend.SkillexBackendDemo.vo;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  *
@@ -17,32 +19,38 @@ public class EventosVO implements Serializable {
     private Integer idEventos;
     private String nombre_evento;
     private String autor_evento;
-    private Integer Usuario_idUsuarios;
+    private Integer usuario_idUsuarios;
     private Integer detalle_evento_id_detalle_evento;
     private Integer id_detalle_evento;
     private String tipo_evento;
     private String servicio_ofrecido;
+    private Timestamp fecha_evento;
+    private String nombre_imagen;
     private String imagen_evento;
 
     public EventosVO(
         Integer idEventos, 
         String nombre_evento, 
         String autor_evento, 
-        Integer Usuario_idUsuarios, 
+        Integer usuario_idUsuarios, 
         Integer detalle_evento_id_detalle_evento, 
         Integer id_detalle_evento, 
         String tipo_evento, 
-        String servicio_ofrecido, 
+        String servicio_ofrecido,
+        Timestamp fecha_evento,
+        String nombre_imagen,
         String imagen_evento) 
     {
         this.idEventos = idEventos;
         this.nombre_evento = nombre_evento;
         this.autor_evento = autor_evento;
-        this.Usuario_idUsuarios = Usuario_idUsuarios;
+        this.usuario_idUsuarios = usuario_idUsuarios;
         this.detalle_evento_id_detalle_evento = detalle_evento_id_detalle_evento;
         this.id_detalle_evento = id_detalle_evento;
         this.tipo_evento = tipo_evento;
         this.servicio_ofrecido = servicio_ofrecido;
+        this.fecha_evento = fecha_evento;
+        this.nombre_imagen = nombre_imagen;
         this.imagen_evento = imagen_evento;
     }
 
@@ -56,7 +64,7 @@ public class EventosVO implements Serializable {
         this.id_detalle_evento = id_detalle_evento; 
     }
     
-    public EventosVO(Integer idEventos, String nombre_evento, String autor_evento, Integer Usuario_idUsuarios, Integer detalle_evento_id_detalle_evento, Integer id_detalle_evento, String tipo_evento, String servicio_ofrecido, String imagen_evento, Object object, String string, String string0) {
+    public EventosVO(Integer idEventos, String nombre_evento, String autor_evento, Integer usuario_idUsuarios, Integer detalle_evento_id_detalle_evento, Integer id_detalle_evento, String tipo_evento, String servicio_ofrecido, String imagen_evento, Object object, String string, String string0) {
     }
 
     public Integer getIdEventos() {
@@ -84,11 +92,11 @@ public class EventosVO implements Serializable {
     }
 
     public Integer getUsuario_idUsuarios() {
-        return Usuario_idUsuarios;
+        return usuario_idUsuarios;
     }
 
     public void setUsuario_idUsuarios(Integer Usuario_idUsuarios) {
-        this.Usuario_idUsuarios = Usuario_idUsuarios;
+        this.usuario_idUsuarios = Usuario_idUsuarios;
     }
 
     public Integer getDetalle_evento_id_detalle_evento() {
@@ -122,12 +130,32 @@ public class EventosVO implements Serializable {
     public void setServicio_ofrecido(String servicio_ofrecido) {
         this.servicio_ofrecido = servicio_ofrecido;
     }
+    
+    public Timestamp getFecha_evento() {
+		return fecha_evento;
+	}
 
-    public String getImagen_evento() {
+
+	public void setFecha_evento(Timestamp fecha_evento) {
+		this.fecha_evento = fecha_evento;
+	}
+
+
+	public String getImagen_evento() {
         return imagen_evento;
     }
 
     public void setImagen_evento(String imagen_evento) {
         this.imagen_evento = imagen_evento;
     }
+
+
+	public String getNombre_imagen() {
+		return nombre_imagen;
+	}
+
+
+	public void setNombre_imagen(String nombre_imagen) {
+		this.nombre_imagen = nombre_imagen;
+	}
 }

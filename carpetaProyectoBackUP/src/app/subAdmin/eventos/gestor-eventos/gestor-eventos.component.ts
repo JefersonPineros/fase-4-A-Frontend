@@ -1,51 +1,80 @@
 import { Component, OnInit } from '@angular/core';
-import { Form, FormGroup, FormArray, FormControl, Validator, FormBuilder, Validators} from '@angular/forms'
+import { Form, FormGroup, FormArray, FormControl, Validator, FormBuilder, Validators } from '@angular/forms';
 import { CreateEvent } from 'src/app/Models/model-create-event';
-
+import { EventosService } from '../../../services/admin/eventos/eventos.service';
+import { Evento } from '../../../Models/EventoModel';
+import * as Cookie from 'js-cookie';
+interface HtmlInputEvent extends Event {
+  target: HTMLInputElement & EventTarget;
+}
 @Component({
   selector: 'app-gestor-eventos',
   templateUrl: './gestor-eventos.component.html',
   styleUrls: ['./gestor-eventos.component.css']
 })
 export class GestorEventosComponent implements OnInit {
-  formEvent:FormGroup;
-  public evento:any[];
-  public createEvent:CreateEvent;
-  public allTypes:[];
-  public fechaEvent:Date;
+  formEvent: FormGroup;
+  public newEvent: Evento;
+  public fileToUpdate;
+  public evento: any[];
+  public createEvent: CreateEvent;
+  public allTypes: [];
+  public selectedFile: File;
+  public fechaEvent: Date;
+  public nameImg = 'No ha seleccionado una imagen';
   constructor(
-    private fb : FormBuilder
-  ) { 
-    this.evento = [
-      {id:"1",tipo:"Promoción"},
-      {id:"2",tipo:"Descuentos"},
-      {id:"3",tipo:"Tematico"},
-      {id:"4",tipo:"Toque"},
-    ]
-    this.createEvent = new CreateEvent(null,"","","","","");
-  }
-
-  ngOnInit(): void {
-    this.fechaEvent = new Date();
-    this.formEvent = this.fb.group(
-      {
-        fecha_event:['',Validators.required],
-        typeEvent:[null,Validators.required]
+    private fb: FormBuilder, private eventoService: EventosService
+  ) {
+    this.newEvent = new Evento();
+    this.eventoService.listarEventos().subscribe(
+      resp => {
+        console.log(resp);
+      },
+      error => {
+        console.log(error);
       }
     );
+    this.evento = [
+      { id: '1', tipo: 'Promoción' },
+      { id: '2', tipo: 'Descuentos' },
+      { id: '3', tipo: 'Tematico' },
+      { id: '4', tipo: 'Toque' },
+    ];
+    this.createEvent = new CreateEvent(null, '', '', '', '', '');
   }
-  public fileToUpdate;
-  updateFile(fileInput:any){
-    this.fileToUpdate = <Array<File>>fileInput.target.files;
-    console.log(this.fileToUpdate)
+  ngOnInit(): void {
+    this.fechaEvent = new Date();
+    this.formEvent = new FormGroup({
+      nameEvent: new FormControl(this.newEvent.nombre_evento, Validators.required),
+      autorEvent: new FormControl(this.newEvent.autor_evento, Validators.required),
+      eventType: new FormControl(this.newEvent.tipo_evento, Validators.required),
+      serviceEvent: new FormControl(this.newEvent.servicio_ofrecido, Validators.required),
+      imagenUrl: new FormControl(this.newEvent.imagen_evento, Validators.required)
+    });
   }
-  onSubmit(){
-    this.createEvent.typeEvent = this.formEvent.value.typeEvent;
-    this.createEvent.imageEvent = this.fileToUpdate[0].name;
-    console.log(this.createEvent);
+  get f(){return this.formEvent.controls; }
+
+  updateFile(event: HtmlInputEvent) {
+    if (event.target.files && event.target.files[0]) {
+      this.selectedFile = event.target.files[0];
+      this.nameImg = this.selectedFile.name;
+      const  reader  = new FileReader();
+      reader.readAsDataURL(this.selectedFile);
+      reader.onload = (): void => {
+        const base64String: string = (reader.result as string).match(/.+;base64,(.+)/)[1];
+        this.newEvent.imagen_evento = 'data:' + this.selectedFile.type + ';base64,' + base64String;
+        console.log(this.nameImg);
+        // this.newEvent.descripcion_producto_in = this.nameImg;
+      };
+    }
+
   }
-  get typeEvent(){
+  onSubmit() {
+    // tslint:disable-next-line: radix
+    this.newEvent.usuario_idUsuarios = parseInt(Cookie.get('idUsuario'));
+    console.log(this.newEvent);
+  }
+  get typeEvent() {
     return this.formEvent.get('typeEvent');
   }
-
 }

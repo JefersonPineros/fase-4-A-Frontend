@@ -12,6 +12,7 @@ export class ProductosModel {
         public valor_mas_iva: number,
         public descripcion_producto: string,
         public descripcion_producto_in: string,
+        public nombre_imagen: string,
         public url_imagen: string,
         public id_categoria_producto: number,
         public tipo_categoria: string,

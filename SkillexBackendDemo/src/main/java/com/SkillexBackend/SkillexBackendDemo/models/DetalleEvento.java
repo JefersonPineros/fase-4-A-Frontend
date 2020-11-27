@@ -49,6 +49,9 @@ public class DetalleEvento implements Serializable {
     @Basic(optional = false)
     @Column(name = "servicio_ofrecido")
     private String servicioOfrecido;
+    @Basic(optional = false)
+    @Column(name = "nombre_imagen")
+    private String nombreImagen;
     @Column(name = "imagen_evento")
     private String imagenEvento;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleEventoIdDetalleEvento", fetch = FetchType.LAZY)
@@ -61,13 +64,16 @@ public class DetalleEvento implements Serializable {
         this.idDetalleEvento = idDetalleEvento;
     }
 
-    public DetalleEvento(Integer idDetalleEvento, String tipoEvento, String servicioOfrecido) {
-        this.idDetalleEvento = idDetalleEvento;
-        this.tipoEvento = tipoEvento;
-        this.servicioOfrecido = servicioOfrecido;
-    }
+    public DetalleEvento(Integer idDetalleEvento, String tipoEvento, String servicioOfrecido, String nombreImagen,
+			String imagenEvento) {
+		this.idDetalleEvento = idDetalleEvento;
+		this.tipoEvento = tipoEvento;
+		this.servicioOfrecido = servicioOfrecido;
+		this.nombreImagen = nombreImagen;
+		this.imagenEvento = imagenEvento;
+	}
 
-    public Integer getIdDetalleEvento() {
+	public Integer getIdDetalleEvento() {
         return idDetalleEvento;
     }
 
@@ -98,8 +104,17 @@ public class DetalleEvento implements Serializable {
     public void setImagenEvento(String imagenEvento) {
         this.imagenEvento = imagenEvento;
     }
+    
 
-    @XmlTransient
+    public String getNombreImagen() {
+		return nombreImagen;
+	}
+
+	public void setNombreImagen(String nombreImagen) {
+		this.nombreImagen = nombreImagen;
+	}
+
+	@XmlTransient
     public List<Eventos> getEventosList() {
         return eventosList;
     }

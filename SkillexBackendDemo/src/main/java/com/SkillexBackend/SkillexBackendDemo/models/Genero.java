@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Genero.findAll", query = "SELECT g FROM Genero g")
     , @NamedQuery(name = "Genero.findByIdGenero", query = "SELECT g FROM Genero g WHERE g.idGenero = :idGenero")
-    , @NamedQuery(name = "Genero.findByDescripci\u00f3n", query = "SELECT g FROM Genero g WHERE g.descripci\u00f3n = :descripci\u00f3n")})
+    , @NamedQuery(name = "Genero.findByDescripcion", query = "SELECT g FROM Genero g WHERE g.descripcion = :descripcion")})
 public class Genero implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,8 +38,8 @@ public class Genero implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_genero")
     private Integer idGenero;
-    @Column(name = "descripci\u00f3n")
-    private String descripción;
+    @Column(name = "descripcion")
+    private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "generoIdGenero", fetch = FetchType.LAZY)
     private List<AlbumMusical> albumMusicalList;
 
@@ -58,12 +58,12 @@ public class Genero implements Serializable {
         this.idGenero = idGenero;
     }
 
-    public String getDescripción() {
-        return descripción;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDescripción(String descripción) {
-        this.descripción = descripción;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     @XmlTransient

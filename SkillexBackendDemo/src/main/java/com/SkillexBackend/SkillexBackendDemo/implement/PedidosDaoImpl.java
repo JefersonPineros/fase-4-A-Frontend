@@ -173,6 +173,7 @@ public class PedidosDaoImpl implements PedidosDao {
                     + "dpr.valor_inicial,"
                     + "dpr.valor_mas_iva,"
                     + "dpr.descripcion_producto,"
+                    + "dpr.nombre_imagen,"
                     + "dpr.url_imagen,"
                     + "u.idUsuarios,"
                     + "u.nombreUsuario,"
@@ -220,19 +221,20 @@ public class PedidosDaoImpl implements PedidosDao {
                 Integer valor_inicial = (Integer) line[19];
                 Integer valor_mas_iva = (Integer) line[20];
                 String descripcion_producto = (String) line[21];
-                String url_imagen = (String) line[22];
-                Integer idUsuarios = (Integer) line[23];
-                String nombreUsuario = (String) line[24];
-                String apellidoUsuario = (String) line[25];
-                String emailUsuario = (String) line[26];
-                String passwordUsuario = (String) line[27];
-                String tienda = (String) line[28];
-                Date creacion_usuario = (Date) line[29];
-                String fecha_login = (String) line[30];
-                String turnos_laborales = (String) line[31];
-                String cedula_ciudadania = (String) line[32];
+                String nombre_imagen = (String) line[22];
+                String url_imagen = (String) line[23];
+                Integer idUsuarios = (Integer) line[24];
+                String nombreUsuario = (String) line[25];
+                String apellidoUsuario = (String) line[26];
+                String emailUsuario = (String) line[27];
+                String passwordUsuario = (String) line[28];
+                String tienda = (String) line[29];
+                Date creacion_usuario = (Date) line[30];
+                String fecha_login = (String) line[31];
+                String turnos_laborales = (String) line[32];
+                String cedula_ciudadania = (String) line[33];
 
-                almacenarPedidos = new ListarPedidosVO(idPedidos, estadoPedido, mesa, iddetallePedido, valorApagar, producto, cantidadProducto, fecha_pedido, Id_Estado_pedido, State_id, descripcion, cantidad_producto_pedido, id_productos, nombre_producto, codigo_producto, estado_producto, cantidad_producto, fecha_ingreso, id_detalle_productos, valor_inicial, valor_mas_iva, descripcion_producto, url_imagen, idUsuarios, nombreUsuario, apellidoUsuario, emailUsuario, passwordUsuario, tienda, creacion_usuario, fecha_login, turnos_laborales, cedula_ciudadania);
+                almacenarPedidos = new ListarPedidosVO(idPedidos, estadoPedido, mesa, iddetallePedido, valorApagar, producto, cantidadProducto, fecha_pedido, Id_Estado_pedido, State_id, descripcion, cantidad_producto_pedido, id_productos, nombre_producto, codigo_producto, estado_producto, cantidad_producto, fecha_ingreso, id_detalle_productos, valor_inicial, valor_mas_iva, descripcion_producto, nombre_imagen, url_imagen, idUsuarios, nombreUsuario, apellidoUsuario, emailUsuario, passwordUsuario, tienda, creacion_usuario, fecha_login, turnos_laborales, cedula_ciudadania);
                 LPVO.add(almacenarPedidos);
             }
             if (LPVO.size() > 0) {
@@ -247,7 +249,7 @@ public class PedidosDaoImpl implements PedidosDao {
                         if (idPedido != null) {
                             for (PedidosVO itemP : listadoPedidos) {
                                 if (itemP.getIdPedidos() == idPedido) {
-                                    productos = new ProductosVO(itemTraidos.getId_productos(), itemTraidos.getNombre_producto(), "", itemTraidos.getCodigo_producto(), itemTraidos.getEstado_producto(), itemTraidos.getCantidad_producto_pedido(), itemTraidos.getFecha_ingreso(), itemTraidos.getId_detalle_productos(), itemTraidos.getValor_inicial(), itemTraidos.getValor_mas_iva(), itemTraidos.getDescripcion_producto(), "", itemTraidos.getUrl_imagen(), null, "", null, "", "");
+                                    productos = new ProductosVO(itemTraidos.getId_productos(), itemTraidos.getNombre_producto(), "", itemTraidos.getCodigo_producto(), itemTraidos.getEstado_producto(), itemTraidos.getCantidad_producto_pedido(), itemTraidos.getFecha_ingreso(), itemTraidos.getId_detalle_productos(), itemTraidos.getValor_inicial(), itemTraidos.getValor_mas_iva(), itemTraidos.getDescripcion_producto(), "", itemTraidos.getNombre_imagen(), itemTraidos.getUrl_imagen(), null, "", null, "", "");
                                     List<ProductosVO> agregar = itemP.getProducto();
                                     agregar.add(productos);
                                     itemP.setProducto(agregar);
@@ -259,7 +261,7 @@ public class PedidosDaoImpl implements PedidosDao {
                             pedido = new PedidosVO(itemTraidos.getIdPedidos(), itemTraidos.getEstadoPedido(), itemTraidos.getMesa(), itemTraidos.getIddetallePedido(), itemTraidos.getIdUsuarios(), itemTraidos.getId_Estado_pedido(), itemTraidos.getValorApagar(), itemTraidos.getFecha_pedido(), null, null);
                             usuario = new UsuarioVO(itemTraidos.getIdUsuarios(), itemTraidos.getNombreUsuario(), itemTraidos.getApellidoUsuario(), itemTraidos.getEmailUsuario(), "", itemTraidos.getTienda(), itemTraidos.getCreacion_usuario(), itemTraidos.getFecha_login(), itemTraidos.getTurnos_laborales(), itemTraidos.getCedula_ciudadania(), null, null);
                             pedido.setUsuario(usuario);
-                            productos = new ProductosVO(itemTraidos.getId_productos(), itemTraidos.getNombre_producto(), "", itemTraidos.getCodigo_producto(), itemTraidos.getEstado_producto(), itemTraidos.getCantidad_producto_pedido(), itemTraidos.getFecha_ingreso(), itemTraidos.getId_detalle_productos(), itemTraidos.getValor_inicial(), itemTraidos.getValor_mas_iva(), itemTraidos.getDescripcion_producto(), "", itemTraidos.getUrl_imagen(), null, "", null, "", "");
+                            productos = new ProductosVO(itemTraidos.getId_productos(), itemTraidos.getNombre_producto(), "", itemTraidos.getCodigo_producto(), itemTraidos.getEstado_producto(), itemTraidos.getCantidad_producto_pedido(), itemTraidos.getFecha_ingreso(), itemTraidos.getId_detalle_productos(), itemTraidos.getValor_inicial(), itemTraidos.getValor_mas_iva(), itemTraidos.getDescripcion_producto(), "", itemTraidos.getNombre_imagen(), itemTraidos.getUrl_imagen(), null, "", null, "", "");
                             listaProductos.add(productos);
                             pedido.setProducto(listaProductos);
                             listadoPedidos.add(pedido);
@@ -271,7 +273,7 @@ public class PedidosDaoImpl implements PedidosDao {
                         pedido = new PedidosVO(itemTraidos.getIdPedidos(), itemTraidos.getEstadoPedido(), itemTraidos.getMesa(), itemTraidos.getIddetallePedido(), itemTraidos.getIdUsuarios(), itemTraidos.getId_Estado_pedido(), itemTraidos.getValorApagar(), itemTraidos.getFecha_pedido(), null, null);
                         usuario = new UsuarioVO(itemTraidos.getIdUsuarios(), itemTraidos.getNombreUsuario(), itemTraidos.getApellidoUsuario(), itemTraidos.getEmailUsuario(), "", itemTraidos.getTienda(), itemTraidos.getCreacion_usuario(), itemTraidos.getFecha_login(), itemTraidos.getTurnos_laborales(), itemTraidos.getCedula_ciudadania(), null, null);
                         pedido.setUsuario(usuario);
-                        productos = new ProductosVO(itemTraidos.getId_productos(), itemTraidos.getNombre_producto(), "", itemTraidos.getCodigo_producto(), itemTraidos.getEstado_producto(), itemTraidos.getCantidad_producto_pedido(), itemTraidos.getFecha_ingreso(), itemTraidos.getId_detalle_productos(), itemTraidos.getValor_inicial(), itemTraidos.getValor_mas_iva(), itemTraidos.getDescripcion_producto(), "", itemTraidos.getUrl_imagen(), null, "", null, "", "");
+                        productos = new ProductosVO(itemTraidos.getId_productos(), itemTraidos.getNombre_producto(), "", itemTraidos.getCodigo_producto(), itemTraidos.getEstado_producto(), itemTraidos.getCantidad_producto_pedido(), itemTraidos.getFecha_ingreso(), itemTraidos.getId_detalle_productos(), itemTraidos.getValor_inicial(), itemTraidos.getValor_mas_iva(), itemTraidos.getDescripcion_producto(), "", itemTraidos.getNombre_imagen(), itemTraidos.getUrl_imagen(), null, "", null, "", "");
                         listaProductos.add(productos);
                         pedido.setProducto(listaProductos);
                         listadoPedidos.add(pedido);
