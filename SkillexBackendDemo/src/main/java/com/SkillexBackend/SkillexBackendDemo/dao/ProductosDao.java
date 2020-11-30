@@ -8,6 +8,10 @@ package com.SkillexBackend.SkillexBackendDemo.dao;
 import com.SkillexBackend.SkillexBackendDemo.models.Productos;
 import com.SkillexBackend.SkillexBackendDemo.vo.ProductosCrearVO;
 import com.SkillexBackend.SkillexBackendDemo.vo.ProductosVO;
+
+import net.sf.jasperreports.engine.JRException;
+
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -25,4 +29,5 @@ public interface ProductosDao {
     public Object save(ProductosCrearVO producto);
     public void deleteById(Integer id);
     public Object updateProducto(ProductosVO producto);
+    public Object reporte(String type) throws FileNotFoundException, JRException;
 }

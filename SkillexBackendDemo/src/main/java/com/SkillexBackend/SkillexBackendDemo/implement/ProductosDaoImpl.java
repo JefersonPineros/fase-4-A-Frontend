@@ -12,10 +12,23 @@ import com.SkillexBackend.SkillexBackendDemo.repository.ProductosRepository;
 import com.SkillexBackend.SkillexBackendDemo.vo.ProductosCrearVO;
 import com.SkillexBackend.SkillexBackendDemo.vo.ProductosVO;
 import com.SkillexBackend.SkillexBackendDemo.vo.RespuestaOperaciones;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -26,6 +39,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ResourceUtils;
 
 /**
  *
@@ -290,4 +304,26 @@ public class ProductosDaoImpl implements ProductosDao {
             return null;
         }
     }
+
+	@Override
+	public Object reporte(String format) throws FileNotFoundException, JRException {
+		List<ProductosVO> lista = this.mostrar_productos();
+    	String path = "C://Users//jefer//Downloads";
+    	File file = ResourceUtils.getFile("classpath:reportes/productosReportes.jrxml");
+    	JasperReport jasper = JasperCompileManager.compileReport(file.getAbsolutePath());
+    	JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(lista);
+    	
+    	Map<String, Object> parameters = new HashMap<String, Object>();
+    	parameters.put("gain java", "Knowledge");
+    	
+    	JasperPrint jasperPrint = JasperFillManager.fillReport(jasper,parameters, ds);
+    	
+    	if(format.equalsIgnoreCase("html")) {
+    		JasperExportManager.exportReportToHtmlFile(jasperPrint, path + "//productosReportes.html");
+    	}
+    	if(format.equalsIgnoreCase("pdf")) {
+    		JasperExportManager.exportReportToPdfFile(jasperPrint, path + "//productosReportes.pdf" );
+    	}
+		return null;
+	}
 }

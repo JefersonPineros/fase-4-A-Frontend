@@ -11,11 +11,27 @@ import com.SkillexBackend.SkillexBackendDemo.models.Productos;
 import com.SkillexBackend.SkillexBackendDemo.vo.InventarioVO;
 import com.SkillexBackend.SkillexBackendDemo.vo.ProductosCrearVO;
 import com.SkillexBackend.SkillexBackendDemo.vo.ProductosVO;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -100,5 +116,15 @@ public class ProductosServices {
         }else {
             return ResponseEntity.notFound().build();
         }
+    }
+    @GetMapping("/reporte/{formato}")
+    public ResponseEntity<?> exportReport(@PathVariable String formato) throws FileNotFoundException, JRException{
+    	try {
+			Object respuesta= productosDao.reporte("pdf");
+			return (ResponseEntity<?>) ResponseEntity.ok(respuesta);
+		} catch (UnknownError e) {
+			System.out.println(e);
+			return (ResponseEntity<?>) ResponseEntity.notFound();
+		}
     }
 }
