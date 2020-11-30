@@ -56,11 +56,24 @@ public class AlbumMusical implements Serializable {
     private Genero generoIdGenero;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "albumMusicalId", fetch = FetchType.LAZY)
     private List<Cancion> cancionList;
-
+    @Column(name = "nombre_imagen")
+    private String nombreImagen;
+    @Column(name = "url_imagen")
+    private String urlImagen;
+    
     public AlbumMusical() {
     }
+    
+    public AlbumMusical(Integer idAlbumMusical, String nombreAlbum, String autorAlbum, String nombreImagen,
+			String urlImagen) {
+		this.idAlbumMusical = idAlbumMusical;
+		this.nombreAlbum = nombreAlbum;
+		this.autorAlbum = autorAlbum;
+		this.nombreImagen = nombreImagen;
+		this.urlImagen = urlImagen;
+	}
 
-    public AlbumMusical(Integer idAlbumMusical) {
+	public AlbumMusical(Integer idAlbumMusical) {
         this.idAlbumMusical = idAlbumMusical;
     }
 
@@ -104,7 +117,24 @@ public class AlbumMusical implements Serializable {
         this.generoIdGenero = generoIdGenero;
     }
 
-    @XmlTransient
+    	
+    public String getNombreImagen() {
+		return nombreImagen;
+	}
+
+	public void setNombreImagen(String nombreImagen) {
+		this.nombreImagen = nombreImagen;
+	}
+
+	public String getUrlImagen() {
+		return urlImagen;
+	}
+
+	public void setUrlImagen(String urlImagen) {
+		this.urlImagen = urlImagen;
+	}
+
+	@XmlTransient
     public List<Cancion> getCancionList() {
         return cancionList;
     }

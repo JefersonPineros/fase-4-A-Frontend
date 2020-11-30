@@ -28,6 +28,7 @@ public class ProductosVO implements Serializable {
     private Integer valor_mas_iva;
     private String descripcion_producto;
     private String descripcion_producto_in;
+    private String nombre_imagen;
     private String url_imagen;
     private Integer id_categoria_producto;
     private String tipo_categoria;
@@ -48,6 +49,7 @@ public class ProductosVO implements Serializable {
             Integer valor_mas_iva, 
             String descripcion_producto, 
             String descripcion_producto_in, 
+            String nombre_imagen,
             String url_imagen, 
             Integer id_categoria_producto, 
             String tipo_categoria, 
@@ -66,6 +68,7 @@ public class ProductosVO implements Serializable {
         this.valor_mas_iva = valor_mas_iva;
         this.descripcion_producto = descripcion_producto;
         this.descripcion_producto_in = descripcion_producto_in;
+        this.nombre_imagen = nombre_imagen;
         this.url_imagen = url_imagen;
         this.id_categoria_producto = id_categoria_producto;
         this.tipo_categoria = tipo_categoria;
@@ -221,6 +224,15 @@ public class ProductosVO implements Serializable {
     public void setFechaIngreso(Date fechaIngreso) {
         this.fechaIngreso = fechaIngreso;
     }
+
+	public String getNombre_imagen() {
+		return nombre_imagen;
+	}
+
+	public void setNombre_imagen(String nombre_imagen) {
+		this.nombre_imagen = nombre_imagen;
+	}
+    
     
     
 }

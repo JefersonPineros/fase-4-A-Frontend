@@ -6,6 +6,8 @@
 package com.SkillexBackend.SkillexBackendDemo.models;
 
 import java.io.Serializable;
+import java.sql.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -52,7 +54,10 @@ public class Eventos implements Serializable {
     @JoinColumn(name = "detalle_evento_id_detalle_evento", referencedColumnName = "id_detalle_evento")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DetalleEvento detalleEventoIdDetalleEvento;
-
+    @Basic(optional = false)
+    @Column(name = "fecha_evento")
+    private Date fechaEvento;
+    
     public Eventos() {
     }
 
@@ -60,10 +65,11 @@ public class Eventos implements Serializable {
         this.idEventos = idEventos;
     }
 
-    public Eventos(Integer idEventos, String nombreEvento, String autorEvento) {
+    public Eventos(Integer idEventos, String nombreEvento, String autorEvento, Date fechaEvento) {
         this.idEventos = idEventos;
         this.nombreEvento = nombreEvento;
         this.autorEvento = autorEvento;
+        this.fechaEvento = fechaEvento;
     }
 
     public Integer getIdEventos() {
@@ -105,8 +111,16 @@ public class Eventos implements Serializable {
     public void setDetalleEventoIdDetalleEvento(DetalleEvento detalleEventoIdDetalleEvento) {
         this.detalleEventoIdDetalleEvento = detalleEventoIdDetalleEvento;
     }
+    
+    public Date getFechaEvento() {
+		return fechaEvento;
+	}
 
-    @Override
+	public void setFechaEvento(Date fechaEvento) {
+		this.fechaEvento = fechaEvento;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idEventos != null ? idEventos.hashCode() : 0);

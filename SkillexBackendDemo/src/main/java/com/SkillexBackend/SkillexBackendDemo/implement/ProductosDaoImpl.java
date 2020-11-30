@@ -5,16 +5,30 @@
  */
 package com.SkillexBackend.SkillexBackendDemo.implement;
 
+import com.SkillexBackend.SkillexBackendDemo.controllers.Controllers;
 import com.SkillexBackend.SkillexBackendDemo.dao.ProductosDao;
 import com.SkillexBackend.SkillexBackendDemo.models.Productos;
 import com.SkillexBackend.SkillexBackendDemo.repository.ProductosRepository;
 import com.SkillexBackend.SkillexBackendDemo.vo.ProductosCrearVO;
 import com.SkillexBackend.SkillexBackendDemo.vo.ProductosVO;
 import com.SkillexBackend.SkillexBackendDemo.vo.RespuestaOperaciones;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -25,6 +39,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ResourceUtils;
 
 /**
  *
@@ -36,7 +51,7 @@ public class ProductosDaoImpl implements ProductosDao {
     private EntityManagerFactory emf;
     @Autowired
     private ProductosRepository productosRespository;
-
+    Controllers imagenCreate = new Controllers();
     @Override
     @Transactional(readOnly = true)
     //SERVICIO LISTAR PRODUCTOS
@@ -63,6 +78,7 @@ public class ProductosDaoImpl implements ProductosDao {
                     + "dp.valor_mas_iva,"
                     + "dp.descripcion_producto,"
                     + "dp.descripcion_producto_in,"
+                    + "dp.nombre_imagen,"
                     + "dp.url_imagen,"
                     + "cp.id_categoria_producto,"
                     + "cp.tipo_categoria "
@@ -90,11 +106,12 @@ public class ProductosDaoImpl implements ProductosDao {
                     Integer valor_mas_iva = (Integer) line[9];
                     String descripcion_producto = (String) line[10];
                     String descripcion_producto_in = (String) line[11];
-                    String url_imagen = (String) line[12];
-                    Integer id_categoria_producto = (Integer) line[13];
-                    String tipo_categoria = (String) line[14];
+                    String nombre_imagen = (String) line[12];
+                    String url_imagen = (String) line[13];
+                    Integer id_categoria_producto = (Integer) line[14];
+                    String tipo_categoria = (String) line[15];
 
-                    pro = new ProductosVO(id_productos, nombre_producto, nombre_producto_in, codigo_producto, estado_producto, cantidad_producto, fecha_ingreso, id_detalle_productos, valor_inicial, valor_mas_iva, descripcion_producto, descripcion_producto_in, url_imagen, id_categoria_producto, tipo_categoria, null, "", "");
+                    pro = new ProductosVO(id_productos, nombre_producto, nombre_producto_in, codigo_producto, estado_producto, cantidad_producto, fecha_ingreso, id_detalle_productos, valor_inicial, valor_mas_iva, descripcion_producto, descripcion_producto_in,nombre_imagen, url_imagen, id_categoria_producto, tipo_categoria, null, "", "");
                     responseProductos.add(pro);
                     pro = new ProductosVO();
                 }
@@ -130,9 +147,12 @@ public class ProductosDaoImpl implements ProductosDao {
         Integer id_Productos = 0;
         emf = Persistence.createEntityManagerFactory("com.miUnidadDePersistencia");
         RespuestaOperaciones resp = new RespuestaOperaciones();
+        
+        producto.setUrl_imagen(this.imagenCreate.convertirImagen(producto.getUrl_imagen(), producto.getNombre_imagen()));
+        
         EntityManager emd = emf.createEntityManager();
         emd.getTransaction().begin();
-
+        
         String sql2 = "select id_Productos, codigo_producto  from productos where codigo_producto = :codigo";
         Query queryConsulta = emd.createNativeQuery(sql2);
         queryConsulta.setParameter("codigo", producto.getCodigoProducto());
@@ -180,8 +200,8 @@ public class ProductosDaoImpl implements ProductosDao {
                 }
                 EntityManager emD1 = emf.createEntityManager();
                 emD1.getTransaction().begin();
-                String sql3 = "insert into detalle_productos(descripcion_producto,descripcion_producto_in,valor_inicial,valor_mas_iva,productos_id_productos,url_imagen)"
-                        + "values(:descripcion_producto, :descripcion_producto_in, :valor_inicial, :valor_mas_iva, :productos_id_productos, :url_imagen)";
+                String sql3 = "insert into detalle_productos(descripcion_producto,descripcion_producto_in,valor_inicial,valor_mas_iva,productos_id_productos, nombre_imagen,url_imagen)"
+                        + "values(:descripcion_producto, :descripcion_producto_in, :valor_inicial, :valor_mas_iva, :productos_id_productos,:nombreImagen, :url_imagen)";
                 Query query2 = emD1.createNativeQuery(sql3);
                 query2.setParameter("descripcion_producto", producto.getDescripcion_producto());
                 query2.setParameter("descripcion_producto_in", producto.getDescripcion_producto_in());
@@ -189,6 +209,7 @@ public class ProductosDaoImpl implements ProductosDao {
                 double valorIva = producto.getValor_inicial() + (producto.getValor_inicial() * 0.16);
                 query2.setParameter("valor_mas_iva",(float) valorIva);
                 query2.setParameter("productos_id_productos", id_Productos);
+                query2.setParameter("nombreImagen", producto.getNombre_imagen());
                 query2.setParameter("url_imagen", producto.getUrl_imagen());
 
                 query2.executeUpdate();
@@ -254,6 +275,7 @@ public class ProductosDaoImpl implements ProductosDao {
                         + "set descripcion_producto = :descripcion, "
                         + "valor_inicial = :valorInicial, "
                         + "valor_mas_iva = :valorIva, "
+                        + "nombre_imagen = :nombreImagen,"
                         + "url_imagen = :url "
                         + "where productos_id_productos = :proId";
                 Query query2 = emd2.createNativeQuery(sql2);
@@ -262,6 +284,7 @@ public class ProductosDaoImpl implements ProductosDao {
                 double valIva = proUp.getValor_inicial() + (proUp.getValor_inicial() * 0.16);
                 
                 query2.setParameter("valorIva", (Integer) Math.round((float) valIva));
+                query2.setParameter("nombreImagen", proUp.getNombre_imagen());
                 query2.setParameter("url", proUp.getUrl_imagen());
                 query2.setParameter("proId",proUp.getIdProductos());
                 
@@ -281,4 +304,26 @@ public class ProductosDaoImpl implements ProductosDao {
             return null;
         }
     }
+
+	@Override
+	public Object reporte(String format) throws FileNotFoundException, JRException {
+		List<ProductosVO> lista = this.mostrar_productos();
+    	String path = "C://Users//jefer//Downloads";
+    	File file = ResourceUtils.getFile("classpath:reportes/productosReportes.jrxml");
+    	JasperReport jasper = JasperCompileManager.compileReport(file.getAbsolutePath());
+    	JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(lista);
+    	
+    	Map<String, Object> parameters = new HashMap<String, Object>();
+    	parameters.put("gain java", "Knowledge");
+    	
+    	JasperPrint jasperPrint = JasperFillManager.fillReport(jasper,parameters, ds);
+    	
+    	if(format.equalsIgnoreCase("html")) {
+    		JasperExportManager.exportReportToHtmlFile(jasperPrint, path + "//productosReportes.html");
+    	}
+    	if(format.equalsIgnoreCase("pdf")) {
+    		JasperExportManager.exportReportToPdfFile(jasperPrint, path + "//productosReportes.pdf" );
+    	}
+		return null;
+	}
 }

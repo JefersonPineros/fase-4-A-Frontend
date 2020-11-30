@@ -51,6 +51,9 @@ public class DetalleProductos implements Serializable {
     @Column(name = "valor_mas_iva")
     private Float valorMasIva;
     @Basic(optional = false)
+    @Column(name = "nombre_imagen")
+    private String nombreImagen;
+    @Basic(optional = false)
     @Lob
     @Column(name = "url_imagen")
     private String urlImagen;
@@ -65,13 +68,20 @@ public class DetalleProductos implements Serializable {
         this.idDetalleProductos = idDetalleProductos;
     }
 
-    public DetalleProductos(Integer idDetalleProductos, float valorInicial, String urlImagen) {
-        this.idDetalleProductos = idDetalleProductos;
-        this.valorInicial = valorInicial;
-        this.urlImagen = urlImagen;
-    }
+    
 
-    public Integer getIdDetalleProductos() {
+    public DetalleProductos(Integer idDetalleProductos, String descripcionProducto, String descripcionProductoIn,
+			float valorInicial, Float valorMasIva, String nombreImagen, String urlImagen) {
+		this.idDetalleProductos = idDetalleProductos;
+		this.descripcionProducto = descripcionProducto;
+		this.descripcionProductoIn = descripcionProductoIn;
+		this.valorInicial = valorInicial;
+		this.valorMasIva = valorMasIva;
+		this.nombreImagen = nombreImagen;
+		this.urlImagen = urlImagen;
+	}
+
+	public Integer getIdDetalleProductos() {
         return idDetalleProductos;
     }
 

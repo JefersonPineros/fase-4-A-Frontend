@@ -30,7 +30,7 @@ public class Email  {
                 + "<h4> Clave: "
                 + password
                 + "</h4>"
-                + "<p> Esta es su contraseña, intente ingresar nuevamente<p>";
+                + "<p> Se ha generado una nueva contraseña<p>";
 		
         MimeMessage mail = javaMailSender.createMimeMessage();
         

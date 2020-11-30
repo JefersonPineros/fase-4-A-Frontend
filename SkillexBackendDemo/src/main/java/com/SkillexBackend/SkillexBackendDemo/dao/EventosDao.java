@@ -16,7 +16,7 @@ import java.util.List;
 public interface EventosDao {
     public List<EventosVO> mostrar_eventos();
     public Object save(EventosVO evento);
-    public Object deleteById(EventosVO borrar);
+    public Object deleteById(Integer id);
     public Object updateEvento(EventosVO evento);
 
 }

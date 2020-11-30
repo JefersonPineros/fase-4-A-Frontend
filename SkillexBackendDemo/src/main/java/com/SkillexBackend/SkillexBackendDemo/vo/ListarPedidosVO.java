@@ -35,6 +35,7 @@ public class ListarPedidosVO {
     private Integer valor_inicial;
     private Integer valor_mas_iva;
     private String descripcion_producto;
+    private String nombre_imagen;
     private String url_imagen;
     private Integer idUsuarios;
     private String nombreUsuario;
@@ -50,7 +51,7 @@ public class ListarPedidosVO {
     public ListarPedidosVO() {
     }
 
-    public ListarPedidosVO(Integer idPedidos, String estadoPedido, String mesa, Integer iddetallePedido, Integer valorApagar, String producto, Integer cantidadProducto, Date fecha_pedido, Integer Id_Estado_pedido, Integer State_id, String descripcion, Integer cantidad_producto_pedido, Integer id_productos, String nombre_producto, String codigo_producto, String estado_producto, Integer cantidad_producto, Date fecha_ingreso, Integer id_detalle_productos, Integer valor_inicial, Integer valor_mas_iva, String descripcion_producto, String url_imagen, Integer idUsuarios, String nombreUsuario, String apellidoUsuario, String emailUsuario, String passwordUsuario, String tienda, Date creacion_usuario, String fecha_login, String turnos_laborales, String cedula_ciudadania) {
+    public ListarPedidosVO(Integer idPedidos, String estadoPedido, String mesa, Integer iddetallePedido, Integer valorApagar, String producto, Integer cantidadProducto, Date fecha_pedido, Integer Id_Estado_pedido, Integer State_id, String descripcion, Integer cantidad_producto_pedido, Integer id_productos, String nombre_producto, String codigo_producto, String estado_producto, Integer cantidad_producto, Date fecha_ingreso, Integer id_detalle_productos, Integer valor_inicial, Integer valor_mas_iva, String descripcion_producto,String nombre_imagen, String url_imagen, Integer idUsuarios, String nombreUsuario, String apellidoUsuario, String emailUsuario, String passwordUsuario, String tienda, Date creacion_usuario, String fecha_login, String turnos_laborales, String cedula_ciudadania) {
         this.idPedidos = idPedidos;
         this.estadoPedido = estadoPedido;
         this.mesa = mesa;
@@ -73,6 +74,7 @@ public class ListarPedidosVO {
         this.valor_inicial = valor_inicial;
         this.valor_mas_iva = valor_mas_iva;
         this.descripcion_producto = descripcion_producto;
+        this.nombre_imagen = nombre_imagen;
         this.url_imagen = url_imagen;
         this.idUsuarios = idUsuarios;
         this.nombreUsuario = nombreUsuario;
@@ -261,8 +263,17 @@ public class ListarPedidosVO {
     public void setDescripcion_producto(String descripcion_producto) {
         this.descripcion_producto = descripcion_producto;
     }
+    
+    
+    public String getNombre_imagen() {
+		return nombre_imagen;
+	}
 
-    public String getUrl_imagen() {
+	public void setNombre_imagen(String nombre_imagen) {
+		this.nombre_imagen = nombre_imagen;
+	}
+
+	public String getUrl_imagen() {
         return url_imagen;
     }
 

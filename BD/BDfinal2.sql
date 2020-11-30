@@ -135,7 +135,8 @@ CREATE TABLE IF NOT EXISTS `skillexBD`.`detalle_evento` (
   `id_detalle_evento` INT NOT NULL AUTO_INCREMENT,
   `tipo_evento` VARCHAR(45) NOT NULL,
   `servicio_ofrecido` VARCHAR(45) NOT NULL,
-  `imagen_evento` VARCHAR(45) NULL,
+  nombre_imagen varchar(300),
+  `imagen_evento` VARCHAR(300) NULL,
   PRIMARY KEY (`id_detalle_evento`))
 ENGINE = InnoDB;
 
@@ -151,6 +152,7 @@ CREATE TABLE IF NOT EXISTS `skillexBD`.`Eventos` (
   `autor_evento` VARCHAR(45) NOT NULL,
   `Usuario_idUsuarios` INT NOT NULL,
   `detalle_evento_id_detalle_evento` INT NOT NULL,
+  fecha_evento DATETIME,
   PRIMARY KEY (`idEventos`),
   FOREIGN KEY(Usuario_idUsuarios) REFERENCES Usuario (idUsuarios),
   FOREIGN KEY(detalle_evento_id_detalle_evento) REFERENCES detalle_evento (id_detalle_evento)
@@ -180,7 +182,7 @@ DROP TABLE IF EXISTS `skillexBD`.`genero` ;
 
 CREATE TABLE IF NOT EXISTS `skillexBD`.`genero` (
   `id_genero` INT NOT NULL,
-  `descripción` VARCHAR(45) NULL,
+  `descripcion` VARCHAR(300) NULL,
   PRIMARY KEY (`id_genero`))
 ENGINE = InnoDB;
 
@@ -196,6 +198,8 @@ CREATE TABLE IF NOT EXISTS `skillexBD`.`album_musical` (
   `autor_album` VARCHAR(45) NULL,
   `Usuario_idUsuarios` INT NOT NULL,
   `genero_id_genero` INT NOT NULL,
+  nombre_imagen varchar(100),
+  url_imagen varchar(300),
   PRIMARY KEY (`id_album_musical`),
   FOREIGN KEY (Usuario_idUsuarios) REFERENCES Usuario (idUsuarios),
   FOREIGN KEY (genero_id_genero) REFERENCES genero (id_genero)
@@ -244,10 +248,11 @@ CREATE TABLE IF NOT EXISTS `skillexBD`.`detalle_productos` (
   `id_detalle_productos` INT NOT NULL AUTO_INCREMENT,
   `valor_inicial` INT NULL,
   `valor_mas_iva` INT NULL,
-  `descripcion_producto` VARCHAR(45) NULL,
-  descripcion_producto_in varchar(45),
+  `descripcion_producto` VARCHAR(300) NULL,
+  descripcion_producto_in varchar(300),
   `productos_id_productos` INT NOT NULL,
-  url_imagen varchar(45) null,
+  nombre_imagen varchar(300),
+  url_imagen varchar(300) null,
   PRIMARY KEY (`id_detalle_productos`),
   FOREIGN KEY (productos_id_productos) REFERENCES productos (id_productos)
 );

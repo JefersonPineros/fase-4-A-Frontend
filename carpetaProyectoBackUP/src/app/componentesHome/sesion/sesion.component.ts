@@ -29,7 +29,7 @@ export class SesionComponent extends LoginController implements OnInit {
   public respuestaSer: RespuestasServices;
   public accessSession: boolean;
   public emailRecuperar: string;
-
+  public resp: RespuestasServices;
   constructor(
     private loginState: LoginService,
     private idiomaService: IdiomaServiceService,
@@ -118,11 +118,24 @@ export class SesionComponent extends LoginController implements OnInit {
       let user;
       let tipoAc;
       let access;
+      let idUsuario = this.userLogin.idUsuarios.toString();
       this.typeValidation.forEach((item) => {
         user = item.user;
         access = item.acceso;
         tipoAc = item.tipo;
       });
+      Cookie.set('idUsuario', idUsuario);
+      this.usuarioService.actualizaFechalogin(this.userLogin.idUsuarios).subscribe(
+        res => {
+          this.resp = res;
+          if (this.resp.codigo !== '001') {
+            console.log('se ha presentado un error al actualizar la fecha de login');
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
       Cookie.set('acceso', access);
       Cookie.set('usuario', user);
       Cookie.set('tipo', tipoAc);
