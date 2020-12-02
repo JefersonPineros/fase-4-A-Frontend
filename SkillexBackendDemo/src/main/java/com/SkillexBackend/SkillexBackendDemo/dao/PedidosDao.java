@@ -16,5 +16,5 @@ public interface PedidosDao {
     public Object create(PedidosVO pedido);
     public List<PedidosVO> getPedidos();
     public PedidosVO getPedido(Integer idPedido);
-    public Object procesar(Integer idEstado);
+    public Object procesar(PedidosVO pedidos);
 }

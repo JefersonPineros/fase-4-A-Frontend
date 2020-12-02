@@ -20,7 +20,7 @@ public class Controllers {
 	public String convertirImagen(String imagen, String nombre) {
 		String url;
 		String nombres = nombre;
-		try {
+		try { 
 			String base64String = imagen.split(",")[1];
 			String tipoImagen = imagen.split(",")[0];
 			String tipoImagen2 = tipoImagen.split("/")[1];

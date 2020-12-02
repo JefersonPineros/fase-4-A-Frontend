@@ -7,10 +7,13 @@ package com.SkillexBackend.SkillexBackendDemo.services;
 
 import com.SkillexBackend.SkillexBackendDemo.dao.PedidosDao;
 import com.SkillexBackend.SkillexBackendDemo.vo.PedidosVO;
+import com.SkillexBackend.SkillexBackendDemo.vo.RespuestaOperaciones;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,5 +48,15 @@ public class PedidosService {
         }else{
             return ResponseEntity.notFound().build();
         }
+    }
+    @PostMapping("/procesar/")
+    public ResponseEntity<?> procesarPedido(@RequestBody PedidosVO pedido) {
+    	RespuestaOperaciones resp = new RespuestaOperaciones();
+    	try {
+			resp = (RespuestaOperaciones) pedidosDao.procesar(pedido);
+			return ResponseEntity.ok(resp);
+		} catch (Exception e) {
+			return (ResponseEntity<?>) ResponseEntity.notFound();
+		}
     }
 }

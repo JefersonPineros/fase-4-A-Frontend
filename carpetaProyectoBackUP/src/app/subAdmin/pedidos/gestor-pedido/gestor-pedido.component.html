@@ -22,7 +22,6 @@
                   <td>{{item.fechaPedido}}</td>
                   <td>
                     <button class="btn btn-primary" (click)="procesarPedido(item.idPedidos)">Procesar</button>
-                    <button class="btn btn-primary" (click)="procesarPedido(item.idPedidos)">Descartar</button>
                   </td>
                 </tr>
               </tbody>
@@ -37,30 +36,34 @@
         <div class="col-lg-12">
           <ng-container *ngIf="pedidoAProcesar.idPedidos !== null">
             <div class="row mt-4">
-              <div class="card col-lg-6">
-                <div class="card-body">
-                  <h5 class="card-title">Pedido seleccionado</h5>
-                  <p class="card-text">Numero de pedido: {{pedidoAProcesar.idPedidos}}</p>
-                  <p class="card-text">Fecha pedido: {{pedidoAProcesar.fechaPedido}}</p>
-                  <p class="card-text">Mesa: {{pedidoAProcesar.mesa}}</p>
-                  <p class="card-text">Usuario: {{pedidoAProcesar.usuario.nombreUsuario}}
-                    {{pedidoAProcesar.usuario.apellidoUsuario}} </p>
+              <div class="col-lg-6">
+                <div class="desProduct">
+                  <h5 class="titulodes">Pedido seleccionado</h5>
+                  <p class="desPedi">Numero de pedido:  <span> {{pedidoAProcesar.idPedidos}} </span> </p>
+                  <p class="desPedi">Fecha pedido: <span>{{pedidoAProcesar.fechaPedido}}</span></p>
+                  <p class="desPedi">Mesa: <span>{{pedidoAProcesar.mesa}}</span> </p>
+                  <p class="desPedi">Usuario: <span>{{pedidoAProcesar.usuario.nombreUsuario}}
+                    {{pedidoAProcesar.usuario.apellidoUsuario}}</span> </p>
+                  <p class="desPedi">Tota del pedido: ${{totalPedido}}</p>
+                  <div class="caja-botones">
+                    <button class="btn btn-success" (click)="aceptarPedido(2)">Aceptar</button>
+                    <button class="btn btn-warning" (click)="aceptarPedido(1)">Terminar</button>
+                    <button class="btn btn-danger" (click)="aceptarPedido(4)">Rechazar</button>
+                  </div>
                 </div>
               </div>
               <div class="col-lg-6">
-                <div class="titulo">
-                  <h5>Productos relacionados</h5>
-                </div>
-                <div class="row row-cols-1 row-cols-2">
+                <div class="desProductS">
+                  <h5 class="titulodes">Productos relacionados</h5>
                   <div *ngFor="let prod of pedidoAProcesar.producto">
-                    <div class="card mb-3 border-secondary ">
-                      <div class="card-header">
+                    <div class="prod-seleccionado">
+                      <div class="">
                         <h5>Nombre: {{prod.nombreProducto}}</h5>
                       </div>
-                      <div class="card-body">
-                        <p>Cantidad solicitada: {{prod.cantidadProducto}}</p>
-                        <p>Valor mas iva U/N: {{prod.valor_mas_iva}}</p>
-                        <p>Total producto: {{prod.valor_mas_iva * prod.cantidadProducto}}</p>
+                      <div class="row">
+                        <div class="col-lg-6"><p>Cantidad solicitada: {{prod.cantidadProducto}}</p></div>
+                        <div class="col-lg-6"><p>Valor mas iva U/N: {{prod.valor_mas_iva}}</p></div>
+                        <div class="col-lg-12"><p>Total producto: {{prod.valor_mas_iva * prod.cantidadProducto}}</p></div>
                       </div>
                     </div>
                   </div>

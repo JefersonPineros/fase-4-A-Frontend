@@ -192,9 +192,13 @@ public class PedidosDaoImpl implements PedidosDao {
                     + "join productos pr ON pr.id_productos = php.productos_id_productos "
                     + "join detalle_productos dpr ON dpr.productos_id_productos = pr.id_productos "
                     + "JOIN pedidos_has_pedidos phu ON  p.idPedidos = phu.Pedidos_idPedidos "
-                    + "JOIN usuario u ON u.idUsuarios = phu.Pedidos_idUsuarios ORDER by dp.fecha_pedido desc;";
+                    + "JOIN usuario u ON u.idUsuarios = phu.Pedidos_idUsuarios "
+                    + "WHERE ep.id_Estado_pedido NOT LIKE 4  and ep.id_Estado_pedido NOT LIKE 1 "
+                    + "ORDER by dp.fecha_pedido desc;";
+             
             Query query = em.createNativeQuery(sql);
-
+            
+            
             List<Object[]> lista = query.getResultList();
             Iterator it = lista.iterator();
             while (it.hasNext()) {
@@ -298,8 +302,49 @@ public class PedidosDaoImpl implements PedidosDao {
     }
 
     @Override
-    public Object procesar(Integer idEstado) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Object procesar(PedidosVO pedidos) {
+    	emf = Persistence.createEntityManagerFactory("com.miUnidadDePersistencia");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        RespuestaOperaciones resp = new RespuestaOperaciones();
+        String estado;
+        if (pedidos.getIdEstadoPedido() == 1) {
+        	estado = "Entregado"; 
+        } else if (pedidos.getIdEstadoPedido() == 2) {
+        	estado = "En proceso";
+        }else if (pedidos.getIdEstadoPedido() == 3) {
+        	estado = "Activo";
+        } else {
+        	estado = "Rechazado";
+        }
+        
+        try {
+        	String sql = "UPDATE pedidos SET estadoPedido = :estado, estado_pedido_ID = :idEstado WHERE idPedidos = :idPedido";
+        	Query query = em.createNativeQuery(sql);
+        	query.setParameter("estado", estado);
+        	query.setParameter("idEstado", pedidos.getIdEstadoPedido());
+        	query.setParameter("idPedido", pedidos.getIdPedidos());
+        	query.executeUpdate();
+        	em.getTransaction().commit();
+        	
+        	EntityManager em2 = emf.createEntityManager();
+        	em2.getTransaction().begin();
+        	String sql2 = "UPDATE detallepedido SET valorApagar = :valor WHERE iddetallePedido = :detallePe";
+        	Query query2 = em2.createNativeQuery(sql2);
+        	query2.setParameter("valor", pedidos.getValorApagar());
+        	query2.setParameter("detallePe", pedidos.getIdDetallePedido());
+        	query2.executeUpdate();
+        	em2.getTransaction().commit();
+        	
+        	resp.setCodigo("001");
+        	resp.setRespuesta("Producto procesado");
+			return resp;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			resp.setCodigo("002");
+        	resp.setRespuesta("Error al procesar el producto");
+			return resp;
+		}
     }
 
 }
