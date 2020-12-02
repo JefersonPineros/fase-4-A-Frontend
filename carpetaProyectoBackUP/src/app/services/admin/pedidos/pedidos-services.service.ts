@@ -9,10 +9,13 @@ import { Pedido } from 'src/app/Models/model-pedido';
 export class PedidosServicesService {
 
   constructor(private httpClient: HttpClient) { }
-  createProducto(pedido: Pedido): Observable<RespuestasServices> {
+  createPedido(pedido: Pedido): Observable<RespuestasServices> {
     return this.httpClient.post<RespuestasServices>('/api/pedidos/', pedido);
   }
   listarPedidos(): Observable<Pedido[]>{
     return this.httpClient.get<Pedido[]>('/api/pedidos/listar/');
+  }
+  procesarPedido(pedidoP: Pedido): Observable<RespuestasServices> {
+    return this.httpClient.post<RespuestasServices>('/api/pedidos/procesar/', pedidoP);
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { PedidosCarritoService } from '../../services/pedidos-carrito.service'
+import { PedidosCarritoService } from '../../services/pedidos-carrito.service';
 import Swal from 'sweetalert2';
 import { IdiomaServiceService } from '../../services/idioma-service.service';
 import * as Cookie from 'js-cookie';
@@ -60,7 +60,7 @@ export class CarritoComprasComponent implements OnInit {
     if (getUsuarioCookie != null) {
       try {
         this.createPedidos.idPedidos = null;
-        this.createPedidos.estadoPedidos = '1';
+        this.createPedidos.estadoPedidos = 'Activo';
         this.createPedidos.mesa = 1;
         this.createPedidos.idDetallePedido = null;
         this.createPedidos.idUsuario = getIdUser;
@@ -71,7 +71,7 @@ export class CarritoComprasComponent implements OnInit {
         this.createPedidos.usuario = null;
         this.createPedidos.producto = this.pedidosList;
         console.log(this.createPedidos);
-        this.pedidoService.createProducto(this.createPedidos).subscribe(
+        this.pedidoService.createPedido(this.createPedidos).subscribe(
           resp => {
             this.respuesta = resp;
             if (this.respuesta.codigo === '001') {
