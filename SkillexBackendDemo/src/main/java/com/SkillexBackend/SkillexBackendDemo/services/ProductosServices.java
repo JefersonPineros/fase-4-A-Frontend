@@ -11,6 +11,7 @@ import com.SkillexBackend.SkillexBackendDemo.models.Productos;
 import com.SkillexBackend.SkillexBackendDemo.vo.InventarioVO;
 import com.SkillexBackend.SkillexBackendDemo.vo.ProductosCrearVO;
 import com.SkillexBackend.SkillexBackendDemo.vo.ProductosVO;
+import com.SkillexBackend.SkillexBackendDemo.vo.RespuestaOperaciones;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -32,6 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -126,5 +128,15 @@ public class ProductosServices {
 			System.out.println(e);
 			return (ResponseEntity<?>) ResponseEntity.notFound();
 		}
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminarProducto(@PathVariable Integer id){
+    	try {
+    		Object respuesta = productosDao.deleteById(id);
+    		return ResponseEntity.ok(respuesta);
+		} catch (Exception e) {
+			return (ResponseEntity<?>) ResponseEntity.notFound();
+		}
+    	
     }
 }

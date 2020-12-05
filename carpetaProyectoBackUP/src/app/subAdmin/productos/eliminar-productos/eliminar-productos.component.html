@@ -1,55 +1,54 @@
 <div class="">
-    <div class="table col-12 tableC">
-        <div class="titleTable">
-            <h4>Productos Stock</h4>
-        </div>
-        <div *ngIf="listaProductos.length > 0; else dataNoDisponible">
-            <table datatable class="table table-hover tableW">
-                <thead>
-                    <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Código</th>
-                        <th scope="col">Valor + iva</th>
-                        <th scope="col">Stock</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col">X/A</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <ng-container *ngFor="let item of listaProductos; let itemSelected=index">
-                        <tr [ngStyle]="{
-                                'background-color' : 
+  <div class="table col-12 tableC">
+    <div class="titleTable">
+      <h4>Productos Stock</h4>
+    </div>
+    <div *ngIf="listaProductos.length > 0; else dataNoDisponible">
+      <table datatable class="table table-hover tableW">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Código</th>
+            <th scope="col">Valor + iva</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Estado</th>
+            <th scope="col">X/A</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let item of listaProductos; let itemSelected=index">
+            <tr [ngStyle]="{
+                                'background-color' :
                                 item.cantidadProducto < 10 && item.cantidadProducto >= 5? 'yellow':
-                                item.cantidadProducto < 5 ? 'red':'white' , 
+                                item.cantidadProducto < 5 ? 'red':'white' ,
                                 'color':
                                 item.cantidadProducto < 10 && item.cantidadProducto >= 5? 'black':
                                 item.cantidadProducto < 5? 'white':'black' }">
-                            <th scope="row">{{item.nombreProducto}}</th>
-                            <td>{{item.codigoProducto}}</td>
-                            <td>${{item.valor_mas_iva}}</td>
-                            <td>{{item.cantidadProducto}}</td>
-                            <td>{{item.tipo_categoria}}</td>
-                            <td>{{item.estadoProducto}}</td>
-                            <td><button type="button" class="btn btn-outline-danger buttonMar" [ngStyle]="{
+              <th scope="row">{{item.nombreProducto}}</th>
+              <td>{{item.codigoProducto}}</td>
+              <td>${{item.valor_mas_iva}}</td>
+              <td>{{item.cantidadProducto}}</td>
+              <td>{{item.tipo_categoria}}</td>
+              <td>{{item.estadoProducto}}</td>
+              <td><button type="button" class="btn btn-outline-danger buttonMar" [ngStyle]="{
                                         'background-color' :
                                         item.cantidadProducto >= 10 ? 'white': 'white',
-                                          'color' : 
+                                          'color' :
                                         item.cantidadProducto <= 10 ? 'red': 'red'}"
-                                    (click)="eliminarProducto(itemSelected)">X</button><button type="button"
-                                    class="btn btn-outline-success buttonMar"
-                                    (click)="actualizarProducto(itemSelected)">A</button></td>
-                        </tr>
-                    </ng-container>
+                  (click)="eliminarProducto(itemSelected)">X</button><button type="button"
+                  class="btn btn-outline-success buttonMar" (click)="actualizarProducto(itemSelected)">A</button></td>
+            </tr>
+          </ng-container>
 
-                </tbody>
-            </table>
-            <div class="text-center">
-                <button class="btn btn-danger btn-md " (click)="reporte()">Descargar reporte</button>
-            </div>
-        </div>
-        <ng-template #dataNoDisponible>
-            <h2>No hay data disponibles</h2>
-        </ng-template>
+        </tbody>
+      </table>
+      <div class="text-center">
+        <button class="btn btn-danger btn-md " (click)="reporte()">Descargar reporte</button>
+      </div>
     </div>
+    <ng-template #dataNoDisponible>
+      <h2>No hay data disponibles</h2>
+    </ng-template>
+  </div>
 </div>

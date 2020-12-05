@@ -42,7 +42,21 @@ export class EliminarProductosComponent implements OnInit {
     }
   }
   eliminarProducto(item: number) {
-    console.log('Eliminar producto', item);
+    this.productosService.eliminarProducto(item).subscribe(
+      resp => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Transacción exitosa',
+          text: 'Se ha eliminado el producto correctamente',
+          onClose: () => {
+            location.reload();
+          }
+        });
+      },
+      error =>{
+        console.log(error);
+      }
+    );
   }
   setColor(cantidad: string): boolean {
     // tslint:disable-next-line: radix

@@ -1,0 +1,29 @@
+<div class="col-12 col-lg-12">
+  <div *ngIf="listaEventos.length > 0; else noData">
+    <table datatable>
+      <thead>
+        <tr>
+          <th>Fecha evento</th>
+          <th>Nombre evento</th>
+          <th>Tipo evento</th>
+          <th>Autor evento</th>
+          <th>Servicio ofrecido</th>
+        </tr>
+      </thead>
+      <tbody>
+          <ng-container *ngFor="let evento of listaEventos; let eventoSelected = index">
+            <tr>
+              <td>{{evento.fecha_evento}}</td>
+              <td>{{evento.nombre_evento}}</td>
+              <td>{{evento.tipo_evento}}</td>
+              <td>{{evento.autor_evento}}</td>
+              <td>{{evento.servicio_ofrecido}}</td>
+            </tr>
+          </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #noData>
+    <h5>No hay data disponible</h5>
+  </ng-template>
+</div>

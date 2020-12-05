@@ -5,6 +5,7 @@
  */
 package com.SkillexBackend.SkillexBackendDemo.implement;
 
+import com.SkillexBackend.SkillexBackendDemo.controllers.Controllers;
 import com.SkillexBackend.SkillexBackendDemo.dao.EventosDao;
 import com.SkillexBackend.SkillexBackendDemo.vo.EventosVO;
 import com.SkillexBackend.SkillexBackendDemo.vo.RespuestaOperaciones;
@@ -30,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class EventosDaoImpl implements EventosDao {
 
     private EntityManagerFactory emf;
-
+    Controllers imagenCreate = new Controllers();
 //SERVICIO LISTAR EVENTOS
     @Override
     public List<EventosVO> mostrar_eventos() {
@@ -154,7 +155,7 @@ public class EventosDaoImpl implements EventosDao {
         RespuestaOperaciones resp = new RespuestaOperaciones();
         EntityManager emd = emf.createEntityManager();
         emd.getTransaction().begin();
-
+        evento.setImagen_evento(this.imagenCreate.convertirImagen(evento.getImagen_evento(), evento.getNombre_imagen(), 2));
         if (idEventos == 0) {
             try {
                 //insert a detalle evento

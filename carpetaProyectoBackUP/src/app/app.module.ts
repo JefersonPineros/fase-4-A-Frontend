@@ -33,6 +33,7 @@ import { UpdateUsuarioComponent } from './subAdmin/usuarios/update-usuario/updat
 import { ActualizarProductosComponent } from './subAdmin/productos/actualizar-productos/actualizar-productos.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FileUploadModule } from 'ng2-file-upload';
+import { ListarEventosComponent } from './subAdmin/eventos/listar-eventos/listar-eventos.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +61,8 @@ import { FileUploadModule } from 'ng2-file-upload';
     IniSesionProductComponent,
     RegistroProComponent,
     UpdateUsuarioComponent,
-    ActualizarProductosComponent
+    ActualizarProductosComponent,
+    ListarEventosComponent
 
   ],
   imports: [

@@ -27,7 +27,7 @@ public interface ProductosDao {
     public Page<Productos> findAll(Pageable pageable);
     public Optional<Productos> findById(Integer idProductos);
     public Object save(ProductosCrearVO producto);
-    public void deleteById(Integer id);
+    public Object deleteById(Integer id);
     public Object updateProducto(ProductosVO producto);
     public Object reporte(String type) throws FileNotFoundException, JRException;
 }

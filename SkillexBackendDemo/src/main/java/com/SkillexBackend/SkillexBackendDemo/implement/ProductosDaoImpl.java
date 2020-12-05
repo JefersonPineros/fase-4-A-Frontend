@@ -84,7 +84,8 @@ public class ProductosDaoImpl implements ProductosDao {
                     + "cp.tipo_categoria "
                     + "FROM productos p "
                     + "JOIN detalle_productos dp ON p.id_productos = dp.productos_id_productos "
-                    + "JOIN categoria_producto cp on p.categoria_producto_id_categoria_producto = cp.id_categoria_producto ";
+                    + "JOIN categoria_producto cp on p.categoria_producto_id_categoria_producto = cp.id_categoria_producto "
+                    + "WHERE estado_producto NOT LIKE 'Inactivo' ";
 
             Query query = em.createNativeQuery(sql);
             List<Object[]> listOb = query.getResultList();
@@ -148,7 +149,7 @@ public class ProductosDaoImpl implements ProductosDao {
         emf = Persistence.createEntityManagerFactory("com.miUnidadDePersistencia");
         RespuestaOperaciones resp = new RespuestaOperaciones();
         
-        producto.setUrl_imagen(this.imagenCreate.convertirImagen(producto.getUrl_imagen(), producto.getNombre_imagen()));
+        producto.setUrl_imagen(this.imagenCreate.convertirImagen(producto.getUrl_imagen(), producto.getNombre_imagen(), 1));
         
         EntityManager emd = emf.createEntityManager();
         emd.getTransaction().begin();
@@ -234,9 +235,28 @@ public class ProductosDaoImpl implements ProductosDao {
     }
 
     @Override
-    @Transactional
-    public void deleteById(Integer id) {
-        productosRespository.deleteById(id);
+    public Object deleteById(Integer id) {
+    	emf = Persistence.createEntityManagerFactory("com.miUnidadDePersistencia");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        RespuestaOperaciones resp  = new RespuestaOperaciones();
+        try {
+			String sql = "UPDATE productos SET estado_producto = :cambio WHERE id_productos = :id";
+			Query query = em.createNativeQuery(sql);
+			query.setParameter("cambio", "Inactivo");
+			query.setParameter("id", id);
+			query.executeUpdate();
+			em.getTransaction().commit();
+			
+			em.close();
+			resp.setCodigo("001");
+			resp.setRespuesta("OK");
+			return resp;
+		} catch (Exception e) {
+			resp.setCodigo("002");
+			resp.setRespuesta("Se ha presentado un error");
+			return resp;
+		}
     }
 
     public void ProductoDAO() {

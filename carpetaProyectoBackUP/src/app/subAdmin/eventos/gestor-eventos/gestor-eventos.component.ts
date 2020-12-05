@@ -4,6 +4,7 @@ import { CreateEvent } from 'src/app/Models/model-create-event';
 import { EventosService } from '../../../services/admin/eventos/eventos.service';
 import { Evento } from '../../../Models/EventoModel';
 import * as Cookie from 'js-cookie';
+import Swal from 'sweetalert2';
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
 }
@@ -26,14 +27,6 @@ export class GestorEventosComponent implements OnInit {
     private fb: FormBuilder, private eventoService: EventosService
   ) {
     this.newEvent = new Evento();
-    this.eventoService.listarEventos().subscribe(
-      resp => {
-        console.log(resp);
-      },
-      error => {
-        console.log(error);
-      }
-    );
     this.evento = [
       { id: '1', tipo: 'Promoción' },
       { id: '2', tipo: 'Descuentos' },
@@ -46,6 +39,7 @@ export class GestorEventosComponent implements OnInit {
     this.fechaEvent = new Date();
     this.formEvent = new FormGroup({
       nameEvent: new FormControl(this.newEvent.nombre_evento, Validators.required),
+      fechaEvent: new FormControl(this.newEvent.fecha_evento, Validators.required),
       autorEvent: new FormControl(this.newEvent.autor_evento, Validators.required),
       eventType: new FormControl(this.newEvent.tipo_evento, Validators.required),
       serviceEvent: new FormControl(this.newEvent.servicio_ofrecido, Validators.required),
@@ -64,15 +58,30 @@ export class GestorEventosComponent implements OnInit {
         const base64String: string = (reader.result as string).match(/.+;base64,(.+)/)[1];
         this.newEvent.imagen_evento = 'data:' + this.selectedFile.type + ';base64,' + base64String;
         console.log(this.nameImg);
-        // this.newEvent.descripcion_producto_in = this.nameImg;
+        this.newEvent.nombre_imagen = this.nameImg;
       };
     }
-
   }
   onSubmit() {
     // tslint:disable-next-line: radix
     this.newEvent.usuario_idUsuarios = parseInt(Cookie.get('idUsuario'));
-    console.log(this.newEvent);
+    this.eventoService.crearEvento(this.newEvent).subscribe(
+      resp => {
+        if (resp.codigo === '001'){
+          Swal.fire({
+            icon: 'success',
+            title: 'Eventos creado exitosamente',
+            text: 'Ninguna novedad al crear el evento ',
+            onClose: () => {
+              location.reload();
+            }
+          });
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
   get typeEvent() {
     return this.formEvent.get('typeEvent');
