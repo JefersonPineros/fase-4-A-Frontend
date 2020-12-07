@@ -8,6 +8,10 @@ package com.SkillexBackend.SkillexBackendDemo.services;
 import com.SkillexBackend.SkillexBackendDemo.dao.UsuarioDao;
 import com.SkillexBackend.SkillexBackendDemo.vo.RespuestaOperaciones;
 import com.SkillexBackend.SkillexBackendDemo.vo.UsuarioVO;
+
+import net.sf.jasperreports.engine.JRException;
+
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -102,6 +106,16 @@ public class UsuarioService {
 			resp.setCodigo("002");
     		resp.setRespuesta("No se pudo completar la operación");
 			return ResponseEntity.ok(resp);
+		}
+    }
+    @GetMapping("/reporte/{formato}")
+    public ResponseEntity<?> exportReport(@PathVariable String formato) throws FileNotFoundException, JRException{
+    	try {
+			Object respuesta= UsDao.reporte("pdf");
+			return (ResponseEntity<?>) ResponseEntity.ok(respuesta);
+		} catch (UnknownError e) {
+			System.out.println(e);
+			return (ResponseEntity<?>) ResponseEntity.notFound();
 		}
     }
     

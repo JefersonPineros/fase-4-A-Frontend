@@ -30,6 +30,7 @@ export class SesionComponent extends LoginController implements OnInit {
   public accessSession: boolean;
   public emailRecuperar: string;
   public resp: RespuestasServices;
+  public validarContrasena: string;
   constructor(
     private loginState: LoginService,
     private idiomaService: IdiomaServiceService,

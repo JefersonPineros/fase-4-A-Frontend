@@ -1,12 +1,12 @@
 <div [ngSwitch]="idiomaSelected">
     <ng-container *ngSwitchCase="'espanol'">
+
         <div class="card mb-3">
-            <img src="../../../assets/imagenes/Flayer.jpg" class="card-img-top" alt="...">
+            <img src="{{lastEvento.imagen_evento}}" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Noche de Eleuvite. </h5>
-                <p class="card-text">Desde Suecia próximamente la banda de folk metal Eleuvite con presentación especial en Power Riff Metal Bar.
-                    Te esperamos.</p>
-                <p class="card-text"><small class="text-muted">Ultima actualización hace 3 minutos</small></p>
+                <h5 class="card-title">{{lastEvento.nombre_evento}} </h5>
+                <p class="card-text">{{lastEvento.servicio_ofrecido}}</p>
+                <p class="card-text"><small class="text-muted">{{lastEvento.tipo_evento}}</small></p>
             </div>
         </div>
     </ng-container>
@@ -15,7 +15,7 @@
             <img src="../../../assets/imagenes/Flayer.jpg" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">Eleuvite night. </h5>
-                <p class="card-text">From Sweden soon the folk metal band Eleuvite with a special presentation at Power Riff Metal Bar. 
+                <p class="card-text">From Sweden soon the folk metal band Eleuvite with a special presentation at Power Riff Metal Bar.
                     We are waiting for you.
                 </p>
                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>

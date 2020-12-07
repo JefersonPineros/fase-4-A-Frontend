@@ -4,6 +4,7 @@ import { ProductosService } from 'src/app/services/admin/productos.service';
 import { CreateProduct } from '../../../Models/model-create-productos';
 import { FileUploader } from 'ng2-file-upload';
 import { event } from 'jquery';
+import Swal from 'sweetalert2';
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
 }
@@ -37,7 +38,24 @@ export class CrearProductosComponent implements OnInit {
     this.createProduct.inventario_id_inventario = 1;
     this.productosService.crearProducto(this.createProduct).subscribe(
       resp => {
-        console.log(resp);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Proceso exitoso',
+          text: 'Se ha creado el usuario correctamente',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      },
+      error => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Se presento un error',
+          text: 'No se pudo realizar la creación del usuario, intente nueva mente.',
+          showConfirmButton: false,
+          timer: 1500
+        });
       }
     );
     console.log(this.createProduct);

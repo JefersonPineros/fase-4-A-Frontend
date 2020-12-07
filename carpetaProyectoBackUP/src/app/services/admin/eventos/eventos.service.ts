@@ -17,4 +17,10 @@ export class EventosService {
   crearEvento(evento: Evento): Observable<RespuestasServices>{
     return this.httpClient.post<RespuestasServices>('/api/eventos', evento);
   }
+  getEvento(id: number): Observable<Evento> {
+    return this.httpClient.get<Evento>('/api/eventos/getEvento/' + id);
+  }
+  getLastEvento(): Observable<Evento> {
+    return this.httpClient.get<Evento>('/api/eventos/getEvento');
+  }
 }

@@ -6,6 +6,7 @@ import * as Cookie from 'js-cookie';
 import Swal from 'sweetalert2';
 import { RespuestasServices } from 'src/app/Models/respuestasServices';
 import { IdiomaServiceService } from 'src/app/services/idioma-service.service';
+import { ReporteProductosService } from '../../../services/reportes/reporte-productos.service';
 @Component({
   selector: 'app-eliminar-usuario',
   templateUrl: './eliminar-usuario.component.html',
@@ -19,7 +20,8 @@ export class EliminarUsuarioComponent implements OnInit {
   constructor(
     private updateUserService: UpdateServiceService,
     private usuarioService: UsuarioService,
-    private idiomaService: IdiomaServiceService) {
+    private idiomaService: IdiomaServiceService,
+    private reporteService: ReporteProductosService) {
     this.listUsuarios = new Array<UserModel>();
   }
 
@@ -109,6 +111,29 @@ export class EliminarUsuarioComponent implements OnInit {
         });
       }
     }
+  }
+  reporte(): void {
+    this.reporteService.reporteUsuarios('pdf').subscribe(
+      resp => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Se ha descargado el documento',
+          text: 'Verifique en descargas',
+          onClose: () => {
+
+          }
+        });
+      },
+      error => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Se ha presentado un error',
+          text: 'No se pudo descargar el documento, intente nueva mente',
+          onClose: () => {
+          }
+        });
+      }
+    );
   }
 
 }

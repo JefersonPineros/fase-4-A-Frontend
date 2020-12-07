@@ -6,6 +6,10 @@
 package com.SkillexBackend.SkillexBackendDemo.dao;
 
 import com.SkillexBackend.SkillexBackendDemo.vo.UsuarioVO;
+
+import net.sf.jasperreports.engine.JRException;
+
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -26,4 +30,5 @@ public interface UsuarioDao {
     public Object updateUser(UsuarioVO usuario);
     public void correoMasivoSend(String mensaje, String asunto) throws MessagingException;
     public Object actualizarLogin(Integer id);
+    public Object reporte(String type) throws FileNotFoundException, JRException;
 }

@@ -7,6 +7,10 @@ package com.SkillexBackend.SkillexBackendDemo.dao;
 
 import com.SkillexBackend.SkillexBackendDemo.models.Eventos;
 import com.SkillexBackend.SkillexBackendDemo.vo.EventosVO;
+
+import net.sf.jasperreports.engine.JRException;
+
+import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
@@ -18,5 +22,7 @@ public interface EventosDao {
     public Object save(EventosVO evento);
     public Object deleteById(Integer id);
     public Object updateEvento(EventosVO evento);
-
+    public EventosVO getEvent(Integer id);
+    public EventosVO getLastEvent();
+    public Object reporte(String format) throws FileNotFoundException, JRException;
 }

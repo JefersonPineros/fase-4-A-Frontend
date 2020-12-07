@@ -11,6 +11,7 @@ import * as Cookie from 'js-cookie';
 export class RegistroProComponent implements OnInit {
   public newUser: NewUser;
   public idiomaSelected: string;
+  public verificarContrasena: string;
   constructor(private loginState: LoginService, private idiomaService: IdiomaServiceService) {
     this.newUser = new NewUser(null, '', '', '', '', '', null, '', '', '', null, null);
   }

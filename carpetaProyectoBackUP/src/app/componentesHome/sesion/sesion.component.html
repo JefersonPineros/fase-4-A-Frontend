@@ -92,7 +92,7 @@
             </div>
             <div class="row iniciarBoton1 text-center">
               <div class="col-12">
-                <a [ngStyle]="{color:'white'}" data-toggle="modal" data-target="#modalRecuperar">¿Olvido su
+                <a [ngStyle]="{color:'white'}" data-toggle="modal" class="btn btn-outline-secondary" data-target="#modalRecuperar">¿Olvido su
                   contraseña?</a>
               </div>
             </div>
@@ -172,7 +172,7 @@
                   <label for="recipient-name" class="col-form-label">Confirm Password</label>
                   <input type="password" appConfirmEqualsValidator="newPass" class="form-control" id="recipient-name"
                     placeholder="Confirm Password" pattern="[a-zA-Z0-9#$%&’*+/=?^_`-]+" name="confirmPass"
-                    #confirmPass="ngModel" [(ngModel)]="newUser.passwordUsuario"
+                    #confirmPass="ngModel" [(ngModel)]="validarContrasena"
                     [style.border]="confirmPass.touched && !confirmPass.valid?'solid red 1px':confirmPass.touched && confirmPass.valid ?'solid green 1px':!confirmPass.touched?'solid grey 1px':''"
                     required>
                   <span class="validForm" *ngIf="confirmPass.touched && confirmPass.valid ">Correcto</span>
@@ -211,7 +211,7 @@
                   <input type="text" name="firstName" #firstName="ngModel" [(ngModel)]="newUser.nombreUsuario"
                     pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"
                     [style.border]="firstName.touched && !firstName.valid?'solid red 1px':firstName.touched && firstName.valid?'solid green 1px':!firstName.touched?'solid grey 1px':''"
-                    class="form-control" id="recipient-name" placeholder="Primer nombre*" required>
+                    class="form-control" id="recipient-name" placeholder="Escriba su nombre*" required>
                   <span class="validForm" *ngIf="firstName.touched && firstName.valid ">Correcto</span>
                   <span class="errorForm" *ngIf="firstName.touched && !firstName.valid ">El campo esta vacío o mal
                     escrito</span>
@@ -222,7 +222,7 @@
                     [(ngModel)]="newUser.apellidoUsuario"
                     pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"
                     [style.border]="lastName.touched && !lastName.valid?'solid red 1px':lastName.touched && lastName.valid?'solid green 1px':!lastName.touched?'solid grey 1px':''"
-                    id="recipient-name" placeholder="Segundo nombre" required>
+                    id="recipient-name" placeholder="Escriba su apellido" required>
                   <span class="validForm" *ngIf="lastName.touched && lastName.valid ">Correcto</span>
                   <span class="errorForm" *ngIf="lastName.touched && !lastName.valid ">El campo esta vacío o mal
                     escrito</span>
@@ -239,7 +239,7 @@
                 </div>
                 <div class="form-group col-md-6">
                   <label for="recipient-name" class="col-form-label">Contraseña*</label>
-                  <input type="password" class="form-control" id="recipient-name" placeholder="Segundo nombre"
+                  <input type="password" class="form-control" id="recipient-name" placeholder="Ingrese una contraseña"
                     pattern="[a-zA-Z0-9#$%&’*+/=?^_`-]+" name="newPass" #newPass="ngModel"
                     [(ngModel)]="newUser.passwordUsuario"
                     [style.border]="newPass.touched && !newPass.valid?'solid red 1px':newPass.touched && newPass.valid?'solid green 1px':!newPass.touched?'solid grey 1px':''"
@@ -251,8 +251,8 @@
                 <div class="form-group col-md-6">
                   <label for="recipient-name" class="col-form-label">Confirmar contraseña</label>
                   <input type="password" appConfirmEqualsValidator="newPass" class="form-control" id="recipient-name"
-                    placeholder="Segundo nombre" pattern="[a-zA-Z0-9#$%&’*+/=?^_`-]+" name="confirmPass"
-                    #confirmPass="ngModel" [(ngModel)]="newUser.passwordUsuario"
+                    placeholder="Verifique su contraseña" pattern="[a-zA-Z0-9#$%&’*+/=?^_`-]+" name="confirmPass"
+                    #confirmPass="ngModel" [(ngModel)]="validarContrasena"
                     [style.border]="confirmPass.touched && !confirmPass.valid?'solid red 1px':confirmPass.touched && confirmPass.valid ?'solid green 1px':!confirmPass.touched?'solid grey 1px':''"
                     required>
                   <span class="validForm" *ngIf="confirmPass.touched && confirmPass.valid ">Correcto</span>

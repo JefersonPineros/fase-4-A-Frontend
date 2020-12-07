@@ -22,16 +22,16 @@
                         name="coProduct" #coProduct="ngModel" [(ngModel)]="createProduct.codigoProducto"
                         pattern="[a-zA-Z0-9àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+"
                         [style.border]="coProduct.touched && !coProduct.valid?'solid red 1px':coProduct.touched && coProduct.valid?'solid green 1px':!coProduct.touched?'solid grey 1px':''"
-                        id="CodProducto" placeholder="Codigo Producto" required>
+                        id="CodProducto" placeholder="Código Producto" required>
                         <span class="validForm" *ngIf="coProduct.touched && !coProduct.errors?.required">Correcto</span>
                         <span class="errorForm" *ngIf="coProduct.touched && coProduct.errors?.required">El campo está vacío o no es valido.</span>
                     </div>
                     <div class="form-group col-6">
-                        <label for="cantProducto">Cantidad inicial del producto</label>
+                        <label for="cantProducto">Stock de productos</label>
                         <input type="text" class="form-control"
                         name="cantProductForm" #cantProductForm="ngModel" [(ngModel)]="createProduct.cantidadProducto"
                         pattern="[0-9]+" [style.border]="cantProductForm.touched && !cantProductForm.valid?'solid red 1px':cantProductForm.touched && !cantProductForm.errors?.required?'solid green 1px':!cantProductForm.touched?'solid grey 1px':''"
-                        id="cantProducto" placeholder="cantida producto" required>
+                        id="cantProducto" placeholder="Cantidad producto" required>
                         <span class="validForm" *ngIf="cantProductForm.touched && cantProductForm.valid">Correcto</span>
                         <span class="errorForm" *ngIf="cantProductForm.touched && !cantProductForm.valid">El campo está vacío o no es valido.</span>
                     </div>
@@ -50,7 +50,7 @@
                         name="descriptionProduct" #descriptionProduct="ngModel" [(ngModel)]="createProduct.descripcion_producto"
                         pattern="[a-zA-Z0-9àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+"
                         [style.border]="descriptionProduct.touched && !descriptionProduct.valid?'solid red 1px':descriptionProduct.touched && !descriptionProduct.errors?.required?'solid green 1px':!descriptionProduct.touched?'solid grey 1px':''"
-                        id="exampleFormControlTextarea1" placeholder="Descripción..."
+                        id="exampleFormControlTextarea1" placeholder="Ingrese una descripción del producto"
                             rows="3" required></textarea>
                             <span class="validForm" *ngIf="descriptionProduct.touched && descriptionProduct.valid">Correcto</span>
                             <span class="errorForm" *ngIf="descriptionProduct.touched && !descriptionProduct.valid">El campo está vacío o no es valido.</span>

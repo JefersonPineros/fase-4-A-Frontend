@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ConfirmEqualsValidatorDirective } from './Directivas/confirm-equals-validator.directive';
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -34,6 +34,13 @@ import { ActualizarProductosComponent } from './subAdmin/productos/actualizar-pr
 import { HttpClientModule } from '@angular/common/http';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ListarEventosComponent } from './subAdmin/eventos/listar-eventos/listar-eventos.component';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import { ActualizarEventoComponent } from './subAdmin/eventos/actualizar-evento/actualizar-evento.component';
+
+FullCalendarModule.registerPlugins([
+  dayGridPlugin
+]);
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +69,8 @@ import { ListarEventosComponent } from './subAdmin/eventos/listar-eventos/listar
     RegistroProComponent,
     UpdateUsuarioComponent,
     ActualizarProductosComponent,
-    ListarEventosComponent
+    ListarEventosComponent,
+    ActualizarEventoComponent
 
   ],
   imports: [
@@ -77,6 +85,7 @@ import { ListarEventosComponent } from './subAdmin/eventos/listar-eventos/listar
 
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

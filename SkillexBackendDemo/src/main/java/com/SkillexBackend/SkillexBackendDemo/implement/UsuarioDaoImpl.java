@@ -11,13 +11,26 @@ import com.SkillexBackend.SkillexBackendDemo.repository.UsuarioRepository;
 import com.SkillexBackend.SkillexBackendDemo.utilidades.Email;
 import com.SkillexBackend.SkillexBackendDemo.vo.RespuestaOperaciones;
 import com.SkillexBackend.SkillexBackendDemo.vo.UsuarioVO;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
 import static com.jayway.jsonpath.internal.function.ParamType.JSON;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
@@ -30,6 +43,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
 
 /**
@@ -404,5 +418,26 @@ public class UsuarioDaoImpl implements UsuarioDao {
 			resp.setRespuesta("Error al actualizar el login");
 			return resp;
 		}
+	}
+	@Override
+	public Object reporte(String format) throws FileNotFoundException, JRException {
+		List<UsuarioVO> lista = this.findAll();
+    	String path = "C://Users//jefer//Downloads";
+    	File file = ResourceUtils.getFile("classpath:reportes/listaUsuarios.jrxml");
+    	JasperReport jasper = JasperCompileManager.compileReport(file.getAbsolutePath());
+    	JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(lista);
+    	
+    	Map<String, Object> parameters = new HashMap<String, Object>();
+    	parameters.put("gain java", "Knowledge");
+    	
+    	JasperPrint jasperPrint = JasperFillManager.fillReport(jasper,parameters, ds);
+    	
+    	if(format.equalsIgnoreCase("html")) {
+    		JasperExportManager.exportReportToHtmlFile(jasperPrint, path + "//listaUsuarios.html");
+    	}
+    	if(format.equalsIgnoreCase("pdf")) {
+    		JasperExportManager.exportReportToPdfFile(jasperPrint, path + "//listaUsuarios.pdf" );
+    	}
+		return null;
 	}
 }

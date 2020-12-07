@@ -1,22 +1,11 @@
 <div class="col-12">
-    <div [ngSwitch]="idiomaSelected">
-        <ng-container *ngSwitchCase="'espanol'">
-            <div class="row" class="calendario1">
-                <full-calendar defaultView="dayGridMonth"
-                [locales]="locales"
-                locale="es"
-                [events]="calendarEvents"
-                [plugins]="calendarPlugins" ></full-calendar>
-            </div>
-        </ng-container>
-        <ng-container *ngSwitchCase="'ingles'">
-            <div class="row" class="calendario1">
-                <full-calendar defaultView="dayGridMonth"
-                [locales]="locales"
-                locale="en"
-                [events]="calendarEvents"
-                [plugins]="calendarPlugins" ></full-calendar>
-            </div>
-        </ng-container>
-    </div>
+      <ng-container *ngIf="calendarEvents.length > 0; else cargando">
+        <div class="row" class="calendario1">
+          <full-calendar [options]="calendarOptions"></full-calendar>
+        </div>
+      </ng-container>
+      <ng-template #cargando>
+        <img src="../../../assets/imagenes/cargando.gif" [style]="{'margin-top': '80px'}" width="100%" alt="Cargando">
+      </ng-template>
 </div>
+
