@@ -19,6 +19,7 @@ export class ProductosComponent implements OnInit {
   public ProduuctosSeleccionados: Array<ProductosModel>;
   public idiomaSelected: string;
   public listarProduct: Array<ProductosModel>;
+  public buscarProducto: string;
   constructor(private sendProductoServices: PedidosCarritoService,
               private idiomaService: IdiomaServiceService,
               private productosServices: ProductosService) {
@@ -112,5 +113,19 @@ export class ProductosComponent implements OnInit {
   }
   sendProductos() {
     this.sendProductoServices.sendProducto(this.ProduuctosSeleccionados);
+  }
+  filtrarBebida(tipo?: string): void {
+    if (tipo === undefined) {
+      this.listaProductosESP = this.listarProduct;
+    } else {
+      this.listaProductosESP = this.listarProduct.filter(tipoP => tipoP.tipo_categoria === tipo);
+    }
+  }
+  buscarProductos(): void {
+    this.listaProductosESP = this.listarProduct.filter(
+      item => {
+        return item.nombreProducto.toLowerCase().indexOf(this.buscarProducto.toLowerCase()) > -1;
+      }
+    );
   }
 }
