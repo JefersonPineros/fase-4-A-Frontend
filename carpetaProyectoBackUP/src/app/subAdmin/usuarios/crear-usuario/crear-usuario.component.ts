@@ -7,6 +7,10 @@ import { RespuestasServices } from '../../../Models/respuestasServices';
 import Swal from 'sweetalert2';
 import * as Cookie from 'js-cookie';
 import { IdiomaServiceService } from 'src/app/services/idioma-service.service';
+
+interface HtmlInputEvent extends Event {
+  target: HTMLInputElement & EventTarget;
+}
 @Component({
   selector: 'app-crear-usuario',
   templateUrl: './crear-usuario.component.html',
@@ -22,6 +26,9 @@ export class CrearUsuarioComponent implements OnInit {
   public error: string[];
   public responseS: RespuestasServices;
   public idiomaSelected: string;
+  public archivo = 'Seleccione un archivo';
+  public archivoSelecionado: File;
+
   constructor( private userService: UsuarioService, private idiomaService: IdiomaServiceService ) {
     this.crearUsuarioAdmin = new UserModel();
     this.tipo = [
@@ -106,5 +113,51 @@ export class CrearUsuarioComponent implements OnInit {
     );
     console.log(this.crearUsuarioAdmin);
   }
-
+  uploadFile(event: HtmlInputEvent): void {
+    this.archivoSelecionado =  event.target.files[0];
+    if (this.archivoSelecionado.type === 'application/vnd.ms-excel') {
+      this.archivo = this.archivoSelecionado.name;
+      Swal.fire({
+        title: 'Creación masiva de usuario!',
+        text: '¿Desea continuar con esta acción?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirmar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.userService.cargueMasivo(this.archivoSelecionado).subscribe(
+            resp => {
+              if (resp.codigo === '001') {
+                Swal.fire(
+                  'Exito!',
+                  'Usuarios creados exitosamente',
+                  'success'
+                );
+              }
+            },
+            err => {
+              console.log(err);
+              Swal.fire({
+                icon: 'error',
+                title: 'Se ha presentado un error',
+                text: 'No se pudo realizar la creación de los usuarios',
+                onClose: () => {
+                }
+              });
+            }
+          );
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Se ha presentado un error',
+        text: 'No se pudo realizar la creación de los usuarios',
+        onClose: () => {
+        }
+      });
+    }
+  }
 }

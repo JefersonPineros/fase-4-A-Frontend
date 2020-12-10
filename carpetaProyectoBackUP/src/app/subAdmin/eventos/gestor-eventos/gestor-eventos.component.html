@@ -74,7 +74,7 @@
             <img src="{{newEvent.imagen_evento}}" width="100%" alt="">
             <span>No hay ninguna imagen cargada.</span>
           </div>
-          <button type="submit" [disabled]="formEvent.errors?.valid" class="btn  btn-outline-dark btn-block">Crear
+          <button type="submit" [disabled]="!formEvent.valid" class="btn  btn-outline-dark btn-block">Crear
             evento</button>
         </div>
       </form>

@@ -60,5 +60,40 @@ export class ListarEventosComponent implements OnInit {
       }
     }
   }
+  eliminarEvento(id: number): void {
+    Swal.fire({
+      title: 'Eliminar usuario!',
+      text: '¿Esta seguro de eliminar este evento?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log(id);
+        this.eventosService.eliminarEvento(id).subscribe(
+          resp => {
+            if (resp.codigo === '001') {
+              Swal.fire(
+                'Eliminado!',
+                'Evento eliminado correctamente',
+                'success'
+              );
+            }
+          },
+          err => {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'No se pudo eliminar el usuario',
+                showConfirmButton: false,
+                timer: 3000
+              });
+          }
+        );
+      }
+    });
+  }
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Form, FormGroup, FormArray, FormControl, Validator, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { CreateEvent } from 'src/app/Models/model-create-event';
 import { EventosService } from '../../../services/admin/eventos/eventos.service';
 import { Evento } from '../../../Models/EventoModel';
@@ -22,6 +22,7 @@ export class GestorEventosComponent implements OnInit {
   public allTypes: [];
   public selectedFile: File;
   public fechaEvent: Date;
+
   public nameImg = 'No ha seleccionado una imagen';
   constructor(
     private fb: FormBuilder, private eventoService: EventosService
@@ -73,7 +74,6 @@ export class GestorEventosComponent implements OnInit {
             title: 'Eventos creado exitosamente',
             text: 'Ninguna novedad al crear el evento ',
             onClose: () => {
-              location.reload();
             }
           });
         }

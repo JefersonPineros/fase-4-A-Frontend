@@ -16,6 +16,7 @@ export class GestorPedidoComponent implements OnInit, OnDestroy {
   public totalPedido: number;
   constructor(private listarPedidos: PedidosServicesService) {
     this.pedidoAProcesar = new Pedido();
+    this.listadoPedidos = new Array<Pedido>();
     this.updatePedidos();
    }
 

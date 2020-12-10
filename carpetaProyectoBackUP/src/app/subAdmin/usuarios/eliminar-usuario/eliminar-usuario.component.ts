@@ -126,7 +126,7 @@ export class EliminarUsuarioComponent implements OnInit {
       },
       error => {
         Swal.fire({
-          icon: 'success',
+          icon: 'error',
           title: 'Se ha presentado un error',
           text: 'No se pudo descargar el documento, intente nueva mente',
           onClose: () => {

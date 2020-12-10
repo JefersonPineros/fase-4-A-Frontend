@@ -49,7 +49,7 @@ export class EliminarProductosComponent implements OnInit {
           title: 'Transacción exitosa',
           text: 'Se ha eliminado el producto correctamente',
           onClose: () => {
-            location.reload();
+
           }
         });
       },

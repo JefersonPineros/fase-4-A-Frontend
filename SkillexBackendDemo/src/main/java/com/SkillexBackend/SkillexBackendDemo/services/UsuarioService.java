@@ -12,12 +12,15 @@ import com.SkillexBackend.SkillexBackendDemo.vo.UsuarioVO;
 import net.sf.jasperreports.engine.JRException;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 
 import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,13 +32,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.annotation.RequestScope;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author jefer
  */
 @RestController
+@RequestScope
 //@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT,RequestMethod.OPTIONS})
 @RequestMapping("/api/usuario")
 public class UsuarioService {
@@ -123,6 +130,19 @@ public class UsuarioService {
     public  ResponseEntity<?> setFechaIngreso(@PathVariable Integer id) {
     		RespuestaOperaciones resp = (RespuestaOperaciones) UsDao.actualizarLogin(id);
     	return ResponseEntity.ok(resp);
+    }
+    
+    @PostMapping(value ="/cargueMasivo", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> cargueM(@RequestParam(name= "file") MultipartFile file) throws IOException {
+    	try {
+    		Path rutaArchivo = UsDao.upload(file);
+    		RespuestaOperaciones resp = (RespuestaOperaciones) UsDao.cargueMasivo(rutaArchivo);
+    		return ResponseEntity.ok(resp);
+		} catch (UnknownError e) {
+			// TODO: handle exception
+			return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+    	
     }
     
 }

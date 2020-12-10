@@ -318,7 +318,7 @@ public class EventosDaoImpl implements EventosDao {
 		EntityManager em = emf.createEntityManager();
 		EventosVO evento = new EventosVO();
 		try {
-			String sql = "SELECT * FROM eventos e JOIN detalle_evento de ON de.id_detalle_evento = e.detalle_evento_id_detalle_evento where idEventos ORDER by idEventos desc Limit 1 ";
+			String sql = "SELECT * FROM eventos e JOIN detalle_evento de ON de.id_detalle_evento = e.detalle_evento_id_detalle_evento  ORDER by fecha_evento desc Limit 1 ";
 			Query query = em.createNativeQuery(sql);
 			
 			List<Object[]> listOb = query.getResultList();
