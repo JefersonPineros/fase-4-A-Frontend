@@ -62,9 +62,9 @@ public class PedidosDaoImpl implements PedidosDao {
             Query query5 = auxiliar.createNativeQuery(sql5);
 
             List<Object[]> lista = query5.getResultList();
-            Iterator it = lista.iterator();
+            Iterator<Object[]> it = lista.iterator();
             while (it.hasNext()) {
-                Object[] line = (Object[]) it.next();
+                Object[] line = it.next();
                 idDetalle = (Integer) line[0];
                 mesa = (String) line[1];
             }
@@ -93,9 +93,9 @@ public class PedidosDaoImpl implements PedidosDao {
             Query query6 = auxiliar2.createNativeQuery(sql6);
 
             List<Object[]> lista2 = query6.getResultList();
-            Iterator it2 = lista2.iterator();
+            Iterator<Object[]> it2 = lista2.iterator();
             while (it2.hasNext()) {
-                Object[] line = (Object[]) it2.next();
+                Object[] line = it2.next();
                 idPedido = (Integer) line[0];
                 mesa = (String) line[1];
             }
@@ -137,7 +137,8 @@ public class PedidosDaoImpl implements PedidosDao {
         }
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public List<PedidosVO> getPedidos() {
         emf = Persistence.createEntityManagerFactory("com.miUnidadDePersistencia");
         EntityManager em = emf.createEntityManager();
@@ -198,11 +199,10 @@ public class PedidosDaoImpl implements PedidosDao {
              
             Query query = em.createNativeQuery(sql);
             
-            
-            List<Object[]> lista = query.getResultList();
-            Iterator it = lista.iterator();
+			List<Object[]> lista = query.getResultList();
+            Iterator<Object[]> it = lista.iterator();
             while (it.hasNext()) {
-                Object[] line = (Object[]) it.next();
+                Object[] line = it.next();
                 Integer idPedidos = (Integer) line[0];
                 String estadoPedido = (String) line[1];
                 String mesa = (String) line[2];

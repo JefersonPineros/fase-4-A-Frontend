@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit, } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Pedido } from 'src/app/Models/model-pedido';
 import { PedidosServicesService } from 'src/app/services/admin/pedidos/pedidos-services.service';
 declare let alertify: any;
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-gestor-pedido',
@@ -14,14 +15,16 @@ export class GestorPedidoComponent implements OnInit, OnDestroy {
   public componenteActivo: boolean;
   public pedidoAProcesar: Pedido;
   public totalPedido: number;
+  suscripcionPedidos: Subscription;
+
   constructor(private listarPedidos: PedidosServicesService) {
     this.pedidoAProcesar = new Pedido();
     this.listadoPedidos = new Array<Pedido>();
     this.updatePedidos();
-   }
+    this.componenteActivo = true;
+  }
 
   ngOnInit(): void {
-    this.componenteActivo = true;
   }
 
   timer() {
@@ -29,22 +32,30 @@ export class GestorPedidoComponent implements OnInit, OnDestroy {
   }
 
   updatePedidos() {
-    this.listarPedidos.listarPedidos().subscribe(
+    this.suscripcionPedidos = this.listarPedidos.listarPedidos().subscribe(
       resp => {
         this.listadoPedidos = resp;
+        if (this.componenteActivo) {
+          console.log('Hola mundo');
+          this.timer();
+        }
       },
       error => {
+        if (this.componenteActivo) {
+          console.log('Hola mundo');
+          this.timer();
+        }
         alertify.error('Se ha presentado un error');
       }
     );
-    if (this.componenteActivo) {
-      this.timer();
-    }
   }
+
   ngOnDestroy(): void {
     this.componenteActivo = false;
+    this.suscripcionPedidos.unsubscribe();
     console.log(this.componenteActivo);
   }
+
   procesarPedido(id: number): void{
     let porTipo: number;
     this.totalPedido = 0;
@@ -62,7 +73,7 @@ export class GestorPedidoComponent implements OnInit, OnDestroy {
   aceptarPedido(estado: number) {
     this.pedidoAProcesar.idEstadoPedido = estado;
     console.log(this.pedidoAProcesar);
-    this.listarPedidos.procesarPedido(this.pedidoAProcesar).subscribe(
+    this.suscripcionPedidos = this.listarPedidos.procesarPedido(this.pedidoAProcesar).subscribe(
       resp => {
         alertify.success('Solicitud exitosa');
       },

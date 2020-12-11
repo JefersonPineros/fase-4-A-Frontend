@@ -1,25 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UpdateProductosService } from '../../../services/update-productos.service';
 import { ProductosService } from '../../../services/admin/productos.service';
 import { ProductosModel } from 'src/app/Models/admin/productosModel';
 import { ReporteProductosService } from '../../../services/reportes/reporte-productos.service';
 import Swal from 'sweetalert2';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-eliminar-productos',
   templateUrl: './eliminar-productos.component.html',
   styleUrls: ['./eliminar-productos.component.css']
 })
-export class EliminarProductosComponent implements OnInit {
+export class EliminarProductosComponent implements OnInit, OnDestroy {
   public listaProductos: Array<ProductosModel>;
   public actPro: ProductosModel;
   cantidadPro = false;
+  suscripcionProductos: Subscription;
+  suscripcionActualizarP: Subscription;
+  suscripcionReportes: Subscription;
 
   constructor(
     private updateProductos: UpdateProductosService,
     private productosService: ProductosService,
     private reportesServices: ReporteProductosService) {
     this.listaProductos = new Array<ProductosModel>();
+  }
+  ngOnDestroy(): void {
+    this.suscripcionProductos.unsubscribe();
+    this.suscripcionReportes.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -42,7 +50,7 @@ export class EliminarProductosComponent implements OnInit {
     }
   }
   eliminarProducto(item: number) {
-    this.productosService.eliminarProducto(item).subscribe(
+    this.suscripcionProductos = this.productosService.eliminarProducto(item).subscribe(
       resp => {
         Swal.fire({
           icon: 'success',
@@ -69,7 +77,7 @@ export class EliminarProductosComponent implements OnInit {
     }
   }
   reporte(): void {
-    this.reportesServices.reporteProducto('pdf').subscribe(
+    this.suscripcionReportes = this.reportesServices.reporteProducto('pdf').subscribe(
       resp => {
         Swal.fire({
           icon: 'success',

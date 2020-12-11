@@ -11,6 +11,7 @@ import com.SkillexBackend.SkillexBackendDemo.vo.RespuestaOperaciones;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,21 +34,29 @@ public class PedidosService {
     @PostMapping("/")
     public ResponseEntity<?> crearPedido(@RequestBody PedidosVO pedido){
         PedidosVO crearPedido = pedido;
-        Object respuesta = pedidosDao.create(crearPedido);
-        if(respuesta != null){
-            return ResponseEntity.ok(respuesta);
-        }else{
-            return ResponseEntity.notFound().build();
-        }
+        try {
+        	Object respuesta = pedidosDao.create(crearPedido);
+            if(respuesta != null){
+                return ResponseEntity.ok(respuesta);
+            }else{
+                return ResponseEntity.notFound().build();
+            }
+		} catch (Exception e) {
+			return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
     }
     @GetMapping("/listar/")
     public ResponseEntity<?> listarPedidos(){
         List<PedidosVO> pedidos = pedidosDao.getPedidos();
-        if(pedidos != null){
-            return ResponseEntity.ok(pedidos);
-        }else{
-            return ResponseEntity.notFound().build();
-        }
+        try {
+        	if(pedidos != null){
+                return ResponseEntity.ok(pedidos);
+            }else{
+                return ResponseEntity.notFound().build();
+            }
+		} catch (Exception e) {
+			return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
     }
     @PostMapping("/procesar/")
     public ResponseEntity<?> procesarPedido(@RequestBody PedidosVO pedido) {

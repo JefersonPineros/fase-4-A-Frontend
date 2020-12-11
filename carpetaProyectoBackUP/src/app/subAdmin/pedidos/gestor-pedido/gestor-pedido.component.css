@@ -16,8 +16,9 @@
   border-radius: 10px;
   padding: 10px;
   background-color: rgba(94, 84, 83, 0.34);
-  height: 350px;
+  height: 305px;
   overflow: auto;
+  margin-bottom: 10px;
 }
 .titulodes{
   text-align: center;

@@ -53,53 +53,79 @@ public class UsuarioService {
     @GetMapping("/access/email={email}&password={password}")
     public ResponseEntity<?> login(@PathVariable String email,@PathVariable String password){
         UsuarioVO oUsuario = UsDao.login(email, password);
-        if(oUsuario == null){
-            return ResponseEntity.notFound().build(); 
-        }else{
-            return ResponseEntity.ok(oUsuario);
-        }
+        try {
+        	if(oUsuario == null){
+                return ResponseEntity.notFound().build(); 
+            }else{
+                return ResponseEntity.ok(oUsuario);
+            }
+		} catch (Exception e) {
+			return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+        
     }
     @PostMapping("/crear/")
     public ResponseEntity<?> crearUsuario(@RequestBody UsuarioVO usuario){
         UsuarioVO crearUser = usuario;
         Object respuesta = UsDao.save(crearUser);
-        if(respuesta != null){
-            return ResponseEntity.ok(respuesta);
-        }else{
-            return ResponseEntity.notFound().build();
-        }
+        try {
+        	if(respuesta != null){
+                return ResponseEntity.ok(respuesta);
+            }else{
+                return ResponseEntity.notFound().build();
+            }
+		} catch (Exception e) {
+			return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
     }
     @GetMapping("/")
     public ResponseEntity<?> getAllUser(){
         List<UsuarioVO> listUsuario = UsDao.findAll();
-        if(listUsuario != null){
-            return ResponseEntity.ok(listUsuario);
-        } else {
-            return null;
-        }
+        try {
+        	if(listUsuario != null){
+                return ResponseEntity.ok(listUsuario);
+            } else {
+                return null;
+            }
+		} catch (Exception e) {
+			return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Integer id){
-        if(id != null){
-            Object resp = UsDao.deleteById(id);
-            return ResponseEntity.ok(resp);
-        }else{
-            return ResponseEntity.notFound().build();
-        }
+    	try {
+    		if(id != null){
+                Object resp = UsDao.deleteById(id);
+                return ResponseEntity.ok(resp);
+            }else{
+                return ResponseEntity.notFound().build();
+            }
+		} catch (Exception e) {
+			return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+        
     }
     @PostMapping("/actualizar")
     public ResponseEntity<?> updateUser(@RequestBody UsuarioVO usuario){
-        if(usuario != null){
-            RespuestaOperaciones resp = (RespuestaOperaciones) UsDao.updateUser(usuario);
-            return ResponseEntity.ok(resp);
-        }else{
-            return ResponseEntity.notFound().build();
-        }       
+    	try {
+    		if(usuario != null){
+                RespuestaOperaciones resp = (RespuestaOperaciones) UsDao.updateUser(usuario);
+                return ResponseEntity.ok(resp);
+            }else{
+                return ResponseEntity.notFound().build();
+            }
+		} catch (Exception e) {
+			return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+		}       
     }
     @GetMapping("/recuperar/email={email}")
     public ResponseEntity<?> recuperarPassword(@PathVariable String email) {
-    	RespuestaOperaciones resp = (RespuestaOperaciones) UsDao.recuperarContrasena(email);
-    	return ResponseEntity.ok(resp);
+    	try {
+    		RespuestaOperaciones resp = (RespuestaOperaciones) UsDao.recuperarContrasena(email);
+        	return ResponseEntity.ok(resp);
+		} catch (Exception e) {
+			return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
     }
     @GetMapping("/correoMasivo/asunto={asunto}&mensaje={mensaje}")
     public ResponseEntity<?> correoMasivoEnviar(@PathVariable String asunto, @PathVariable String mensaje) throws MessagingException {
@@ -128,8 +154,13 @@ public class UsuarioService {
     
     @GetMapping("/fechalogin/id={id}")
     public  ResponseEntity<?> setFechaIngreso(@PathVariable Integer id) {
+    	try {
     		RespuestaOperaciones resp = (RespuestaOperaciones) UsDao.actualizarLogin(id);
-    	return ResponseEntity.ok(resp);
+        	return ResponseEntity.ok(resp);
+		} catch (Exception e) {
+			return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+    		
     }
     
     @PostMapping(value ="/cargueMasivo", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

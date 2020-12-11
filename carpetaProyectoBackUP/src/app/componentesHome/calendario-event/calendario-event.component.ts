@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import esLocale from '@fullcalendar/core/locales/es';
 import frLocale from '@fullcalendar/core/locales/fr';
@@ -7,18 +7,20 @@ import * as Cookie from 'js-cookie';
 import { EventosService } from 'src/app/services/admin/eventos/eventos.service';
 import { Evento } from 'src/app/Models/EventoModel';
 import { CalendarOptions, DateSelectArg, EventClickArg, EventApi, Calendar } from '@fullcalendar/angular';
-import { event } from 'jquery';
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-calendario-event',
   templateUrl: './calendario-event.component.html',
   styleUrls: ['./calendario-event.component.css']
 })
-export class CalendarioEventComponent implements OnInit {
+export class CalendarioEventComponent implements OnInit, OnDestroy {
   public calendarEvents: Array<any>;
   public idiomaSelected: string;
   public listaEvent: Array<Evento>;
   @Output() pasarId: EventEmitter<number> = new EventEmitter<number>();
 
+  suscripcionEvento: Subscription;
   calendarOptions: CalendarOptions;
   calendarPlugins = [dayGridPlugin];
   locales = [esLocale, frLocale];
@@ -33,7 +35,7 @@ export class CalendarioEventComponent implements OnInit {
         }
       }
     );
-    this.eventosService.listarEventos().subscribe(
+    this.suscripcionEvento = this.eventosService.listarEventos().subscribe(
       resp => {
         this.listaEvent = resp;
         this.getEvento();
@@ -42,6 +44,9 @@ export class CalendarioEventComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+  ngOnDestroy(): void {
+    this.suscripcionEvento.unsubscribe();
   }
 
   ngOnInit(): void {

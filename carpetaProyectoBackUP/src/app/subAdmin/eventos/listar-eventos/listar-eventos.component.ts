@@ -56,6 +56,7 @@ export class ListarEventosComponent implements OnInit {
   actualizarEvento(idEvento: number): void {
     for (let item of this.listaEventos) {
       if  (item.idEventos === idEvento ) {
+        console.log(item);
         this.updateService.sendEvent(item);
       }
     }

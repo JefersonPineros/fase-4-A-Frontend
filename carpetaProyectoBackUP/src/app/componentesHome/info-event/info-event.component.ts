@@ -1,18 +1,22 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { IdiomaServiceService } from '../../services/idioma-service.service';
 import * as Cookie from 'js-cookie';
 import { Observable } from 'rxjs';
 import { EventosService } from 'src/app/services/admin/eventos/eventos.service';
 import { Evento } from 'src/app/Models/EventoModel';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-info-event',
   templateUrl: './info-event.component.html',
   styleUrls: ['./info-event.component.css']
 })
-export class InfoEventComponent implements OnInit, OnChanges {
+export class InfoEventComponent implements OnInit, OnChanges, OnDestroy {
   public idiomaSelected: string;
   public lastEvento: Evento;
+  suscripcionEvento: Subscription;
+
   @Input() idEvento: number;
 
   @Output() evento: EventEmitter<number> = new EventEmitter<number>();
@@ -34,6 +38,9 @@ export class InfoEventComponent implements OnInit, OnChanges {
       }
     );
   }
+  ngOnDestroy(): void {
+    this.suscripcionEvento.unsubscribe();
+  }
   ngOnChanges(): void {
     this.consultarEvento(this.idEvento);
   }
@@ -54,7 +61,7 @@ export class InfoEventComponent implements OnInit, OnChanges {
   consultarEvento(id: number) {
     console.log(id);
     this.spinner.show();
-    this.eventosService.getEvento(id).subscribe(
+    this.suscripcionEvento = this.eventosService.getEvento(id).subscribe(
       resp => {
         this.lastEvento = resp;
         this.spinner.hide();

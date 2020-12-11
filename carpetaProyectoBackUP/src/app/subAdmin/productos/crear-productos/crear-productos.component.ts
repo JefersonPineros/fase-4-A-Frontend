@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm, FormGroup, FormControl } from '@angular/forms';
 import { ProductosService } from 'src/app/services/admin/productos.service';
 import { CreateProduct } from '../../../Models/model-create-productos';
 import { FileUploader } from 'ng2-file-upload';
 import { event } from 'jquery';
 import Swal from 'sweetalert2';
+import { Subscription } from 'rxjs';
+
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
 }
@@ -13,11 +15,13 @@ interface HtmlInputEvent extends Event {
   templateUrl: './crear-productos.component.html',
   styleUrls: ['./crear-productos.component.css']
 })
-export class CrearProductosComponent implements OnInit {
+export class CrearProductosComponent implements OnInit, OnDestroy {
   public createProduct: CreateProduct;
   public tipoProduct: any[];
   public nameImg = 'No ha seleccionado una imagen';
   public selectedFile: File;
+  suscripcionProductos: Subscription;
+
   constructor(private productosService: ProductosService) {
     this.createProduct = new CreateProduct(null, '', '', '', '', null, null, null, null, null, null, null, '', '', '', '');
     this.tipoProduct = [
@@ -28,6 +32,9 @@ export class CrearProductosComponent implements OnInit {
       { id: '5', tipo: 'Cocteles' }
     ];
   }
+  ngOnDestroy(): void {
+    this.suscripcionProductos.unsubscribe();
+  }
 
   ngOnInit(): void {
   }
@@ -36,7 +43,7 @@ export class CrearProductosComponent implements OnInit {
     const fechaIngreso: Date = new Date(Date.now());
     this.createProduct.fechaIngreso = fechaIngreso;
     this.createProduct.inventario_id_inventario = 1;
-    this.productosService.crearProducto(this.createProduct).subscribe(
+    this.suscripcionProductos = this.productosService.crearProducto(this.createProduct).subscribe(
       resp => {
         Swal.fire({
           position: 'top-end',
