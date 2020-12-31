@@ -6,33 +6,35 @@
           <div class="iniciar-sesion col-3">
             <div class="row">
               <button class="btn btn-secondary" data-toggle="modal" data-target="#iniSesionProduct"
-                type="button">Login</button>
+                type="button">Ingresar</button>
             </div>
             <div class="row">
-              <a class="rsP" data-dismiss="modal" data-toggle="modal" data-target="#registroProducts">You
-                have not registered yet?</a>
+              <a class="rsP" data-dismiss="modal" data-toggle="modal" data-target="#registroProducts">Aun no te has
+                registrado?</a>
             </div>
           </div>
           <div class="buscador col-9 align-content-around">
             <div class="col-lg-12">
               <div [ngSwitch]="idiomaSelected">
                 <div *ngSwitchCase="'espanol'">
-                  <div class="row">
-                    <div class="col-6">
-                      <input type="text" placeholder="Buscar productos" id="buscar" class="form-control">
+                  <form ngForm="formBusqueda" (ngSubmit)="buscarProductos()">
+                    <div class="row">
+                      <div class="col-6">
+                        <input type="text" name="busqueda" #busqueda="ngModel" [(ngModel)]="buscarProducto" placeholder="Buscar productos" id="buscar" class="form-control">
+                      </div>
+                      <div class="col-3">
+                        <label for="buscar">
+                          <button type="submit" class="btn btn-dark">buscar productos
+                          </button>
+                        </label>
+                      </div>
+                      <div class="col-2 carritoCo">
+                        <a type="button" (click)="sendProductos()" data-toggle="modal"
+                          data-target="#exampleModal">Carrito<i class="fas fa-2x fa-cart-plus"></i></a>
+                        <label for="">({{countPedidos}})</label>
+                      </div>
                     </div>
-                    <div class="col-3">
-                      <label for="buscar">
-                        <button type="button" class="btn btn-dark">buscar productos
-                        </button>
-                      </label>
-                    </div>
-                    <div class="col-2 carritoCo">
-                      <a type="button" (click)="sendProductos()" data-toggle="modal"
-                        data-target="#exampleModal">Carrito<i class="fas fa-2x fa-cart-plus"></i></a>
-                      <label for="">({{countPedidos}})</label>
-                    </div>
-                  </div>
+                  </form>
                 </div>
                 <div *ngSwitchCase="'ingles'">
                   <div class="row">
@@ -82,18 +84,29 @@
         <div class="list-group filtros">
           <div [ngSwitch]="idiomaSelected">
             <div *ngSwitchCase="'espanol'">
-              <button type="button" class="list-group-item list-group-item-action"><i class="fas fa-glass-martini"></i>
+              <button type="button" (click)="filtrarBebida()" class="list-group-item list-group-item-action"><i
+                  class="fas fa-glass-martini"></i>
+                Todos los productos</button>
+              <button type="button" (click)="filtrarBebida('Cerveza')" class="list-group-item list-group-item-action"><i
+                  class="fas fa-glass-martini"></i>
                 Cervezas</button>
-              <button type="button" class="list-group-item list-group-item-action"><i class="fas fa-glass-martini"></i>
+              <button type="button" (click)="filtrarBebida('Aguardiente')"
+                class="list-group-item list-group-item-action"><i class="fas fa-glass-martini"></i>
                 Aguardientes</button>
-              <button type="button" class="list-group-item list-group-item-action"><i class="fas fa-glass-martini"></i>
+              <button type="button" (click)="filtrarBebida('Aperitivos')"
+                class="list-group-item list-group-item-action"><i class="fas fa-glass-martini"></i>
                 Aperitivos</button>
-              <button type="button" class="list-group-item list-group-item-action"><i class="fas fa-glass-martini"></i>
+              <button type="button" (click)="filtrarBebida('Whisky')" class="list-group-item list-group-item-action"><i
+                  class="fas fa-glass-martini"></i>
                 Whisky</button>
-              <button type="button" class="list-group-item list-group-item-action"><i class="fas fa-glass-martini"></i>
+              <button type="button" (click)="filtrarBebida('Cócteles')"
+                class="list-group-item list-group-item-action"><i class="fas fa-glass-martini"></i>
                 Cocteles</button>
             </div>
             <div *ngSwitchCase="'ingles'">
+              <button type="button" (click)="filtrarBebida()" class="list-group-item list-group-item-action"><i
+                  class="fas fa-glass-martini"></i>
+                Todos los productos</button>
               <button type="button" class="list-group-item list-group-item-action"><i class="fas fa-glass-martini"></i>
                 Beer</button>
               <button type="button" class="list-group-item list-group-item-action"><i class="fas fa-glass-martini"></i>
@@ -106,15 +119,23 @@
                 Cocktails</button>
             </div>
             <div *ngSwitchDefault>
-              <button type="button" class="list-group-item list-group-item-action"><i class="fas fa-glass-martini"></i>
+              <button type="button" (click)="filtrarBebida()" class="list-group-item list-group-item-action"><i
+                  class="fas fa-glass-martini"></i>
+                Todos los productos</button>
+              <button type="button" (click)="filtrarBebida('Cerveza')" class="list-group-item list-group-item-action"><i
+                  class="fas fa-glass-martini"></i>
                 Cervezas</button>
-              <button type="button" class="list-group-item list-group-item-action"><i class="fas fa-glass-martini"></i>
+              <button type="button" (click)="filtrarBebida('Aguardiente')"
+                class="list-group-item list-group-item-action"><i class="fas fa-glass-martini"></i>
                 Aguardientes</button>
-              <button type="button" class="list-group-item list-group-item-action"><i class="fas fa-glass-martini"></i>
+              <button type="button" (click)="filtrarBebida('Aperitivos')"
+                class="list-group-item list-group-item-action"><i class="fas fa-glass-martini"></i>
                 Aperitivos</button>
-              <button type="button" class="list-group-item list-group-item-action"><i class="fas fa-glass-martini"></i>
+              <button type="button" (click)="filtrarBebida('Whisky')" class="list-group-item list-group-item-action"><i
+                  class="fas fa-glass-martini"></i>
                 Whisky</button>
-              <button type="button" class="list-group-item list-group-item-action"><i class="fas fa-glass-martini"></i>
+              <button type="button" (click)="filtrarBebida('Cócteles')"
+                class="list-group-item list-group-item-action"><i class="fas fa-glass-martini"></i>
                 Cocteles</button>
             </div>
           </div>
@@ -169,9 +190,7 @@
             </div>
           </div>
         </div>
-
       </div>
-
     </div>
   </aside>
 </div>

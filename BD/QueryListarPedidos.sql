@@ -39,4 +39,5 @@ JOIN pedidos_has_productos php ON p.idPedidos = php.pedidos_idPedidos
 join productos pr ON pr.id_productos = php.productos_id_productos
 join detalle_productos dpr ON dpr.productos_id_productos = pr.id_productos
 JOIN pedidos_has_pedidos phu ON  p.idPedidos = phu.Pedidos_idPedidos 
-JOIN usuario u ON u.idUsuarios = phu.Pedidos_idUsuarios;
+JOIN usuario u ON u.idUsuarios = phu.Pedidos_idUsuarios
+WHERE ep.id_Estado_pedido NOT LIKE 4 and ep.id_Estado_pedido NOT LIKE 1 ;

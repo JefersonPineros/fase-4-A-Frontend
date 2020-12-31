@@ -11,13 +11,32 @@ import com.SkillexBackend.SkillexBackendDemo.repository.UsuarioRepository;
 import com.SkillexBackend.SkillexBackendDemo.utilidades.Email;
 import com.SkillexBackend.SkillexBackendDemo.vo.RespuestaOperaciones;
 import com.SkillexBackend.SkillexBackendDemo.vo.UsuarioVO;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
 import static com.jayway.jsonpath.internal.function.ParamType.JSON;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
@@ -30,6 +49,8 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -403,6 +424,88 @@ public class UsuarioDaoImpl implements UsuarioDao {
 			resp.setCodigo("002");
 			resp.setRespuesta("Error al actualizar el login");
 			return resp;
+		}
+	}
+	@Override
+	public Object reporte(String format) throws FileNotFoundException, JRException {
+		List<UsuarioVO> lista = this.findAll();
+    	String path = "C://Users//jefer//Downloads";
+    	File file = ResourceUtils.getFile("classpath:reportes/listaUsuarios.jrxml");
+    	JasperReport jasper = JasperCompileManager.compileReport(file.getAbsolutePath());
+    	JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(lista);
+    	
+    	Map<String, Object> parameters = new HashMap<String, Object>();
+    	parameters.put("gain java", "Knowledge");
+    	
+    	JasperPrint jasperPrint = JasperFillManager.fillReport(jasper,parameters, ds);
+    	
+    	if(format.equalsIgnoreCase("html")) {
+    		JasperExportManager.exportReportToHtmlFile(jasperPrint, path + "//listaUsuarios.html");
+    	}
+    	if(format.equalsIgnoreCase("pdf")) {
+    		JasperExportManager.exportReportToPdfFile(jasperPrint, path + "//listaUsuarios.pdf" );
+    	}
+		return null;
+	}
+
+	@Override
+	public Object cargueMasivo(Path uri) {
+		RespuestaOperaciones resp = new RespuestaOperaciones();
+		UsuarioVO usuario = new UsuarioVO();
+		File archivo = new File(uri.toFile().getAbsolutePath());
+		String line;
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(archivo));
+			line = br.readLine();
+			while (null != line) {
+				String[] fields = line.split(",");
+				if (!fields[0].equalsIgnoreCase("nombreUsuario")) {
+					usuario.setNombreUsuario(fields[0]);
+					usuario.setApellidoUsuario(fields[1]);
+					usuario.setEmailUsuario(fields[2]);
+					usuario.setPasswordUsuario(fields[3]);
+					usuario.setTienda(fields[4]);
+					
+					//Date hoy = new Date(System.currentTimeMillis());
+					
+					usuario.setCreacionUsuario(null);
+					usuario.setTurnosLaborales(fields[5]);
+					usuario.setCedulaCiudadania(fields[6]);
+					usuario.setTipoUsuario(Integer.valueOf(fields[7]));
+					usuario.setInventarioIdInventario(Integer.valueOf(fields[8]));
+					this.save(usuario);
+				}
+				line = br.readLine();
+			}
+			resp.setCodigo("001");
+			resp.setRespuesta("Exitoso");
+			return resp;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			resp.setCodigo("002");
+			resp.setRespuesta("Se ha presentado un error");
+			return resp;
+		}
+	}
+
+	@Override
+	public Path upload(MultipartFile file) throws IOException {
+		Path path = Paths.get("Archivos");
+		String url = path.toFile().getAbsolutePath();
+		byte[] bytes = file.getBytes();
+		Path ruta = Paths.get(url + "/" + file.getOriginalFilename());
+		this.validarArchivo(ruta);
+		Files.write(ruta, bytes);
+		return  ruta;
+	}
+
+	@Override
+	public void validarArchivo(Path path) {
+		// TODO Auto-generated method stub
+		File file = new File(path.toUri());
+		if(file.exists()) {
+			file.delete();
 		}
 	}
 }

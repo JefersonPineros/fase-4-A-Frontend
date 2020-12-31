@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserModel } from 'src/app/Models/userModel';
 import { UsuarioService } from 'src/app/services/admin/usuario.service';
 import { UpdateServiceService } from '../../../services/update-service.service';
@@ -6,25 +6,29 @@ import * as Cookie from 'js-cookie';
 import Swal from 'sweetalert2';
 import { RespuestasServices } from 'src/app/Models/respuestasServices';
 import { IdiomaServiceService } from 'src/app/services/idioma-service.service';
+import { ReporteProductosService } from '../../../services/reportes/reporte-productos.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-eliminar-usuario',
   templateUrl: './eliminar-usuario.component.html',
   styleUrls: ['./eliminar-usuario.component.css']
 })
-export class EliminarUsuarioComponent implements OnInit {
+export class EliminarUsuarioComponent implements OnInit, OnDestroy {
   public listUsuarios: Array<UserModel>;
   public seletedUser: any;
   public responseS: RespuestasServices;
   public idiomaSelected: string;
+  suscriptionUsuario: Subscription;
+  suscriptionResporte: Subscription;
   constructor(
     private updateUserService: UpdateServiceService,
     private usuarioService: UsuarioService,
-    private idiomaService: IdiomaServiceService) {
+    private idiomaService: IdiomaServiceService,
+    private reporteService: ReporteProductosService) {
     this.listUsuarios = new Array<UserModel>();
   }
-
   ngOnInit(): void {
-    this.usuarioService.listarUsuario().subscribe(
+    this.suscriptionUsuario = this.usuarioService.listarUsuario().subscribe(
       res => {
         this.listUsuarios = res;
       },
@@ -60,6 +64,10 @@ export class EliminarUsuarioComponent implements OnInit {
     } else {
       this.idiomaSelected = 'espanol';
     }
+  }
+  ngOnDestroy() {
+    this.suscriptionUsuario.unsubscribe();
+    this.suscriptionResporte.unsubscribe();
   }
   actualizarTabla(index: number) {
     const selected = index;
@@ -109,6 +117,29 @@ export class EliminarUsuarioComponent implements OnInit {
         });
       }
     }
+  }
+  reporte(): void {
+    this.suscriptionResporte = this.reporteService.reporteUsuarios('pdf').subscribe(
+      resp => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Se ha descargado el documento',
+          text: 'Verifique en descargas',
+          onClose: () => {
+
+          }
+        });
+      },
+      error => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Se ha presentado un error',
+          text: 'No se pudo descargar el documento, intente nueva mente',
+          onClose: () => {
+          }
+        });
+      }
+    );
   }
 
 }

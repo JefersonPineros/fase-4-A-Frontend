@@ -5,22 +5,38 @@
  */
 package com.SkillexBackend.SkillexBackendDemo.implement;
 
+import com.SkillexBackend.SkillexBackendDemo.controllers.Controllers;
 import com.SkillexBackend.SkillexBackendDemo.dao.EventosDao;
 import com.SkillexBackend.SkillexBackendDemo.vo.EventosVO;
 import com.SkillexBackend.SkillexBackendDemo.vo.RespuestaOperaciones;
 
+import net.bytebuddy.asm.Advice.Return;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ResourceUtils;
 
 /**
  *
@@ -30,7 +46,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class EventosDaoImpl implements EventosDao {
 
     private EntityManagerFactory emf;
-
+    Controllers imagenCreate = new Controllers();
 //SERVICIO LISTAR EVENTOS
     @Override
     public List<EventosVO> mostrar_eventos() {
@@ -154,7 +170,7 @@ public class EventosDaoImpl implements EventosDao {
         RespuestaOperaciones resp = new RespuestaOperaciones();
         EntityManager emd = emf.createEntityManager();
         emd.getTransaction().begin();
-
+        evento.setImagen_evento(this.imagenCreate.convertirImagen(evento.getImagen_evento(), evento.getNombre_imagen(), 2));
         if (idEventos == 0) {
             try {
                 //insert a detalle evento
@@ -255,5 +271,105 @@ public class EventosDaoImpl implements EventosDao {
         }
     }
 
+	@Override
+	public EventosVO getEvent(Integer id) {
+		emf = Persistence.createEntityManagerFactory("com.miUnidadDePersistencia");
+		EntityManager em = emf.createEntityManager();
+		EventosVO evento = new EventosVO();
+		try {
+			String sql = "SELECT * FROM eventos e JOIN detalle_evento de ON de.id_detalle_evento = e.detalle_evento_id_detalle_evento where idEventos = :id ";
+			Query query = em.createNativeQuery(sql);
+			query.setParameter("id", id);
+			
+			List<Object[]> listOb = query.getResultList();
+
+            if (listOb.size() > 0) {
+            	Iterator<Object[]> it = listOb.iterator();
+                while (it.hasNext()) {
+                    Object[] line = it.next();
+                    Integer idEventos = (Integer) line[0];
+                    String nombre_evento = (String) line[1];
+                    String autor_evento = (String) line[2];
+                    Integer Usuario_idUsuarios = (Integer) line[3];
+                    Integer detalle_evento_id_detalle_evento = (Integer) line[4];
+                    Timestamp fecha_evento = null;
+                    if (line[5] != null) {
+                    	fecha_evento= (Timestamp) line[5];
+                    }                  
+                    Integer id_detalle_evento = (Integer) line[6];
+                    String tipo_evento = (String) line[7];
+                    String servicio_ofrecido = (String) line[8];
+                    String nombre_imagen = (String) line[9];
+                    String imagen_evento = (String) line[10];
+
+                    evento = new EventosVO(idEventos, nombre_evento, autor_evento, Usuario_idUsuarios, detalle_evento_id_detalle_evento, id_detalle_evento, tipo_evento, servicio_ofrecido, fecha_evento,nombre_imagen, imagen_evento);
+                }
+            }
+            return evento;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	public EventosVO getLastEvent() {
+		
+		emf = Persistence.createEntityManagerFactory("com.miUnidadDePersistencia");
+		EntityManager em = emf.createEntityManager();
+		EventosVO evento = new EventosVO();
+		try {
+			String sql = "SELECT * FROM eventos e JOIN detalle_evento de ON de.id_detalle_evento = e.detalle_evento_id_detalle_evento  ORDER by fecha_evento desc Limit 1 ";
+			Query query = em.createNativeQuery(sql);
+			
+			List<Object[]> listOb = query.getResultList();
+
+            if (listOb.size() > 0) {
+            	Iterator<Object[]> it = listOb.iterator();
+                while (it.hasNext()) {
+                    Object[] line = it.next();
+                    Integer idEventos = (Integer) line[0];
+                    String nombre_evento = (String) line[1];
+                    String autor_evento = (String) line[2];
+                    Integer Usuario_idUsuarios = (Integer) line[3];
+                    Integer detalle_evento_id_detalle_evento = (Integer) line[4];
+                    Timestamp fecha_evento = null;
+                    if (line[5] != null) {
+                    	fecha_evento= (Timestamp) line[5];
+                    }                  
+                    Integer id_detalle_evento = (Integer) line[6];
+                    String tipo_evento = (String) line[7];
+                    String servicio_ofrecido = (String) line[8];
+                    String nombre_imagen = (String) line[9];
+                    String imagen_evento = (String) line[10];
+
+                    evento = new EventosVO(idEventos, nombre_evento, autor_evento, Usuario_idUsuarios, detalle_evento_id_detalle_evento, id_detalle_evento, tipo_evento, servicio_ofrecido, fecha_evento,nombre_imagen, imagen_evento);
+                }
+            }
+            return evento;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	@Override
+	public Object reporte(String format) throws FileNotFoundException, JRException {
+		List<EventosVO> lista = this.mostrar_eventos();
+    	String path = "C://Users//jefer//Downloads";
+    	File file = ResourceUtils.getFile("classpath:reportes/listaEventos.jrxml");
+    	JasperReport jasper = JasperCompileManager.compileReport(file.getAbsolutePath());
+    	JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(lista);
+    	
+    	Map<String, Object> parameters = new HashMap<String, Object>();
+    	parameters.put("gain java", "Knowledge");
+    	
+    	JasperPrint jasperPrint = JasperFillManager.fillReport(jasper,parameters, ds);
+    	
+    	if(format.equalsIgnoreCase("html")) {
+    		JasperExportManager.exportReportToHtmlFile(jasperPrint, path + "//listaEventos.html");
+    	}
+    	if(format.equalsIgnoreCase("pdf")) {
+    		JasperExportManager.exportReportToPdfFile(jasperPrint, path + "//listaEventos.pdf" );
+    	}
+		return null;
+	}
 }
 

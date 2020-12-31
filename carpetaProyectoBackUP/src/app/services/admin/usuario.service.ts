@@ -27,4 +27,9 @@ export class UsuarioService {
   actualizaFechalogin(id: number): Observable<RespuestasServices>{
     return this.httpClient.get<RespuestasServices>('/api/usuario/fechalogin/id=' + id);
   }
+  cargueMasivo(file: File): Observable<RespuestasServices> {
+    const formdata = new FormData();
+    formdata.append('file', file);
+    return this.httpClient.post<RespuestasServices>('/api/usuario/cargueMasivo', formdata);
+  }
 }

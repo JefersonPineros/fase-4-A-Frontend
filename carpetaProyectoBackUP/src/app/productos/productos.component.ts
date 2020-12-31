@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PedidosCarritoService } from '../services/pedidos-carrito.service';
 import Swal from 'sweetalert2';
 import { IdiomaServiceService } from '../services/idioma-service.service';
@@ -6,19 +6,23 @@ import * as Cookie from 'js-cookie';
 import { CarritoComprasComponent } from '../subProductsCom/carrito-compras/carrito-compras.component';
 import { ProductosService } from '../services/admin/productos.service';
 import { ProductosModel } from '../Models/admin/productosModel';
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css'],
   providers: [CarritoComprasComponent]
 })
-export class ProductosComponent implements OnInit {
+export class ProductosComponent implements OnInit , OnDestroy {
   public countPedidos: string;
   public listaProductosIN: Array<ProductosModel>;
   public listaProductosESP: Array<ProductosModel>;
   public ProduuctosSeleccionados: Array<ProductosModel>;
   public idiomaSelected: string;
   public listarProduct: Array<ProductosModel>;
+  public buscarProducto: string;
+  suscripcionProductos: Subscription;
   constructor(private sendProductoServices: PedidosCarritoService,
               private idiomaService: IdiomaServiceService,
               private productosServices: ProductosService) {
@@ -28,7 +32,7 @@ export class ProductosComponent implements OnInit {
     /**
      * Inyeccion de servicio de consulta de productos
      */
-    this.productosServices.getProductos().subscribe(
+    this.suscripcionProductos = this.productosServices.getProductos().subscribe(
       resp => {
         this.listarProduct = resp;
         this.listaProductosESP = this.listarProduct;
@@ -48,14 +52,17 @@ export class ProductosComponent implements OnInit {
       }
     );
   }
+  ngOnDestroy(): void {
+    this.suscripcionProductos.unsubscribe();
+  }
   ngOnInit(): void {
     this.idiomaService.getIdioma().subscribe(
       idioma => {
-        let idm = idioma;
+        const idm = idioma;
         this.idiomaSelected = idm;
       }
     );
-    let getIdiomaCookie = Cookie.get('idioma');
+    const getIdiomaCookie = Cookie.get('idioma');
     if (getIdiomaCookie != null) {
       if (getIdiomaCookie === 'espanol') {
         this.idiomaSelected = getIdiomaCookie;
@@ -68,7 +75,7 @@ export class ProductosComponent implements OnInit {
   }
 
   agregarProducto(idPro: number) {
-    let idPr: number = idPro;
+    const idPr: number = idPro;
     let contador: number = parseInt(this.countPedidos);
 
     if (this.ProduuctosSeleccionados.length > 0) {
@@ -112,5 +119,19 @@ export class ProductosComponent implements OnInit {
   }
   sendProductos() {
     this.sendProductoServices.sendProducto(this.ProduuctosSeleccionados);
+  }
+  filtrarBebida(tipo?: string): void {
+    if (tipo === undefined) {
+      this.listaProductosESP = this.listarProduct;
+    } else {
+      this.listaProductosESP = this.listarProduct.filter(tipoP => tipoP.tipo_categoria === tipo);
+    }
+  }
+  buscarProductos(): void {
+    this.listaProductosESP = this.listarProduct.filter(
+      item => {
+        return item.nombreProducto.toLowerCase().indexOf(this.buscarProducto.toLowerCase()) > -1;
+      }
+    );
   }
 }

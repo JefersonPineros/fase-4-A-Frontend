@@ -50,11 +50,11 @@
             </div>
             <div class="row eventos">
                 <div class="col-lg-4 ">
-                    <app-info-event></app-info-event>
+                    <app-info-event [idEvento]="idEvento"></app-info-event>
                 </div>
                 <div class=" col-lg-8">
                     <div class="calendario">
-                        <app-calendario-event></app-calendario-event>
+                        <app-calendario-event (pasarId)="pasarIdInfoEvent($event)"></app-calendario-event>
                     </div>
                 </div>
             </div>
@@ -88,13 +88,13 @@
                                         </a>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
 
                         <!-- <div class="col-lg-2 col-md-2 col-xl-2 col-sm-2 text-center">
                             <button class="btn btn-primary">¿Quieres saber como encontrarnos?</button>
-                            
+
                         </div> -->
                     </div>
                 </div>

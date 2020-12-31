@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import * as Cookie from 'js-cookie';
 import { IdiomaServiceService } from '../../app/services/idioma-service.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -12,7 +13,8 @@ export class HomeComponent implements OnInit {
   private accessObject: Array<any>;
   public accesoValidado: boolean;
   public idiomaSelected: string;
-  constructor(private loginService: LoginService, private idiomaServices: IdiomaServiceService) {
+  public idEvento: number;
+  constructor(private loginService: LoginService, private idiomaServices: IdiomaServiceService, private spinner: NgxSpinnerService) {
     this.sucripcion = this.loginService.getLogin().subscribe(
       validacion => {
         this.accessObject = validacion;
@@ -49,6 +51,9 @@ export class HomeComponent implements OnInit {
       this.accesoValidado = false;
     }
 
+  }
+  pasarIdInfoEvent(evento: number): void {
+    this.idEvento = evento;
   }
 
 }

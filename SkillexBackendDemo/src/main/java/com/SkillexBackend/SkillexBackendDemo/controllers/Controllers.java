@@ -17,7 +17,7 @@ import com.SkillexBackend.SkillexBackendDemo.utilidades.MultipartImage;
 
 public class Controllers {
 	
-	public String convertirImagen(String imagen, String nombre) {
+	public String convertirImagen(String imagen, String nombre, Integer tipo) {
 		String url;
 		String nombres = nombre;
 		try { 
@@ -28,10 +28,16 @@ public class Controllers {
 			byte[] imagesBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64String);
 			BufferedImage img = ImageIO.read(new ByteArrayInputStream(imagesBytes));
 			
+			if ( tipo == 1) {
+				ImageIO.write( img, tipoImagen3, new File("C:\\Users\\jefer\\Documents\\NetBeansProjects\\SkillexBackendDemo\\images\\" + nombres));
+				url = "http://localhost:8080/images/" + nombres;
+				return url;
+			} else {
+				ImageIO.write( img, tipoImagen3.toLowerCase(), new File("C:\\Users\\jefer\\Documents\\NetBeansProjects\\SkillexBackendDemo\\images\\eventos\\" + nombres));
+				url = "http://localhost:8080/images/eventos/" + nombres;
+				return url;
+			}
 			
-			ImageIO.write( img, tipoImagen3, new File("C:\\Users\\jefer\\Documents\\NetBeansProjects\\SkillexBackendDemo\\images\\" + nombres));
-			url = "http://localhost:8080/images/" + nombres;
-			return url;
 		} catch (Exception e) {
 			System.out.println("A ocurrido un error al guardar la imagen");
 			return null;

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ConfirmEqualsValidatorDirective } from './Directivas/confirm-equals-validator.directive';
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -33,6 +33,15 @@ import { UpdateUsuarioComponent } from './subAdmin/usuarios/update-usuario/updat
 import { ActualizarProductosComponent } from './subAdmin/productos/actualizar-productos/actualizar-productos.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FileUploadModule } from 'ng2-file-upload';
+import { ListarEventosComponent } from './subAdmin/eventos/listar-eventos/listar-eventos.component';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import { ActualizarEventoComponent } from './subAdmin/eventos/actualizar-evento/actualizar-evento.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+
+FullCalendarModule.registerPlugins([
+  dayGridPlugin
+]);
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +69,9 @@ import { FileUploadModule } from 'ng2-file-upload';
     IniSesionProductComponent,
     RegistroProComponent,
     UpdateUsuarioComponent,
-    ActualizarProductosComponent
+    ActualizarProductosComponent,
+    ListarEventosComponent,
+    ActualizarEventoComponent
 
   ],
   imports: [
@@ -71,10 +82,12 @@ import { FileUploadModule } from 'ng2-file-upload';
     FullCalendarModule,
     DataTablesModule,
     HttpClientModule,
-    FileUploadModule
+    FileUploadModule,
+    NgxSpinnerModule
 
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

@@ -6,9 +6,17 @@
 package com.SkillexBackend.SkillexBackendDemo.dao;
 
 import com.SkillexBackend.SkillexBackendDemo.vo.UsuarioVO;
+
+import net.sf.jasperreports.engine.JRException;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 
 import javax.mail.MessagingException;
+
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -26,4 +34,8 @@ public interface UsuarioDao {
     public Object updateUser(UsuarioVO usuario);
     public void correoMasivoSend(String mensaje, String asunto) throws MessagingException;
     public Object actualizarLogin(Integer id);
+    public Object reporte(String type) throws FileNotFoundException, JRException;
+    public Object cargueMasivo(Path file);
+    public Path upload(MultipartFile file) throws IOException;
+    public void validarArchivo(Path path);
 }
