@@ -366,6 +366,7 @@ CREATE TABLE IF NOT EXISTS `skillexBD`.`cancion_has_usuarioMusica` (
 DROP TABLE IF EXISTS `skillexBD`.`pedidos_has_productos` ;
 
 CREATE TABLE IF NOT EXISTS `skillexBD`.`pedidos_has_productos` (
+  `id` INT primary key auto_increment not null,
   `pedidos_idPedidos` INT NOT NULL,
   `productos_id_productos` INT NOT NULL,
 	cantidad_producto_pedido INT NULL,
