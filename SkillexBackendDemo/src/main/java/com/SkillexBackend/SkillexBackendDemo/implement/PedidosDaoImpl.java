@@ -38,6 +38,7 @@ public class PedidosDaoImpl implements PedidosDao {
         Integer idDetalle = null;
         Integer idPedido = null;
         String mesa = "";
+        Integer mesaP;
 
         RespuestaOperaciones resp = new RespuestaOperaciones();
         emf = Persistence.createEntityManagerFactory("com.miUnidadDePersistencia");
@@ -97,7 +98,7 @@ public class PedidosDaoImpl implements PedidosDao {
             while (it2.hasNext()) {
                 Object[] line = it2.next();
                 idPedido = (Integer) line[0];
-                mesa = (String) line[1];
+                mesaP = (Integer) line[1];
             }
             auxiliar2.close();
             //Tercer insert
@@ -117,7 +118,7 @@ public class PedidosDaoImpl implements PedidosDao {
             for (ProductosVO pro : proPedido) {
                 EntityManager em4 = emf.createEntityManager();
                 em4.getTransaction().begin();
-                String sql4 = "Insert into pedidos_has_productos values(:pedido,:producto,:cantidad)";
+                String sql4 = "Insert into pedidos_has_productos(pedidos_idPedidos,productos_id_productos,cantidad_producto_pedido) values(:pedido,:producto,:cantidad)";
                 Query query4 = em4.createNativeQuery(sql4);
                 query4.setParameter("pedido", idPedido);
                 query4.setParameter("producto", pro.getIdProductos());
@@ -205,7 +206,7 @@ public class PedidosDaoImpl implements PedidosDao {
                 Object[] line = it.next();
                 Integer idPedidos = (Integer) line[0];
                 String estadoPedido = (String) line[1];
-                String mesa = (String) line[2];
+                Integer mesa = (Integer) line[2];
                 Integer iddetallePedido = (Integer) line[3];
                 Integer valorApagar = (Integer) line[4];
                 String producto = (String) line[5];
@@ -237,8 +238,10 @@ public class PedidosDaoImpl implements PedidosDao {
                 String fecha_login = (String) line[31];
                 String turnos_laborales = (String) line[32];
                 String cedula_ciudadania = (String) line[33];
+                
+                String mesaP = mesa.toString();
 
-                almacenarPedidos = new ListarPedidosVO(idPedidos, estadoPedido, mesa, iddetallePedido, valorApagar, producto, cantidadProducto, fecha_pedido, Id_Estado_pedido, State_id, descripcion, cantidad_producto_pedido, id_productos, nombre_producto, codigo_producto, estado_producto, cantidad_producto, fecha_ingreso, id_detalle_productos, valor_inicial, valor_mas_iva, descripcion_producto, nombre_imagen, url_imagen, idUsuarios, nombreUsuario, apellidoUsuario, emailUsuario, passwordUsuario, tienda, creacion_usuario, fecha_login, turnos_laborales, cedula_ciudadania);
+                almacenarPedidos = new ListarPedidosVO(idPedidos, estadoPedido, mesaP, iddetallePedido, valorApagar, producto, cantidadProducto, fecha_pedido, Id_Estado_pedido, State_id, descripcion, cantidad_producto_pedido, id_productos, nombre_producto, codigo_producto, estado_producto, cantidad_producto, fecha_ingreso, id_detalle_productos, valor_inicial, valor_mas_iva, descripcion_producto, nombre_imagen, url_imagen, idUsuarios, nombreUsuario, apellidoUsuario, emailUsuario, passwordUsuario, tienda, creacion_usuario, fecha_login, turnos_laborales, cedula_ciudadania);
                 LPVO.add(almacenarPedidos);
             }
             if (LPVO.size() > 0) {

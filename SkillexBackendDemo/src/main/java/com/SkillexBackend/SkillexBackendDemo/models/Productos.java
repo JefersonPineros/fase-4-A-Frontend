@@ -63,11 +63,14 @@ public class Productos implements Serializable {
     @Column(name = "fecha_ingreso")
     @Temporal(TemporalType.DATE)
     private Date fechaIngreso;
+    
     @OneToMany(mappedBy = "productosIdProductos", fetch = FetchType.LAZY)
     private List<DetalleProductos> detalleProductosList;
+    
     @JoinColumn(name = "categoria_producto_id_categoria_producto", referencedColumnName = "id_categoria_producto")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private CategoriaProducto categoriaProductoIdCategoriaProducto;
+    
     @JoinColumn(name = "inventario_id_inventario", referencedColumnName = "id_inventario")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Inventario inventarioIdInventario;

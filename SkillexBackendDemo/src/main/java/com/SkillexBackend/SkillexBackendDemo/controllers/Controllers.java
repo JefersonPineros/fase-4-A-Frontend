@@ -29,11 +29,11 @@ public class Controllers {
 			BufferedImage img = ImageIO.read(new ByteArrayInputStream(imagesBytes));
 			
 			if ( tipo == 1) {
-				ImageIO.write( img, tipoImagen3, new File("C:\\Users\\jefer\\Documents\\NetBeansProjects\\SkillexBackendDemo\\images\\" + nombres));
+				ImageIO.write( img, tipoImagen3, new File("C:\\Users\\jefer\\Documents\\Documentos\\NetBeansProjects\\SkillexBackendDemo\\images\\" + nombres));
 				url = "http://localhost:8080/images/" + nombres;
 				return url;
 			} else {
-				ImageIO.write( img, tipoImagen3.toLowerCase(), new File("C:\\Users\\jefer\\Documents\\NetBeansProjects\\SkillexBackendDemo\\images\\eventos\\" + nombres));
+				ImageIO.write( img, tipoImagen3.toLowerCase(), new File("C:\\Users\\jefer\\Documents\\Documentos\\NetBeansProjects\\SkillexBackendDemo\\images\\eventos\\" + nombres));
 				url = "http://localhost:8080/images/eventos/" + nombres;
 				return url;
 			}
