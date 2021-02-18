@@ -65,7 +65,7 @@ export class GestorEventosComponent implements OnInit {
   }
   onSubmit() {
     // tslint:disable-next-line: radix
-    this.newEvent.usuario_idUsuarios = parseInt(Cookie.get('idUsuario'));
+    this.newEvent.usuario_idUsuarios = parseInt(sessionStorage.getItem('idUsuario'));
     this.eventoService.crearEvento(this.newEvent).subscribe(
       resp => {
         if (resp.codigo === '001'){

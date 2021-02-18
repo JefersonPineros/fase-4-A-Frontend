@@ -30,9 +30,10 @@ export class UpdateUsuarioComponent implements OnInit, OnDestroy {
       { id: '2', tipo: 'Bartender' }
     ];
   }
+  
   ngOnDestroy(): void {
-    this.suscripcionUsuario.unsubscribe();
-    this.SuscripcionActualizar.unsubscribe();
+    // this.suscripcionUsuario.unsubscribe();
+    // this.SuscripcionActualizar.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -45,9 +46,9 @@ export class UpdateUsuarioComponent implements OnInit, OnDestroy {
       }
     );
 
-    let uG = Cookie.get('usuario');
-    let access = Cookie.get('acceso');
-    let tipoAC = Cookie.get('tipo');
+    let uG = sessionStorage.getItem('usuario');
+    let access = sessionStorage.getItem('acceso');
+    let tipoAC = sessionStorage.getItem('tipo');
     if (uG !== undefined) {
       let accessConfirm;
       if (access === 'true') {
@@ -61,7 +62,7 @@ export class UpdateUsuarioComponent implements OnInit, OnDestroy {
         }
       }
     )
-    let getIdiomaCookye = Cookie.get('idioma');
+    let getIdiomaCookye = sessionStorage.getItem('idioma');
     if (getIdiomaCookye != null) {
       if (getIdiomaCookye === 'espanol') {
         this.idiomaSelected = getIdiomaCookye;

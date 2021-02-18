@@ -8,6 +8,7 @@ package com.SkillexBackend.SkillexBackendDemo.implement;
 import com.SkillexBackend.SkillexBackendDemo.controllers.Controllers;
 import com.SkillexBackend.SkillexBackendDemo.dao.EventosDao;
 import com.SkillexBackend.SkillexBackendDemo.vo.EventosVO;
+import com.SkillexBackend.SkillexBackendDemo.vo.ReporteVO;
 import com.SkillexBackend.SkillexBackendDemo.vo.RespuestaOperaciones;
 
 import net.bytebuddy.asm.Advice.Return;
@@ -34,6 +35,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
@@ -362,14 +365,12 @@ public class EventosDaoImpl implements EventosDao {
     	parameters.put("gain java", "Knowledge");
     	
     	JasperPrint jasperPrint = JasperFillManager.fillReport(jasper,parameters, ds);
-    	
-    	if(format.equalsIgnoreCase("html")) {
-    		JasperExportManager.exportReportToHtmlFile(jasperPrint, path + "//listaEventos.html");
-    	}
-    	if(format.equalsIgnoreCase("pdf")) {
-    		JasperExportManager.exportReportToPdfFile(jasperPrint, path + "//listaEventos.pdf" );
-    	}
-		return null;
+    	 byte[] pdf = JasperExportManager.exportReportToPdf(jasperPrint);
+    	 
+    	 String archivoBase64 = Base64.encodeBase64String(pdf);
+    	 
+    	 ReporteVO reporteBase64 = new ReporteVO(archivoBase64, "listadoEventos");
+		return reporteBase64;
 	}
 }
 

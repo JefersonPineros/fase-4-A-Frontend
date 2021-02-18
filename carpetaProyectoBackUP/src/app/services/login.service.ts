@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, delay } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { UserModel } from '../Models/userModel';
-
+import {environment} from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +14,7 @@ export class LoginService {
   }
 
   solicitarAcceso(email: string, pass: string): Observable<UserModel> {
-    return this.httpCliente.get<UserModel>('/api/usuario/access/email=' + email + '&password=' + pass);
+    return this.httpCliente.get<UserModel>(environment.apiBaseUrl+'/api/usuario/access/email=' + email + '&password=' + pass);
   }
   sendLogin(acceso: Array<any>) {
     this.subject.next(acceso);

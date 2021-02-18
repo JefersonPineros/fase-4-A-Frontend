@@ -5,13 +5,14 @@ import { ProductosModel } from 'src/app/Models/admin/productosModel';
 import { ReporteProductosService } from '../../../services/reportes/reporte-productos.service';
 import Swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
+import { descargarPDF } from 'src/app/Controller/descargaPDF-controller';
 
 @Component({
   selector: 'app-eliminar-productos',
   templateUrl: './eliminar-productos.component.html',
   styleUrls: ['./eliminar-productos.component.css']
 })
-export class EliminarProductosComponent implements OnInit, OnDestroy {
+export class EliminarProductosComponent extends descargarPDF implements OnInit, OnDestroy {
   public listaProductos: Array<ProductosModel>;
   public actPro: ProductosModel;
   cantidadPro = false;
@@ -23,11 +24,12 @@ export class EliminarProductosComponent implements OnInit, OnDestroy {
     private updateProductos: UpdateProductosService,
     private productosService: ProductosService,
     private reportesServices: ReporteProductosService) {
+    super();
     this.listaProductos = new Array<ProductosModel>();
   }
   ngOnDestroy(): void {
-    this.suscripcionProductos.unsubscribe();
-    this.suscripcionReportes.unsubscribe();
+    // this.suscripcionProductos.unsubscribe();
+    // this.suscripcionReportes.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -61,7 +63,7 @@ export class EliminarProductosComponent implements OnInit, OnDestroy {
           }
         });
       },
-      error =>{
+      error => {
         console.log(error);
       }
     );
@@ -79,6 +81,7 @@ export class EliminarProductosComponent implements OnInit, OnDestroy {
   reporte(): void {
     this.suscripcionReportes = this.reportesServices.reporteProducto('pdf').subscribe(
       resp => {
+        this.descargar(resp);
         Swal.fire({
           icon: 'success',
           title: 'Descarga exitosa',

@@ -26,9 +26,9 @@ export class AdministradorComponent implements OnInit,  OnDestroy {
   }
 
   ngOnInit(): void {
-    let uG = Cookie.get('usuario');
-    let access = Cookie.get('acceso');
-    let tipoAC = Cookie.get('tipo');
+    let uG = sessionStorage.getItem('usuario');
+    let access = sessionStorage.getItem('acceso');
+    let tipoAC = sessionStorage.getItem('tipo');
     if (uG !== undefined) {
       let accessConfirm;
       if (access === 'true') {
@@ -44,7 +44,7 @@ export class AdministradorComponent implements OnInit,  OnDestroy {
         }
       }
     )
-    let getIdiomaCookye = Cookie.get('idioma');
+    let getIdiomaCookye = sessionStorage.getItem('idioma');
     if (getIdiomaCookye != null) {
       if (getIdiomaCookye === 'espanol') {
         this.idiomaSelected = getIdiomaCookye;
@@ -56,7 +56,7 @@ export class AdministradorComponent implements OnInit,  OnDestroy {
     }
   }
   ngOnDestroy(): void {
-    this.mensajeSuscripcion.unsubscribe();
+    // this.mensajeSuscripcion.unsubscribe();
   }
   modulo(indice: string) {
     const indi: string = indice;

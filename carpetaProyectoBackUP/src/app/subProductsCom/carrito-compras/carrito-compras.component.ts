@@ -42,7 +42,7 @@ export class CarritoComprasComponent implements OnInit {
         this.idiomaSelected = idioma;
       }
     );
-    let getIdiomaCookie = Cookie.get('idioma');
+    let getIdiomaCookie = sessionStorage.getItem('idioma');
     if (getIdiomaCookie != null) {
       if (getIdiomaCookie === 'espanol' ) {
         this.idiomaSelected = getIdiomaCookie;
@@ -55,8 +55,8 @@ export class CarritoComprasComponent implements OnInit {
   }
   enviarPedido() {
 
-    let getUsuarioCookie = Cookie.get('usuario');
-    let getIdUser = parseInt(Cookie.get('idUsuario'));
+    let getUsuarioCookie = sessionStorage.getItem('usuario');
+    let getIdUser = parseInt(sessionStorage.getItem('idUsuario'));
     if (getUsuarioCookie != null) {
       try {
         this.createPedidos.idPedidos = null;

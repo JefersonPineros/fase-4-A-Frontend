@@ -41,13 +41,13 @@ export class CrearUsuarioComponent implements OnInit, OnDestroy {
     this.error = ['Correcto', 'Ingrese una contraseña valida', 'Las contraseñas no coinciden'];
   }
   ngOnDestroy(): void {
-    this.suscripcionUsuario.unsubscribe();
+    // this.suscripcionUsuario.unsubscribe();
   }
 
   ngOnInit(): void {
-    let uG = Cookie.get('usuario');
-    let access = Cookie.get('acceso');
-    let tipoAC = Cookie.get('tipo');
+    let uG = sessionStorage.getItem('usuario');
+    let access = sessionStorage.getItem('acceso');
+    let tipoAC = sessionStorage.getItem('tipo');
     if (uG !== undefined) {
       let accessConfirm;
       if (access === 'true') {
@@ -61,7 +61,7 @@ export class CrearUsuarioComponent implements OnInit, OnDestroy {
         }
       }
     )
-    let getIdiomaCookye = Cookie.get('idioma');
+    let getIdiomaCookye = sessionStorage.getItem('idioma');
     if (getIdiomaCookye != null) {
       if (getIdiomaCookye === 'espanol') {
         this.idiomaSelected = getIdiomaCookye;

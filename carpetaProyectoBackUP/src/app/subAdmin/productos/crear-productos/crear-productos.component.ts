@@ -33,7 +33,7 @@ export class CrearProductosComponent implements OnInit, OnDestroy {
     ];
   }
   ngOnDestroy(): void {
-    this.suscripcionProductos.unsubscribe();
+    // this.suscripcionProductos.unsubscribe();
   }
 
   ngOnInit(): void {

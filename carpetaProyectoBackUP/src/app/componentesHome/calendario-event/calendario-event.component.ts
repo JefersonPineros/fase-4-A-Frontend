@@ -46,12 +46,12 @@ export class CalendarioEventComponent implements OnInit, OnDestroy {
     );
   }
   ngOnDestroy(): void {
-    this.suscripcionEvento.unsubscribe();
+    // this.suscripcionEvento.unsubscribe();
   }
 
   ngOnInit(): void {
 
-    let getIdiomaCookye = Cookie.get('idioma');
+    let getIdiomaCookye = sessionStorage.getItem('idioma');
     if (getIdiomaCookye != null) {
       if (getIdiomaCookye === 'espanol') {
         this.idiomaSelected = getIdiomaCookye;

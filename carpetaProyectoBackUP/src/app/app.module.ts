@@ -37,6 +37,7 @@ import { ListarEventosComponent } from './subAdmin/eventos/listar-eventos/listar
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { ActualizarEventoComponent } from './subAdmin/eventos/actualizar-evento/actualizar-evento.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin
@@ -83,8 +84,8 @@ FullCalendarModule.registerPlugins([
     DataTablesModule,
     HttpClientModule,
     FileUploadModule,
-    NgxSpinnerModule
-
+    NgxSpinnerModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

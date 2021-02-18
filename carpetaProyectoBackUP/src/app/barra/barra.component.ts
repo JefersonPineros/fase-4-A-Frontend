@@ -23,9 +23,9 @@ export class BarraComponent implements OnInit {
   }
   ngOnInit(): void {
 
-    let tipoCookie = Cookie.get('tipo');
-    let userCookie = Cookie.get('usuario');
-    let accesoCookie = Cookie.get('acceso');
+    const tipoCookie = sessionStorage.getItem('tipo');
+    const userCookie = sessionStorage.getItem('usuario');
+    const accesoCookie = sessionStorage.getItem('acceso');
     if (userCookie !== undefined) {
       if (accesoCookie === 'true') {
         this.ingreso = true;
@@ -38,7 +38,7 @@ export class BarraComponent implements OnInit {
       this.usuario = null;
     }
 
-    $('a[data-toggle="tab"]').on('shown.bs.tab',  ( e ) => {
+    $('a[data-toggle="tab"]').on('shown.bs.tab', (e) => {
       e.target // newly activated tab
       e.relatedTarget // previous active tab
     });
@@ -51,11 +51,9 @@ export class BarraComponent implements OnInit {
         this.ingreso = this.objAccess[0].acceso;
         this.tipoUsuario = this.objAccess[0].tipo;
         this.usuario = this.objAccess[0].user;
-        console.log(this.ingreso);
-        console.log(this.tipoUsuario);
       }
-    )
-    let getIdiomaCookie = Cookie.get('idioma');
+    );
+    const getIdiomaCookie = sessionStorage.getItem('idioma');
     if (getIdiomaCookie != null) {
       if (getIdiomaCookie === 'espanol') {
         this.idiomaSeleccionado = getIdiomaCookie;
@@ -68,17 +66,18 @@ export class BarraComponent implements OnInit {
   }
   clearSesion() {
     this.loginService.clearLogin();
-    Cookie.remove('tipo');
-    Cookie.remove('usuario');
-    Cookie.remove('acceso');
-    Cookie.remove('idUsuario');
+    sessionStorage.removeItem('tipo');
+    sessionStorage.removeItem('usuario');
+    sessionStorage.removeItem('acceso');
+    sessionStorage.removeItem('idUsuario');
     location.reload();
     location.replace(this.urlHome);
   }
 
   selectIdioma(idm: string) {
     let idm1 = idm;
-    Cookie.set('idioma', idm1);
+    sessionStorage.setItem('idioma', idm1);
+    // Cookie.set('idioma', idm1);
     this.idiomaSeleccionado = idm;
     this.IdiomaService.sendIdioma(idm1);
   }

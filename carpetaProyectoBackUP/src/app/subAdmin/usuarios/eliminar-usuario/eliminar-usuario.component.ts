@@ -8,12 +8,13 @@ import { RespuestasServices } from 'src/app/Models/respuestasServices';
 import { IdiomaServiceService } from 'src/app/services/idioma-service.service';
 import { ReporteProductosService } from '../../../services/reportes/reporte-productos.service';
 import { Subscription } from 'rxjs';
+import { descargarPDF } from '../../../Controller/descargaPDF-controller';
 @Component({
   selector: 'app-eliminar-usuario',
   templateUrl: './eliminar-usuario.component.html',
   styleUrls: ['./eliminar-usuario.component.css']
 })
-export class EliminarUsuarioComponent implements OnInit, OnDestroy {
+export class EliminarUsuarioComponent extends descargarPDF implements OnInit, OnDestroy{
   public listUsuarios: Array<UserModel>;
   public seletedUser: any;
   public responseS: RespuestasServices;
@@ -25,6 +26,7 @@ export class EliminarUsuarioComponent implements OnInit, OnDestroy {
     private usuarioService: UsuarioService,
     private idiomaService: IdiomaServiceService,
     private reporteService: ReporteProductosService) {
+    super();
     this.listUsuarios = new Array<UserModel>();
   }
   ngOnInit(): void {
@@ -37,9 +39,9 @@ export class EliminarUsuarioComponent implements OnInit, OnDestroy {
       }
     );
 
-    let uG = Cookie.get('usuario');
-    let access = Cookie.get('acceso');
-    let tipoAC = Cookie.get('tipo');
+    let uG = sessionStorage.getItem('usuario');
+    let access = sessionStorage.getItem('acceso');
+    let tipoAC = sessionStorage.getItem('tipo');
     if (uG !== undefined) {
       let accessConfirm;
       if (access === 'true') {
@@ -54,7 +56,7 @@ export class EliminarUsuarioComponent implements OnInit, OnDestroy {
         }
       }
     )
-    let getIdiomaCookye = Cookie.get('idioma');
+    let getIdiomaCookye = sessionStorage.getItem('idioma');
     if (getIdiomaCookye != null) {
       if (getIdiomaCookye === 'espanol') {
         this.idiomaSelected = getIdiomaCookye;
@@ -66,8 +68,8 @@ export class EliminarUsuarioComponent implements OnInit, OnDestroy {
     }
   }
   ngOnDestroy() {
-    this.suscriptionUsuario.unsubscribe();
-    this.suscriptionResporte.unsubscribe();
+    // this.suscriptionUsuario.unsubscribe();
+    // this.suscriptionResporte.unsubscribe();
   }
   actualizarTabla(index: number) {
     const selected = index;
@@ -121,6 +123,8 @@ export class EliminarUsuarioComponent implements OnInit, OnDestroy {
   reporte(): void {
     this.suscriptionResporte = this.reporteService.reporteUsuarios('pdf').subscribe(
       resp => {
+        this.descargar(resp);
+
         Swal.fire({
           icon: 'success',
           title: 'Se ha descargado el documento',
