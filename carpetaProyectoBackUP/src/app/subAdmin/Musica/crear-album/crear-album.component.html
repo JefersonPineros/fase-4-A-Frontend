@@ -8,7 +8,7 @@
                 <div class="form-group col-md-12">
                     <label for="Nombrealbum">Nombre album</label>
                     <input type="text" class="form-control" name="nameAlbum" #nameAlbum="ngModel"
-                        [(ngModel)]="createAlbum.nameAlbum" [ngModelOptions]="{standalone:true}"
+                        [(ngModel)]="createAlbum.nombreAlbum" [ngModelOptions]="{standalone:true}"
                         pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+"
                         [style.border]="nameAlbum.touched && !nameAlbum.valid?'solid red 1px':nameAlbum.touched && nameAlbum.valid?'solid green 1px':!nameAlbum.touched?'solid grey 1px':''"
                         id="Nombrealbum" placeholder="Nombre album" required>
@@ -30,7 +30,7 @@
                 <div class="form-group col-6">
                     <label for="Generos">Genero</label>
                     <select id="geneForm" name="geneForm" #geneForm="ngModel"
-                         [(ngModel)]="createAlbum.generoAlbum" [ngModelOptions]="{standalone:true}"
+                         [(ngModel)]="createAlbum.generoId" [ngModelOptions]="{standalone:true}"
                         [style.border]="geneForm.touched && !geneForm.valid?'solid red 1px':geneForm.touched && geneForm.valid?'solid green 1px':!geneForm.touched?'solid grey 1px':''"
                         class="form-control" required>
                         
@@ -38,12 +38,12 @@
                     </select>
                 </div>
                 <div class="form-group col-12">
-                    <label for="validatedCustomFile">Seleccione una imagen</label>
-                    <div class="custom-file col-12">
-                        <input type="file" (change)="filesChangeEvent($event)" id="validatedCustomFile" required>                       
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFileLang" lang="es"  (change)="filesChangeEvent($event)" #eventoImagen>
+
+                        <label class="custom-file-label" for="customFileLang" >{{nombreImg}}</label>
                     </div>
                 </div>
-
                 <div class="form-group col-12">
                     <label for="newSong">
                         Agregue una canción
@@ -55,7 +55,7 @@
                                 <button type="button" (click)="deleteCancionGroup(pointIndex)" class="btn btn-danger">Eliminar</button>
                             </div>
                             <div class="col-auto ">
-                                <input formControlName="cancion" class="form-control" id="nombreCancion" placeholder="Nombre canción" >
+                                <input formControlName="nombreCancion" class="form-control" id="nombreCancion" placeholder="Nombre canción" >
                             </div>
                             <div class="col-auto ">
                                 <input formControlName="duracion" class="form-control" id="durationSong" placeholder="Duracion de la canción">

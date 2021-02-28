@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MusicaServiciosService } from '../services/admin/musica/musica-servicios.service';
+
 declare var $: any;
 declare let alertify: any;
 @Component({
@@ -9,7 +11,13 @@ declare let alertify: any;
 export class MusicaComponent implements OnInit {
   public visible: boolean;
   public album: Array<any>;
-  constructor() {
+  constructor(private albumesServices: MusicaServiciosService) {
+
+    this.albumesServices.listarAlbumes().subscribe(
+      resp => {
+        console.log(resp);
+      }
+    );
 
     this.visible = false;
     this.album = [

@@ -58,7 +58,6 @@ export class GestorEventosComponent implements OnInit {
       reader.onload = (): void => {
         const base64String: string = (reader.result as string).match(/.+;base64,(.+)/)[1];
         this.newEvent.imagen_evento = 'data:' + this.selectedFile.type + ';base64,' + base64String;
-        console.log(this.nameImg);
         this.newEvent.nombre_imagen = this.nameImg;
       };
     }

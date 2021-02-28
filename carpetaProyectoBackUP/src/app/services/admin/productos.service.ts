@@ -15,6 +15,7 @@ export class ProductosService {
     return this.httpCliente.get<ProductosModel[]>('/api/productos');
   }
   crearProducto(producto: CreateProduct): Observable<any> {
+
     return this.httpCliente.post<any>(environment.apiBaseUrl + '/api/productos', producto);
   }
   actualizarProoducto(producto: ProductosModel): Observable<any> {
