@@ -5,6 +5,7 @@
  */
 package com.SkillexBackend.SkillexBackendDemo.implement;
 
+import com.SkillexBackend.SkillexBackendDemo.controllers.Controllers;
 import com.SkillexBackend.SkillexBackendDemo.dao.UsuarioDao;
 import com.SkillexBackend.SkillexBackendDemo.utilidades.Email;
 import com.SkillexBackend.SkillexBackendDemo.vo.ReporteVO;
@@ -59,6 +60,8 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 	@Autowired
 	private Email email;
+	
+	Controllers controladores = new Controllers();
 
 	@Override
 	public Object save(UsuarioVO usuario) {

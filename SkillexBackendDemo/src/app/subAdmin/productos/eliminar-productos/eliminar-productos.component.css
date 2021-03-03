@@ -1,0 +1,25 @@
+.tableC{
+    margin-top: 10px;
+    border: solid black 1px;
+    border-radius: 10px;
+    padding: 2%;
+}
+.page{
+    margin-left: 35%;
+}
+.pagination li a{
+    color: black;
+}
+.tableW{
+    width: 100% !important;
+}
+tbody tr td{
+    overflow: hidden;
+    max-width: 65px;
+}
+.buttonMar{
+    margin-left: 15px;
+}
+tr:hover .hover {
+    background-color: silver;
+}

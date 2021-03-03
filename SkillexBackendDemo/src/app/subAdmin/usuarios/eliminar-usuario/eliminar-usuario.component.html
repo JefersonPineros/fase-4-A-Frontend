@@ -1,0 +1,103 @@
+<div class="">
+  <div class="table tableC">
+    <div class="titleTable">
+      <div [ngSwitch]="idiomaSelected">
+        <ng-container *ngSwitchCase="'ingles'">
+          <h4>User list</h4>
+        </ng-container>
+        <ng-container *ngSwitchCase="'espanol'">
+          <h4>Lista de usuarios</h4>
+        </ng-container>
+      </div>
+    </div>
+    <ng-container *ngIf="listUsuarios?.length > 0; else errorLista">
+
+      <div [ngSwitch]="idiomaSelected">
+        <ng-container *ngSwitchCase="'ingles'">
+          <table datatable class="row-border hover">
+
+            <thead>
+
+              <tr>
+                <td></td>
+                <th scope="col">Name</th>
+                <th scope="col">Last name</th>
+                <th scope="col">Email</th>
+                <th scope="col">User type</th>
+                <th scope="col">X/A</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr *ngFor="let user of listUsuarios; let indice= index">
+                <td>{{user.idUsuarios}}</td>
+                <th>{{user.nombreUsuario}}</th>
+                <td>{{user.apellidoUsuario}}</td>
+                <td>{{user.emailUsuario}}</td>
+                <td>
+                  {{user.tipoUsuario == 1? 'Administrador': (user.tipoUsuario) == 2? 'Cliente': (user.tipoUsuario) == 3? 'Bartender':'Sin usuario'}}
+                </td>
+                <td>
+                  <button type="button" class="btn btn-outline-danger buttonMar"
+                    (click)="eliminarUsuario(indice)">X</button>
+                  <button type="button" class="btn btn-outline-success buttonMar"
+                    (click)="actualizarTabla(indice)">A</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-container>
+        <ng-container *ngSwitchCase="'espanol'">
+          <table datatable class="row-border hover">
+            <thead>
+              <tr>
+                <td></td>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">X/A</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr *ngFor="let user of listUsuarios; let indice= index">
+                <td>{{user.idUsuarios}}</td>
+                <th>{{user.nombreUsuario}}</th>
+                <td>{{user.apellidoUsuario}}</td>
+                <td>{{user.emailUsuario}}</td>
+                <td>
+                  {{user.tipoUsuario == 1? 'Administrador': (user.tipoUsuario) == 2? 'Cliente': (user.tipoUsuario) == 3? 'Bartender':'Sin usuario'}}
+                </td>
+                <td>
+                  <button type="button" class="btn btn-outline-danger buttonMar"
+                    (click)="eliminarUsuario(indice)">X</button>
+                  <button type="button" class="btn btn-outline-success buttonMar"
+                    (click)="actualizarTabla(indice)">A</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-container>
+      </div>
+    </ng-container>
+    <ng-template #errorLista>
+      <div [ngSwitch]="idiomaSelected">
+        <ng-container *ngSwitchCase="'ingles'">
+          <div>
+            <h2>No users created</h2>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'espanol'">
+          <div>
+            <h2>No usuarios hay creados</h2>
+          </div>
+        </ng-container>
+      </div>
+    </ng-template>
+    <div class="text-center">
+
+      <button class="btn btn-danger btn-md " (click)="reporte()">Descargar reporte</button>
+    </div>
+  </div>
+</div>

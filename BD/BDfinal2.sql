@@ -200,6 +200,7 @@ CREATE TABLE IF NOT EXISTS `skillexBD`.`album_musical` (
   `genero_id_genero` INT NOT NULL,
   nombre_imagen varchar(100),
   url_imagen varchar(300),
+  activo int,
   PRIMARY KEY (`id_album_musical`),
   FOREIGN KEY (Usuario_idUsuarios) REFERENCES Usuario (idUsuarios),
   FOREIGN KEY (genero_id_genero) REFERENCES genero (id_genero)
@@ -316,7 +317,8 @@ DROP TABLE IF EXISTS `skillexBD`.`usuarioMusica` ;
 
 CREATE TABLE IF NOT EXISTS `skillexBD`.`usuarioMusica` (
   `idusuarioMusica` INT NOT NULL AUTO_INCREMENT,
-  `mesa_cancion` VARCHAR(45) NULL,
+  `mesa_cancion` VARCHAR(45) not NULL,
+  `estado` INT not null,
   PRIMARY KEY (`idusuarioMusica`))
 ENGINE = InnoDB;
 

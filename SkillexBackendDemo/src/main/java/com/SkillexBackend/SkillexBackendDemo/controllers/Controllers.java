@@ -1,24 +1,26 @@
 package com.SkillexBackend.SkillexBackendDemo.controllers;
 
-import java.awt.PageAttributes.MediaType;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.nio.file.Paths;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.UUID;
+import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
-
 import org.springframework.web.multipart.MultipartFile;
-import com.SkillexBackend.SkillexBackendDemo.utilidades.MultipartImage;
 
 public class Controllers {
 	
 	public String convertirImagen(String imagen, String nombre, Integer tipo) {
 		String url;
+		Path pathImagenes = Paths.get("images");
+		String urlFinalImagenes = pathImagenes.toUri().getRawPath();
+		Path pathEventos = Paths.get("images/eventos");
+		String urlFinalEventos = pathEventos.toUri().getRawPath();
+		Path pathAlbumes = Paths.get("images/albumes");
+		String urlFinalAlbumes = pathAlbumes.toUri().getRawPath();
 		String nombres = nombre;
 		try { 
 			String base64String = imagen.split(",")[1];
@@ -29,13 +31,19 @@ public class Controllers {
 			BufferedImage img = ImageIO.read(new ByteArrayInputStream(imagesBytes));
 			
 			if ( tipo == 1) {
-				ImageIO.write( img, tipoImagen3, new File("C:\\Users\\jefer\\Documents\\Documentos\\NetBeansProjects\\SkillexBackendDemo\\images\\" + nombres));
+				ImageIO.write( img, tipoImagen3.toLowerCase(), new File(urlFinalImagenes + nombres));
 				url = "http://localhost:8080/images/" + nombres;
 				return url;
-			} else {
-				ImageIO.write( img, tipoImagen3.toLowerCase(), new File("C:\\Users\\jefer\\Documents\\Documentos\\NetBeansProjects\\SkillexBackendDemo\\images\\eventos\\" + nombres));
+			} else if (tipo == 2) {
+				ImageIO.write( img, tipoImagen3.toLowerCase(), new File(urlFinalEventos + nombres));
 				url = "http://localhost:8080/images/eventos/" + nombres;
 				return url;
+			} else if (tipo == 3) {
+				ImageIO.write( img, tipoImagen3.toLowerCase(), new File(urlFinalAlbumes + nombres));
+				url = "http://localhost:8080/images/albumes/" + nombres;
+				return url;
+			} else {
+				return "";
 			}
 			
 		} catch (Exception e) {

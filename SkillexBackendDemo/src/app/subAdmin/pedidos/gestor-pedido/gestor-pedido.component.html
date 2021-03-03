@@ -1,0 +1,80 @@
+<div class="">
+  <div class="row mt-4">
+    <div class="col-lg-12 tablePedidos">
+      <div class=" tabla-pedido table" *ngIf="listadoPedidos.length > 0; else tablaError">
+        <table datatable>
+          <thead>
+            <tr>
+              <td scope="col">Id pedido</td>
+              <td scope="col">Estado pedido</td>
+              <td scope="col">Mesa</td>
+              <td scope="col">Fecha</td>
+              <td>acciones</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor=" let item of listadoPedidos">
+              <td>{{item.idPedidos}}</td>
+              <td>{{item.estadoPedidos}}</td>
+              <td>{{item.mesa}}</td>
+              <td>{{item.fechaPedido}}</td>
+              <td>
+                <button class="btn btn-primary" (click)="procesarPedido(item.idPedidos)">Procesar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-template #tablaError>
+        <h3>No hay ningun pedido</h3>
+      </ng-template>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="row mt-4">
+        <div class="col-lg-6">
+          <div class="desProduct">
+            <h5 class="titulodes">Pedido seleccionado</h5>
+            <div *ngIf="pedidoAProcesar.idPedidos != null">
+              <p class="desPedi">Numero de pedido: <span> {{pedidoAProcesar.idPedidos}} </span> </p>
+              <p class="desPedi">Fecha pedido: <span>{{pedidoAProcesar.fechaPedido}}</span></p>
+              <p class="desPedi">Mesa: <span>{{pedidoAProcesar.mesa}}</span> </p>
+              <p class="desPedi">Usuario: <span>{{pedidoAProcesar.usuario.nombreUsuario}}
+                  {{pedidoAProcesar.usuario.apellidoUsuario}}</span> </p>
+              <p class="desPedi">Tota del pedido: ${{totalPedido}}</p>
+              <div class="caja-botones">
+                <button class="btn btn-success" (click)="aceptarPedido(2)">Aceptar</button>
+                <button class="btn btn-warning" (click)="aceptarPedido(1)">Terminar</button>
+                <button class="btn btn-danger" (click)="aceptarPedido(4)">Rechazar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="desProductS">
+            <h5 class="titulodes">Productos relacionados</h5>
+            <div *ngFor="let prod of pedidoAProcesar.producto">
+              <div class="prod-seleccionado">
+                <div class="">
+                  <h5>Nombre: {{prod.nombreProducto}}</h5>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <p>Cantidad solicitada: {{prod.cantidadProducto}}</p>
+                  </div>
+                  <div class="col-lg-6">
+                    <p>Valor mas iva U/N: {{prod.valor_mas_iva}}</p>
+                  </div>
+                  <div class="col-lg-12">
+                    <p>Total producto: {{prod.valor_mas_iva * prod.cantidadProducto}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

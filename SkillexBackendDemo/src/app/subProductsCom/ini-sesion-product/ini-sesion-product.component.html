@@ -1,0 +1,34 @@
+<div class="col-lg-12 ">
+    <div class="row">
+        <div class="col-12">
+            <form #formsesionP="ngForm" (ngSubmit)="onSubmit()">
+                <div class="form-group formsesionP">
+                    <label for="">Email usuario</label>
+                    <input type="email" class="form-control"  name="userEmailF"
+                    pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" type="email"
+                    [style.border]="userEmailF.touched && !userEmailF.valid?'solid red 1px':userEmailF.touched && userEmailF.valid?'solid green 1px':!userEmailF.touched?'solid grey 1px':''"
+                    #userEmailF="ngModel" [(ngModel)]="sesion.emailSesion" placeholder="Email usuario" required>
+                    <span class="validForm" *ngIf="userEmailF.touched && userEmailF.valid ">Correcto</span>
+                    <span class="errorForm" *ngIf="userEmailF.touched && !userEmailF.valid ">El campo esta vacío o mal escrito</span>
+                </div>
+                <div class="form-group formsesionP">
+                    <label for="">Contraseña usuario</label>
+                    <input type="password" class="form-control"
+                    name="passwordUser" #passwordUser="ngModel" [(ngModel)]="sesion.contrasenaSesion"
+                    [style.border]="passwordUser.touched && !passwordUser.valid?'solid red 1px':passwordUser.touched && passwordUser.valid?'solid green 1px':!passwordUser.touched?'solid grey 1px':''"
+                    pattern="[a-zA-Z0-9#$%&’*+/=?^_`-]+"
+                    placeholder="Contraseña" required>
+                    <span class="validForm" *ngIf="passwordUser.touched && passwordUser.valid ">Correcto</span>
+                    <span class="errorForm" *ngIf="passwordUser.touched && !passwordUser.valid">Por favor ingrese su contraseña</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" (click)="onSubmit()" [disabled]="!formsesionP.valid" data-dismiss="modal" value="ingresar">Iniciar sesión</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+

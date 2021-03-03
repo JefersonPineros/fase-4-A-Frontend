@@ -23,6 +23,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ import java.util.Optional;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -41,7 +43,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -58,13 +62,13 @@ public class ProductosServices {
 	// crear nuevo producto
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody ProductosCrearVO producto) {
-		Object resp = productosDao.save(producto);
-		if (resp != null) {
-			return ResponseEntity.ok(resp);
-		} else {
-			return ResponseEntity.notFound().build();
-		}
-	}
+        Object resp = productosDao.save(producto);
+        if(resp != null){
+            return ResponseEntity.ok(resp);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 	// Read productos
 	@GetMapping("/{id}")
