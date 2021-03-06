@@ -93,16 +93,17 @@ public class ProductosServices {
 
 	// Listar todos los productos
 	@GetMapping()
-	public ResponseEntity<?> readAll() {
+	public ResponseEntity<List<ProductosVO>> readAll() {
 		List<ProductosVO> list = productosDao.mostrar_productos();
 		if (list.size() > 0) {
-			return ResponseEntity.ok(list);
+			//return ResponseEntity.ok(list);
+			return new ResponseEntity<List<ProductosVO>>(list, HttpStatus.OK);
 		} else {
 			return ResponseEntity.notFound().build();
 		}
 	}
 
-	@PostMapping("/actualizar/")
+	@PostMapping(path = "/actualizar/", consumes = MediaType.APPLICATION_JSON_VALUE )
 	public ResponseEntity<?> updateProducto(@RequestBody ProductosVO producto) {
 		Object respuesta = productosDao.updateProducto(producto);
 		if (respuesta != null) {

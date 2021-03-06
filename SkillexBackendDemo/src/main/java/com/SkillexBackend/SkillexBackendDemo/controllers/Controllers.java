@@ -32,15 +32,18 @@ public class Controllers {
 			
 			if ( tipo == 1) {
 				ImageIO.write( img, tipoImagen3.toLowerCase(), new File(urlFinalImagenes + nombres));
-				url = "http://localhost:8080/images/" + nombres;
+				//http://localhost:8080/images/
+				url = "https://power-riff-metal-bar.herokuapp.com/images/" + nombres;
 				return url;
 			} else if (tipo == 2) {
 				ImageIO.write( img, tipoImagen3.toLowerCase(), new File(urlFinalEventos + nombres));
-				url = "http://localhost:8080/images/eventos/" + nombres;
+				//http://localhost:8080/images/eventos/
+				url = "https://power-riff-metal-bar.herokuapp.com/images/eventos/" + nombres;
 				return url;
 			} else if (tipo == 3) {
 				ImageIO.write( img, tipoImagen3.toLowerCase(), new File(urlFinalAlbumes + nombres));
-				url = "http://localhost:8080/images/albumes/" + nombres;
+				//http://localhost:8080/images/albumes/
+				url = "https://power-riff-metal-bar.herokuapp.com/images/albumes/" + nombres;
 				return url;
 			} else {
 				return "";

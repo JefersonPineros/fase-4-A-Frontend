@@ -390,7 +390,6 @@ public class PedidosDaoImpl extends Consultas implements PedidosDao {
 						em4.getTransaction().begin();
 						
 						String consulta = "UPDATE productos SET cantidad_producto =";
-						String sql4 = "";
 						
 						for (ProductosVO producto : pedidos.getProducto() ) {
 							String consulta2 = "";
@@ -401,13 +400,8 @@ public class PedidosDaoImpl extends Consultas implements PedidosDao {
 									consulta2 = consulta + " " + cantidadFinal + " WHERE id_productos = " + idUpdate + ";\n" ;
 								}
 							}
-							//sql4 = sql4 + consulta2;
 							this.consultas(consulta2);
 						}
-						//System.out.println(sql4);
-						//Query query4 = em4.createNativeQuery(sql4);
-						//query4.executeUpdate();
-						//em4.getTransaction().commit();
 					}
 				}
 
