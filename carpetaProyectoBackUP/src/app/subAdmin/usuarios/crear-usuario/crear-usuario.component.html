@@ -2,118 +2,319 @@
   <ng-container *ngSwitchCase="'espanol'">
     <div class="usuarioContainer">
       <div class="tituloCrear">
-        <h4>
-          Crear usuario
-        </h4>
+        <h4>Crear usuario</h4>
       </div>
-      <hr>
+      <hr />
       <div class="cargueMasivo">
         <div><h6>Cargue masivo</h6></div>
         <div class="form-group col-12">
           <div class="custom-file">
-            <input type="file" class="custom-file-input" id="customFileLang" lang="es" (change)="uploadFile($event)"
-              #eventoImagen>
-            <label class="custom-file-label" for="customFileLang">{{archivo}}</label>
+            <input
+              type="file"
+              class="custom-file-input"
+              id="customFileLang"
+              lang="es"
+              (change)="uploadFile($event)"
+              #eventoImagen
+            />
+            <label class="custom-file-label" for="customFileLang">{{
+              archivo
+            }}</label>
           </div>
         </div>
       </div>
-      <hr>
+      <hr />
       <form #crearUsuarioForm="ngForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="primerNombre">Nombres</label>
-            <input type="text" class="form-control" id="primerNombre" name="firstName" #firstName="ngModel"
+            <input
+              type="text"
+              class="form-control"
+              id="primerNombre"
+              name="firstName"
+              #firstName="ngModel"
               [(ngModel)]="crearUsuarioAdmin.nombreUsuario"
               pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"
-              [style.border]="firstName.touched && !firstName.valid?'solid red 1px':firstName.touched && firstName.valid?'solid green 1px':!firstName.touched?'solid grey 1px':''"
-              placeholder="Ingrese un nombre" required>
-            <span class="validForm" *ngIf="firstName.touched && firstName.valid">Correcto</span>
-            <span class="errorForm" *ngIf="firstName.touched && !firstName.valid">No ha ingresado un dato valido</span>
+              [style.border]="
+                firstName.touched && !firstName.valid
+                  ? 'solid red 1px'
+                  : firstName.touched && firstName.valid
+                  ? 'solid green 1px'
+                  : !firstName.touched
+                  ? 'solid grey 1px'
+                  : ''
+              "
+              placeholder="Ingrese un nombre"
+              required
+            />
+            <span class="validForm" *ngIf="firstName.touched && firstName.valid"
+              >Correcto</span
+            >
+            <span
+              class="errorForm"
+              *ngIf="firstName.touched && !firstName.valid"
+              >No ha ingresado un dato valido</span
+            >
           </div>
           <div class="form-group col-md-6">
             <label for="segundoNombre">Apellidos</label>
-            <input type="text" class="form-control" id="segundoNombre" name="lastName" #lastName="ngModel"
+            <input
+              type="text"
+              class="form-control"
+              id="segundoNombre"
+              name="lastName"
+              #lastName="ngModel"
               [(ngModel)]="crearUsuarioAdmin.apellidoUsuario"
               pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"
-              [style.border]="lastName.touched && !lastName.valid?'solid red 1px':lastName.touched && lastName.valid?'solid green 1px':!lastName.touched?'solid grey 1px':''"
-              placeholder="Ingrese un apellido" required>
-            <span class="validForm" *ngIf="lastName.touched && lastName.valid">Correcto</span>
-            <span class="errorForm" *ngIf="lastName.touched && !lastName.valid">No ha ingresado un dato valido</span>
+              [style.border]="
+                lastName.touched && !lastName.valid
+                  ? 'solid red 1px'
+                  : lastName.touched && lastName.valid
+                  ? 'solid green 1px'
+                  : !lastName.touched
+                  ? 'solid grey 1px'
+                  : ''
+              "
+              placeholder="Ingrese un apellido"
+              required
+            />
+            <span class="validForm" *ngIf="lastName.touched && lastName.valid"
+              >Correcto</span
+            >
+            <span class="errorForm" *ngIf="lastName.touched && !lastName.valid"
+              >No ha ingresado un dato valido</span
+            >
           </div>
           <div class="form-group col-6">
             <label for="cedulaForm">Documento de identidad</label>
-            <input type="text" class="form-control" id="cedulaForm" name="documento" #documento="ngModel"
-              [(ngModel)]="crearUsuarioAdmin.cedulaCiudadania" pattern="[0-9]+"
-              [style.border]="documento.touched && !documento.valid?'solid red 1px':documento.touched && documento.valid?'solid green 1px':!documento.touched?'solid grey 1px':''"
-              placeholder="Ingrese un número de documento" required>
-            <span class="validForm" *ngIf="documento.touched && documento.valid">Correcto</span>
-            <span class="errorForm" *ngIf="documento.touched && !documento.valid">No ha ingresado un dato valido</span>
+            <input
+              type="text"
+              class="form-control"
+              id="cedulaForm"
+              name="documento"
+              #documento="ngModel"
+              [(ngModel)]="crearUsuarioAdmin.cedulaCiudadania"
+              pattern="[0-9]+"
+              [style.border]="
+                documento.touched && !documento.valid
+                  ? 'solid red 1px'
+                  : documento.touched && documento.valid
+                  ? 'solid green 1px'
+                  : !documento.touched
+                  ? 'solid grey 1px'
+                  : ''
+              "
+              placeholder="Ingrese un número de documento"
+              required
+            />
+            <span class="validForm" *ngIf="documento.touched && documento.valid"
+              >Correcto</span
+            >
+            <span
+              class="errorForm"
+              *ngIf="documento.touched && !documento.valid"
+              >No ha ingresado un dato valido</span
+            >
           </div>
           <div class="form-group col-12">
             <label for="correoElectronico">Correo electronico</label>
-            <input type="text" class="form-control" id="correoElectronico" name="newEmail" #newEmail="ngModel"
+            <input
+              type="text"
+              class="form-control"
+              id="correoElectronico"
+              name="newEmail"
+              #newEmail="ngModel"
               [(ngModel)]="crearUsuarioAdmin.emailUsuario"
               pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
-              [style.border]="newEmail.touched && !newEmail.valid?'solid red 1px':newEmail.touched && newEmail.valid?'solid green 1px':!newEmail.touched?'solid grey 1px':''"
-              placeholder="Correo electronico" required>
-            <span class="validForm" *ngIf="newEmail.touched && newEmail.valid">Correcto</span>
-            <span class="errorForm" *ngIf="newEmail.touched && !newEmail.valid">No ha ingresado un dato valido</span>
+              [style.border]="
+                newEmail.touched && !newEmail.valid
+                  ? 'solid red 1px'
+                  : newEmail.touched && newEmail.valid
+                  ? 'solid green 1px'
+                  : !newEmail.touched
+                  ? 'solid grey 1px'
+                  : ''
+              "
+              placeholder="Correo electronico"
+              required
+            />
+            <span class="validForm" *ngIf="newEmail.touched && newEmail.valid"
+              >Correcto</span
+            >
+            <span class="errorForm" *ngIf="newEmail.touched && !newEmail.valid"
+              >No ha ingresado un dato valido</span
+            >
           </div>
           <div class="form-group col-6">
             <label for="tiendaForm">Tienda a laborar</label>
-            <input type="text" class="form-control" id="tiendaForm" name="tienda" #tienda="ngModel"
+            <input
+              type="text"
+              class="form-control"
+              id="tiendaForm"
+              name="tienda"
+              #tienda="ngModel"
               [(ngModel)]="crearUsuarioAdmin.tienda"
               pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"
-              [style.border]="tienda.touched && !tienda.valid?'solid red 1px':tienda.touched && tienda.valid?'solid green 1px':!tienda.touched?'solid grey 1px':''"
-              placeholder="Ingrese sitio de trabajo" required>
-            <span class="validForm" *ngIf="tienda.touched && tienda.valid">Correcto</span>
-            <span class="errorForm" *ngIf="tienda.touched && !tienda.valid">No ha ingresado un dato valido</span>
+              [style.border]="
+                tienda.touched && !tienda.valid
+                  ? 'solid red 1px'
+                  : tienda.touched && tienda.valid
+                  ? 'solid green 1px'
+                  : !tienda.touched
+                  ? 'solid grey 1px'
+                  : ''
+              "
+              placeholder="Ingrese sitio de trabajo"
+              required
+            />
+            <span class="validForm" *ngIf="tienda.touched && tienda.valid"
+              >Correcto</span
+            >
+            <span class="errorForm" *ngIf="tienda.touched && !tienda.valid"
+              >No ha ingresado un dato valido</span
+            >
           </div>
           <div class="form-group col-md-6">
             <label for="inputState">Tipo usuario</label>
-            <select id="inputState" name="tipoUser" #tipoUser="ngModel" [(ngModel)]="crearUsuarioAdmin.tipoUsuario"
-              [style.border]="tipoUser.touched && !tipoUser.valid?'solid red 1px':tipoUser.touched && tipoUser.valid?'solid green 1px':!tipoUser.touched?'solid grey 1px':''"
-              class="form-control" required>
-              <option *ngFor="let value of tipo" [ngValue]="value.id" selected>{{value.tipo}}</option>
+            <select
+              id="inputState"
+              name="tipoUser"
+              #tipoUser="ngModel"
+              [(ngModel)]="crearUsuarioAdmin.tipoUsuario"
+              [style.border]="
+                tipoUser.touched && !tipoUser.valid
+                  ? 'solid red 1px'
+                  : tipoUser.touched && tipoUser.valid
+                  ? 'solid green 1px'
+                  : !tipoUser.touched
+                  ? 'solid grey 1px'
+                  : ''
+              "
+              class="form-control"
+              required
+            >
+              <option *ngFor="let value of tipo" [ngValue]="value.id" selected>
+                {{ value.tipo }}
+              </option>
             </select>
-            <span class="validForm" *ngIf=" tipoUser.valid">Correcto</span>
-            <span class="errorForm" *ngIf="tipoUser.touched && !tipoUser.valid">Seleccione un tipo de usuario</span>
+            <span class="validForm" *ngIf="tipoUser.valid">Correcto</span>
+            <span class="errorForm" *ngIf="tipoUser.touched && !tipoUser.valid"
+              >Seleccione un tipo de usuario</span
+            >
           </div>
           <div class="form-group col-12">
             <label for="turnosForm">Turnos laborales</label>
-            <input type="text" class="form-control" id="turnosForm" name="turnos" #turnos="ngModel"
+            <input
+              type="text"
+              class="form-control"
+              id="turnosForm"
+              name="turnos"
+              #turnos="ngModel"
               [(ngModel)]="crearUsuarioAdmin.turnosLaborales"
               pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"
-              [style.border]="turnos.touched && !turnos.valid?'solid red 1px':turnos.touched && turnos.valid?'solid green 1px':!turnos.touched?'solid grey 1px':''"
-              placeholder="Ingrese los turnos a laborar" required>
-            <span class="validForm" *ngIf="turnos.touched && turnos.valid">Correcto</span>
-            <span class="errorForm" *ngIf="turnos.touched && !turnos.valid">No ha ingresado un dato valido</span>
+              [style.border]="
+                turnos.touched && !turnos.valid
+                  ? 'solid red 1px'
+                  : turnos.touched && turnos.valid
+                  ? 'solid green 1px'
+                  : !turnos.touched
+                  ? 'solid grey 1px'
+                  : ''
+              "
+              placeholder="Ingrese los turnos a laborar"
+              required
+            />
+            <span class="validForm" *ngIf="turnos.touched && turnos.valid"
+              >Correcto</span
+            >
+            <span class="errorForm" *ngIf="turnos.touched && !turnos.valid"
+              >No ha ingresado un dato valido</span
+            >
           </div>
           <div class="form-group col-6">
             <label for="contraseñaForm">Contraseña *</label>
-            <input type="password" class="form-control" id="contraseñaForm" pattern="[a-zA-Z0-9#$%&’*+/=?^_`-]+"
-              name="passForm" #passForm="ngModel" [(ngModel)]="crearUsuarioAdmin.passwordUsuario"
-              [style.border]="passForm.touched && !passForm.valid?'solid red 1px':passForm.touched && passForm.valid?'solid green 1px':!passForm.touched?'solid grey 1px':''"
-              placeholder="Contraseña" required>
-            <span class="validForm" *ngIf="passForm.touched && passForm.valid">Correcto</span>
-            <span class="errorForm" *ngIf="passForm.touched && !passForm.valid">Ingrese una contraseña.</span>
+            <input
+              type="password"
+              class="form-control"
+              id="contraseñaForm"
+              pattern="[a-zA-Z0-9#$%&’*+/=?^_`-]+"
+              name="passForm"
+              #passForm="ngModel"
+              [(ngModel)]="crearUsuarioAdmin.passwordUsuario"
+              [style.border]="
+                passForm.touched && !passForm.valid
+                  ? 'solid red 1px'
+                  : passForm.touched && passForm.valid
+                  ? 'solid green 1px'
+                  : !passForm.touched
+                  ? 'solid grey 1px'
+                  : ''
+              "
+              placeholder="Contraseña"
+              required
+            />
+            <span class="validForm" *ngIf="passForm.touched && passForm.valid"
+              >Correcto</span
+            >
+            <span class="errorForm" *ngIf="passForm.touched && !passForm.valid"
+              >Ingrese una contraseña.</span
+            >
           </div>
           <div class="form-group col-6">
             <label for="confirmarContraseñaForm">Confirmar contraseña *</label>
-            <input type="password" class="form-control" id="confirmarContraseñaForm"
-              pattern="[a-zA-Z0-9#$%&’*+/=?^_`-]+" appConfirmEqualsValidator="passForm" name="confirmPass"
-              #confirmPass="ngModel" [(ngModel)]="pass2"
-              [style.border]="confirmPass.touched && !confirmPass.valid?'solid red 1px':confirmPass.touched && confirmPass.valid?'solid green 1px':!confirmPass.touched?'solid grey 1px':!confirmacion?'solid red 1px':confirmacion?'solid green 1px':''"
-              placeholder="Confirmar contraseña" required>
-            <span class="validForm" *ngIf="confirmPass.touched && confirmPass.valid">Correcto</span>
-            <span class="errorForm" *ngIf="confirmPass.touched && confirmPass.errors?.required">Ingrese una
-              contraseña.</span>
-            <span class="errorForm"
-              *ngIf="confirmPass.errors?.notEquals && confirmPass.touched && !confirmPass.errors?.required">Las
-              contraseñas deben ser iguales</span>
+            <input
+              type="password"
+              class="form-control"
+              id="confirmarContraseñaForm"
+              pattern="[a-zA-Z0-9#$%&’*+/=?^_`-]+"
+              appConfirmEqualsValidator="passForm"
+              name="confirmPass"
+              #confirmPass="ngModel"
+              [(ngModel)]="pass2"
+              [style.border]="
+                confirmPass.touched && !confirmPass.valid
+                  ? 'solid red 1px'
+                  : confirmPass.touched && confirmPass.valid
+                  ? 'solid green 1px'
+                  : !confirmPass.touched
+                  ? 'solid grey 1px'
+                  : !confirmacion
+                  ? 'solid red 1px'
+                  : confirmacion
+                  ? 'solid green 1px'
+                  : ''
+              "
+              placeholder="Confirmar contraseña"
+              required
+            />
+            <span
+              class="validForm"
+              *ngIf="confirmPass.touched && confirmPass.valid"
+              >Correcto</span
+            >
+            <span
+              class="errorForm"
+              *ngIf="confirmPass.touched && confirmPass.errors?.required"
+              >Ingrese una contraseña.</span
+            >
+            <span
+              class="errorForm"
+              *ngIf="
+                confirmPass.errors?.notEquals &&
+                confirmPass.touched &&
+                !confirmPass.errors?.required
+              "
+              >Las contraseñas deben ser iguales</span
+            >
           </div>
-          <button type="submit" [disabled]="!crearUsuarioForm.form.valid"
-            class="btn  btn-outline-danger btn-block">Crear usuario</button>
+          <button
+            type="submit"
+            [disabled]="!crearUsuarioForm.form.valid"
+            class="btn btn-outline-danger btn-block"
+          >
+            Crear usuario
+          </button>
         </div>
       </form>
     </div>
@@ -121,118 +322,319 @@
   <ng-container *ngSwitchCase="'ingles'">
     <div class="usuarioContainer">
       <div class="tituloCrear">
-        <h4>
-          Create user
-        </h4>
+        <h4>Create user</h4>
       </div>
-      <hr>
+      <hr />
       <div class="cargueMasivo">
         <div class="form-group col-12">
           <div class="custom-file">
-            <input type="file" class="custom-file-input" id="customFileLang" lang="es" (change)="uploadFile($event)"
-              #eventoImagen>
+            <input
+              type="file"
+              class="custom-file-input"
+              id="customFileLang"
+              lang="es"
+              (change)="uploadFile($event)"
+              #eventoImagen
+            />
 
-            <label class="custom-file-label" for="customFileLang">{{archivo}}</label>
+            <label class="custom-file-label" for="customFileLang">{{
+              archivo
+            }}</label>
           </div>
         </div>
       </div>
-      <hr>
+      <hr />
       <form #crearUsuarioForm="ngForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="primerNombre">Name</label>
-            <input type="text" class="form-control" id="primerNombre" name="firstName" #firstName="ngModel"
+            <input
+              type="text"
+              class="form-control"
+              id="primerNombre"
+              name="firstName"
+              #firstName="ngModel"
               [(ngModel)]="crearUsuarioAdmin.nombreUsuario"
               pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"
-              [style.border]="firstName.touched && !firstName.valid?'solid red 1px':firstName.touched && firstName.valid?'solid green 1px':!firstName.touched?'solid grey 1px':''"
-              placeholder="Name" required>
-            <span class="validForm" *ngIf="firstName.touched && firstName.valid">Correcto</span>
-            <span class="errorForm" *ngIf="firstName.touched && !firstName.valid">No ha ingresado un dato valido</span>
+              [style.border]="
+                firstName.touched && !firstName.valid
+                  ? 'solid red 1px'
+                  : firstName.touched && firstName.valid
+                  ? 'solid green 1px'
+                  : !firstName.touched
+                  ? 'solid grey 1px'
+                  : ''
+              "
+              placeholder="Name"
+              required
+            />
+            <span class="validForm" *ngIf="firstName.touched && firstName.valid"
+              >Correcto</span
+            >
+            <span
+              class="errorForm"
+              *ngIf="firstName.touched && !firstName.valid"
+              >No ha ingresado un dato valido</span
+            >
           </div>
           <div class="form-group col-md-6">
             <label for="segundoNombre">Last name</label>
-            <input type="text" class="form-control" id="segundoNombre" name="lastName" #lastName="ngModel"
+            <input
+              type="text"
+              class="form-control"
+              id="segundoNombre"
+              name="lastName"
+              #lastName="ngModel"
               [(ngModel)]="crearUsuarioAdmin.apellidoUsuario"
               pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"
-              [style.border]="lastName.touched && !lastName.valid?'solid red 1px':lastName.touched && lastName.valid?'solid green 1px':!lastName.touched?'solid grey 1px':''"
-              placeholder="Last name" required>
-            <span class="validForm" *ngIf="lastName.touched && lastName.valid">Correcto</span>
-            <span class="errorForm" *ngIf="lastName.touched && !lastName.valid">No ha ingresado un dato valido</span>
+              [style.border]="
+                lastName.touched && !lastName.valid
+                  ? 'solid red 1px'
+                  : lastName.touched && lastName.valid
+                  ? 'solid green 1px'
+                  : !lastName.touched
+                  ? 'solid grey 1px'
+                  : ''
+              "
+              placeholder="Last name"
+              required
+            />
+            <span class="validForm" *ngIf="lastName.touched && lastName.valid"
+              >Correcto</span
+            >
+            <span class="errorForm" *ngIf="lastName.touched && !lastName.valid"
+              >No ha ingresado un dato valido</span
+            >
           </div>
           <div class="form-group col-6">
             <label for="cedulaForm">Identification document</label>
-            <input type="text" class="form-control" id="cedulaForm" name="documento" #documento="ngModel"
-              [(ngModel)]="crearUsuarioAdmin.cedulaCiudadania" pattern="[0-9]+"
-              [style.border]="documento.touched && !documento.valid?'solid red 1px':documento.touched && documento.valid?'solid green 1px':!documento.touched?'solid grey 1px':''"
-              placeholder="identification card" required>
-            <span class="validForm" *ngIf="documento.touched && documento.valid">Correcto</span>
-            <span class="errorForm" *ngIf="documento.touched && !documento.valid">No ha ingresado un dato valido</span>
+            <input
+              type="text"
+              class="form-control"
+              id="cedulaForm"
+              name="documento"
+              #documento="ngModel"
+              [(ngModel)]="crearUsuarioAdmin.cedulaCiudadania"
+              pattern="[0-9]+"
+              [style.border]="
+                documento.touched && !documento.valid
+                  ? 'solid red 1px'
+                  : documento.touched && documento.valid
+                  ? 'solid green 1px'
+                  : !documento.touched
+                  ? 'solid grey 1px'
+                  : ''
+              "
+              placeholder="identification card"
+              required
+            />
+            <span class="validForm" *ngIf="documento.touched && documento.valid"
+              >Correcto</span
+            >
+            <span
+              class="errorForm"
+              *ngIf="documento.touched && !documento.valid"
+              >No ha ingresado un dato valido</span
+            >
           </div>
           <div class="form-group col-12">
             <label for="correoElectronico">Email</label>
-            <input type="text" class="form-control" id="correoElectronico" name="newEmail" #newEmail="ngModel"
+            <input
+              type="text"
+              class="form-control"
+              id="correoElectronico"
+              name="newEmail"
+              #newEmail="ngModel"
               [(ngModel)]="crearUsuarioAdmin.emailUsuario"
               pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
-              [style.border]="newEmail.touched && !newEmail.valid?'solid red 1px':newEmail.touched && newEmail.valid?'solid green 1px':!newEmail.touched?'solid grey 1px':''"
-              placeholder="Email" required>
-            <span class="validForm" *ngIf="newEmail.touched && newEmail.valid">Correcto</span>
-            <span class="errorForm" *ngIf="newEmail.touched && !newEmail.valid">No ha ingresado un dato valido</span>
+              [style.border]="
+                newEmail.touched && !newEmail.valid
+                  ? 'solid red 1px'
+                  : newEmail.touched && newEmail.valid
+                  ? 'solid green 1px'
+                  : !newEmail.touched
+                  ? 'solid grey 1px'
+                  : ''
+              "
+              placeholder="Email"
+              required
+            />
+            <span class="validForm" *ngIf="newEmail.touched && newEmail.valid"
+              >Correcto</span
+            >
+            <span class="errorForm" *ngIf="newEmail.touched && !newEmail.valid"
+              >No ha ingresado un dato valido</span
+            >
           </div>
           <div class="form-group col-6">
             <label for="tiendaForm">Store</label>
-            <input type="text" class="form-control" id="tiendaForm" name="tienda" #tienda="ngModel"
+            <input
+              type="text"
+              class="form-control"
+              id="tiendaForm"
+              name="tienda"
+              #tienda="ngModel"
               [(ngModel)]="crearUsuarioAdmin.tienda"
               pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"
-              [style.border]="tienda.touched && !tienda.valid?'solid red 1px':tienda.touched && tienda.valid?'solid green 1px':!tienda.touched?'solid grey 1px':''"
-              placeholder="Store" required>
-            <span class="validForm" *ngIf="tienda.touched && tienda.valid">Correcto</span>
-            <span class="errorForm" *ngIf="tienda.touched && !tienda.valid">No ha ingresado un dato valido</span>
+              [style.border]="
+                tienda.touched && !tienda.valid
+                  ? 'solid red 1px'
+                  : tienda.touched && tienda.valid
+                  ? 'solid green 1px'
+                  : !tienda.touched
+                  ? 'solid grey 1px'
+                  : ''
+              "
+              placeholder="Store"
+              required
+            />
+            <span class="validForm" *ngIf="tienda.touched && tienda.valid"
+              >Correcto</span
+            >
+            <span class="errorForm" *ngIf="tienda.touched && !tienda.valid"
+              >No ha ingresado un dato valido</span
+            >
           </div>
           <div class="form-group col-md-6">
             <label for="inputState">User type</label>
-            <select id="inputState" name="tipoUser" #tipoUser="ngModel" [(ngModel)]="crearUsuarioAdmin.tipoUsuario"
-              [style.border]="tipoUser.touched && !tipoUser.valid?'solid red 1px':tipoUser.touched && tipoUser.valid?'solid green 1px':!tipoUser.touched?'solid grey 1px':''"
-              class="form-control" required>
-              <option *ngFor="let value of tipo" [ngValue]="value.id" selected>{{value.tipo}}</option>
+            <select
+              id="inputState"
+              name="tipoUser"
+              #tipoUser="ngModel"
+              [(ngModel)]="crearUsuarioAdmin.tipoUsuario"
+              [style.border]="
+                tipoUser.touched && !tipoUser.valid
+                  ? 'solid red 1px'
+                  : tipoUser.touched && tipoUser.valid
+                  ? 'solid green 1px'
+                  : !tipoUser.touched
+                  ? 'solid grey 1px'
+                  : ''
+              "
+              class="form-control"
+              required
+            >
+              <option *ngFor="let value of tipo" [ngValue]="value.id" selected>
+                {{ value.tipo }}
+              </option>
             </select>
-            <span class="validForm" *ngIf=" tipoUser.valid">Correcto</span>
-            <span class="errorForm" *ngIf="tipoUser.touched && !tipoUser.valid">Seleccione un tipo de usuario</span>
+            <span class="validForm" *ngIf="tipoUser.valid">Correcto</span>
+            <span class="errorForm" *ngIf="tipoUser.touched && !tipoUser.valid"
+              >Seleccione un tipo de usuario</span
+            >
           </div>
           <div class="form-group col-12">
             <label for="turnosForm">Work shifts</label>
-            <input type="text" class="form-control" id="turnosForm" name="turnos" #turnos="ngModel"
+            <input
+              type="text"
+              class="form-control"
+              id="turnosForm"
+              name="turnos"
+              #turnos="ngModel"
               [(ngModel)]="crearUsuarioAdmin.turnosLaborales"
               pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"
-              [style.border]="turnos.touched && !turnos.valid?'solid red 1px':turnos.touched && turnos.valid?'solid green 1px':!turnos.touched?'solid grey 1px':''"
-              placeholder="Work shifts" required>
-            <span class="validForm" *ngIf="turnos.touched && turnos.valid">Correcto</span>
-            <span class="errorForm" *ngIf="turnos.touched && !turnos.valid">No ha ingresado un dato valido</span>
+              [style.border]="
+                turnos.touched && !turnos.valid
+                  ? 'solid red 1px'
+                  : turnos.touched && turnos.valid
+                  ? 'solid green 1px'
+                  : !turnos.touched
+                  ? 'solid grey 1px'
+                  : ''
+              "
+              placeholder="Work shifts"
+              required
+            />
+            <span class="validForm" *ngIf="turnos.touched && turnos.valid"
+              >Correcto</span
+            >
+            <span class="errorForm" *ngIf="turnos.touched && !turnos.valid"
+              >No ha ingresado un dato valido</span
+            >
           </div>
           <div class="form-group col-6">
             <label for="contraseñaForm">Password *</label>
-            <input type="password" class="form-control" id="contraseñaForm" pattern="[a-zA-Z0-9#$%&’*+/=?^_`-]+"
-              name="passForm" #passForm="ngModel" [(ngModel)]="crearUsuarioAdmin.passwordUsuario"
-              [style.border]="passForm.touched && !passForm.valid?'solid red 1px':passForm.touched && passForm.valid?'solid green 1px':!passForm.touched?'solid grey 1px':''"
-              placeholder="Password" required>
-            <span class="validForm" *ngIf="passForm.touched && passForm.valid">Correcto</span>
-            <span class="errorForm" *ngIf="passForm.touched && !passForm.valid">Ingrese una contraseña.</span>
+            <input
+              type="password"
+              class="form-control"
+              id="contraseñaForm"
+              pattern="[a-zA-Z0-9#$%&’*+/=?^_`-]+"
+              name="passForm"
+              #passForm="ngModel"
+              [(ngModel)]="crearUsuarioAdmin.passwordUsuario"
+              [style.border]="
+                passForm.touched && !passForm.valid
+                  ? 'solid red 1px'
+                  : passForm.touched && passForm.valid
+                  ? 'solid green 1px'
+                  : !passForm.touched
+                  ? 'solid grey 1px'
+                  : ''
+              "
+              placeholder="Password"
+              required
+            />
+            <span class="validForm" *ngIf="passForm.touched && passForm.valid"
+              >Correcto</span
+            >
+            <span class="errorForm" *ngIf="passForm.touched && !passForm.valid"
+              >Ingrese una contraseña.</span
+            >
           </div>
           <div class="form-group col-6">
             <label for="confirmarContraseñaForm">Confirm password *</label>
-            <input type="password" class="form-control" id="confirmarContraseñaForm"
-              pattern="[a-zA-Z0-9#$%&’*+/=?^_`-]+" appConfirmEqualsValidator="passForm" name="confirmPass"
-              #confirmPass="ngModel" [(ngModel)]="pass2"
-              [style.border]="confirmPass.touched && !confirmPass.valid?'solid red 1px':confirmPass.touched && confirmPass.valid?'solid green 1px':!confirmPass.touched?'solid grey 1px':!confirmacion?'solid red 1px':confirmacion?'solid green 1px':''"
-              placeholder="Confirm password" required>
-            <span class="validForm" *ngIf="confirmPass.touched && confirmPass.valid">Correcto</span>
-            <span class="errorForm" *ngIf="confirmPass.touched && confirmPass.errors?.required">Ingrese una
-              contraseña.</span>
-            <span class="errorForm"
-              *ngIf="confirmPass.errors?.notEquals && confirmPass.touched && !confirmPass.errors?.required">Las
-              contraseñas deben ser iguales</span>
+            <input
+              type="password"
+              class="form-control"
+              id="confirmarContraseñaForm"
+              pattern="[a-zA-Z0-9#$%&’*+/=?^_`-]+"
+              appConfirmEqualsValidator="passForm"
+              name="confirmPass"
+              #confirmPass="ngModel"
+              [(ngModel)]="pass2"
+              [style.border]="
+                confirmPass.touched && !confirmPass.valid
+                  ? 'solid red 1px'
+                  : confirmPass.touched && confirmPass.valid
+                  ? 'solid green 1px'
+                  : !confirmPass.touched
+                  ? 'solid grey 1px'
+                  : !confirmacion
+                  ? 'solid red 1px'
+                  : confirmacion
+                  ? 'solid green 1px'
+                  : ''
+              "
+              placeholder="Confirm password"
+              required
+            />
+            <span
+              class="validForm"
+              *ngIf="confirmPass.touched && confirmPass.valid"
+              >Correcto</span
+            >
+            <span
+              class="errorForm"
+              *ngIf="confirmPass.touched && confirmPass.errors?.required"
+              >Ingrese una contraseña.</span
+            >
+            <span
+              class="errorForm"
+              *ngIf="
+                confirmPass.errors?.notEquals &&
+                confirmPass.touched &&
+                !confirmPass.errors?.required
+              "
+              >Las contraseñas deben ser iguales</span
+            >
           </div>
-          <button type="submit" [disabled]="!crearUsuarioForm.form.valid"
-            class="btn  btn-outline-danger btn-block">Send</button>
+          <button
+            type="submit"
+            [disabled]="!crearUsuarioForm.form.valid"
+            class="btn btn-outline-danger btn-block"
+          >
+            Send
+          </button>
         </div>
       </form>
     </div>

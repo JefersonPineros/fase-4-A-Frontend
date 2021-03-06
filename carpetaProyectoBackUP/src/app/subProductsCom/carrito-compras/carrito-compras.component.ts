@@ -33,6 +33,7 @@ export class CarritoComprasComponent implements OnInit {
       product => {
         if (product !== '') {
           this.pedidosList = product;
+          this.pedidosList.forEach((item) => {item.cantidadProducto = 0});
           console.log(this.pedidosList);
         }
       }

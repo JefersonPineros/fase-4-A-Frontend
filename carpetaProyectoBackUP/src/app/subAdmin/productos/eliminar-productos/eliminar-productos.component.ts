@@ -28,8 +28,6 @@ export class EliminarProductosComponent extends descargarPDF implements OnInit, 
     this.listaProductos = new Array<ProductosModel>();
   }
   ngOnDestroy(): void {
-    // this.suscripcionProductos.unsubscribe();
-    // this.suscripcionReportes.unsubscribe();
   }
 
   ngOnInit(): void {

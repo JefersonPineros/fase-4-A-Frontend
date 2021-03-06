@@ -193,7 +193,7 @@ public class EventosDaoImpl implements EventosDao {
                 // buscar detalle_evento Creado
                 EntityManager emD2 = emf.createEntityManager();
                 emD2.getTransaction().begin();
-                String sql4 = "SELECT id_detalle_evento,tipo_evento FROM skillexbd.detalle_evento ORDER BY id_detalle_evento desc limit 1";
+                String sql4 = "SELECT id_detalle_evento,tipo_evento FROM detalle_evento ORDER BY id_detalle_evento desc limit 1";
                 Query query3 = emD2.createNativeQuery(sql4);
                 List<Object[]> listP1 = query3.getResultList();
                 Iterator<Object[]> it2 = listP1.iterator();

@@ -5,6 +5,7 @@ import { IdiomaServiceService } from '../services/idioma-service.service';
 import { LoginService } from '../services/login.service';
 import { Subscription } from 'rxjs';
 declare let alertify: any;
+declare var $: any;
 @Component({
   selector: 'app-administrador',
   templateUrl: './administrador.component.html',
@@ -23,6 +24,7 @@ export class AdministradorComponent implements OnInit,  OnDestroy {
                private mensajesService: SendCorreoServiceService
   ) {
     this.rutasAdmin = '1';
+    $('.collapse').collapse()
   }
 
   ngOnInit(): void {

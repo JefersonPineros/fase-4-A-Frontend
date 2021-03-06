@@ -43,6 +43,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -50,7 +51,6 @@ import org.springframework.util.ResourceUtils;
  */
 @Service
 public class ProductosDaoImpl implements ProductosDao {
-	private String upload_imagen = ".//src//main//resource//imagenes//";
 	private EntityManagerFactory emf;
 	@Autowired
 	private ProductosRepository productosRespository;

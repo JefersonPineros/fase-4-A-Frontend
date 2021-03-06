@@ -1,54 +1,87 @@
 <aside>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="row">
-                    <div class="input-group mb-3 buscarAlbum">
-                        <div class="input-group-prepend ">
-                            <button class="btn btn-danger" type="button" id="button-addon1"><i
-                                    class="fas fa-search"></i> Buscar</button>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Ingrese una palabra clave"
-                            aria-label="Example text with button addon" aria-describedby="button-addon1">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4 col-sm-6" *ngFor="let item of album; let albumSelected = index">
-                        <div>
-                            <div class="col-12">
-                                <div class="col-12 tituloAlbum text-center">
-                                    <h3>
-                                        {{item.nameAlbum}}
-                                    </h3>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 albumImg align-content-center"
-                                        (click)="hideOrShow(albumSelected)" *ngIf="!item.visible">
-                                        <img src="{{item.imagenAlbum}}" alt="Black album metallica">
-                                    </div>
-                                    <div class="col-12" *ngIf="item.visible">
-                                        <div class="listadoAl">
-                                            <div *ngFor="let cancion of item.canciones; let songSelected=index">
-                                                <ul class="listaCanciones">
-                                                    <li>
-                                                        <a class="canciones"
-                                                            (click)="mensajeEnvio(albumSelected,songSelected)">{{songSelected+1}}.
-                                                            {{cancion.cancion}} - Duración {{cancion.duracion}} </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="cerrar">
-                                                <a type="botton" class="closeAlbum"
-                                                    (click)="hideOrShow(albumSelected)">Cerrar</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <form #formBuscar="ngForm" (ngSubmit)="buscarAlbumes()">
+          <div class="row">
+            <div class="input-group mb-3 buscarAlbum">
+              <div class="input-group-prepend">
+                <button type="submit" class="btn btn-danger" id="button-addon1">
+                  <i class="fas fa-search"></i> Buscar
+                </button>
+              </div>
+              <input
+                type="text"
+                name="buscarInput"
+                #buscarInput="ngModel"
+                [(ngModel)]="buscarAlbum"
+                class="form-control"
+                placeholder="Ingrese una palabra clave"
+                aria-label="Example text with button addon"
+                aria-describedby="button-addon1"
+              />
             </div>
+          </div>
+        </form>
+        <div class="row">
+          <div
+            class="col-lg-4 col-sm-6"
+            *ngFor="let item of album; let albumSelected = index"
+          >
+            <div>
+              <div class="col-12">
+                <div class="col-12 tituloAlbum text-center">
+                  <h3>
+                    {{ item.nombreAlbum }}
+                  </h3>
+                </div>
+                <div class="row">
+                  <div
+                    class="col-12 albumImg align-content-center"
+                    (click)="hideOrShow(albumSelected)"
+                    *ngIf="!item.visible"
+                  >
+                    <img
+                      src="{{ item.urlImagen }}"
+                      alt="Black album metallica"
+                    />
+                  </div>
+                  <div class="col-12" *ngIf="item.visible">
+                    <div class="listadoAl">
+                      <div
+                        *ngFor="
+                          let cancion of item.canciones;
+                          let songSelected = index
+                        "
+                      >
+                        <ul class="listaCanciones">
+                          <li>
+                            <a
+                              class="canciones"
+                              (click)="mensajeEnvio(cancion.id)"
+                              >{{ songSelected + 1 }}.
+                              {{ cancion.nombreCancion }} - Duración
+                              {{ cancion.duracion }}
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="cerrar">
+                        <a
+                          type="botton"
+                          class="closeAlbum"
+                          (click)="hideOrShow(albumSelected)"
+                          >Cerrar</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </aside>

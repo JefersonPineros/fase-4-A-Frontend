@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NgForm, FormGroup, FormControl } from '@angular/forms';
+import { NgForm, FormGroup, FormControl, NgModel } from '@angular/forms';
 import { ProductosService } from 'src/app/services/admin/productos.service';
 import { CreateProduct } from '../../../Models/model-create-productos';
 import { FileUploader } from 'ng2-file-upload';
@@ -20,6 +20,7 @@ export class CrearProductosComponent implements OnInit, OnDestroy {
   public tipoProduct: any[];
   public nameImg = 'No ha seleccionado una imagen';
   public selectedFile: File;
+  public imagen: File;
   suscripcionProductos: Subscription;
 
   constructor(private productosService: ProductosService) {
@@ -68,17 +69,33 @@ export class CrearProductosComponent implements OnInit, OnDestroy {
     console.log(this.createProduct);
   }
   uploadFile(event: HtmlInputEvent): void {
-    if (event.target.files && event.target.files[0]) {
-      this.selectedFile = event.target.files[0];
-      this.nameImg = this.selectedFile.name;
-      const reader = new FileReader();
-      reader.readAsDataURL(this.selectedFile);
-      reader.onload = (): void => {
-        const base64String: string = (reader.result as string).match(/.+;base64,(.+)/)[1];
-        this.createProduct.url_imagen = 'data:' + this.selectedFile.type + ';base64,' + base64String;
-        console.log(this.nameImg);
-        this.createProduct.nombre_imagen = this.nameImg;
-      };
+    this.imagen = event.target.files[0];
+    if (
+      this.imagen.type === 'image/jpeg' ||
+      this.imagen.type === 'image/png' ||
+      this.imagen.type === 'image/jpg'
+    ) {
+      if (event.target.files && event.target.files[0]) {
+        this.selectedFile = event.target.files[0];
+        this.nameImg = this.selectedFile.name;
+        const reader = new FileReader();
+        reader.readAsDataURL(this.selectedFile);
+        reader.onload = (): void => {
+          const base64String: string = (reader.result as string).match(/.+;base64,(.+)/)[1];
+          this.createProduct.url_imagen = 'data:' + this.selectedFile.type + ';base64,' + base64String;
+          console.log(this.nameImg);
+          this.createProduct.nombre_imagen = this.nameImg;
+        };
+      }
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Se ha presentado un error',
+        text: 'El formato del archivo no es el correcto (jpeg, png o png) ',
+        onClose: () => {
+          this.nameImg = "Seleccione una imagen";
+        }
+      });
     }
   }
 }

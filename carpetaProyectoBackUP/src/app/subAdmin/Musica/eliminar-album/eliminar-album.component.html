@@ -1,1 +1,31 @@
-<p>eliminar-album works!</p>
+<div class="col-12">
+    <div *ngIf="this.listaAl?.length > 0; else errorTabla">
+        <table datatable class="table table-hover">
+            <thead>
+                <tr>                    
+                    <th>Id</th>
+                    <th>Nombre Album</th>
+                    <th>Autor</th>
+                    <th>Genero</th>
+                    <th>Canciones</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let album of listaAl; let item = index">
+                    <tr>
+                        <td>{{album.id}}</td>
+                        <td>{{album.nombreAlbum}}</td>
+                        <td>{{album.autorAlbum}}</td>
+                        <td>{{album.generoId}}</td>
+                        <td>{{album.canciones.length}}</td>
+                        <td> <button class="btn btn-outline-danger" (click)="eliminarAlbum(album.id)">Eliminar</button> </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+    <ng-template #errorTabla>
+        <h2>No hay solicitudes actualmente</h2>
+    </ng-template>
+</div>
