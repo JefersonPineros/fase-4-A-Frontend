@@ -3,7 +3,7 @@ import { UpdateProductosService } from '../../../services/update-productos.servi
 import { UpdateProductosModels } from '../../../Models/model-update-products';
 import { ProductosModel } from 'src/app/Models/admin/productosModel';
 import { ProductosService } from 'src/app/services/admin/productos.service';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-actualizar-productos',
   templateUrl: './actualizar-productos.component.html',
@@ -16,7 +16,10 @@ export class ActualizarProductosComponent implements OnInit {
   public selected = false;
   public tipoProducto: Array<any>;
   public tipoCat: number;
-  constructor(private updateProducto: UpdateProductosService, private productosService: ProductosService) { }
+  constructor(
+    private updateProducto: UpdateProductosService,
+    private productosService: ProductosService,
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.updateProducto.getProduct().subscribe(
@@ -32,7 +35,7 @@ export class ActualizarProductosComponent implements OnInit {
       error => {
         console.log(error);
       }
-      );
+    );
     this.tipoProducto = [
       { id: '1', tipo: 'Cerveza' },
       { id: '2', tipo: 'Aguardiente' },
@@ -42,11 +45,14 @@ export class ActualizarProductosComponent implements OnInit {
     ];
   }
   actualizarProducto() {
+    this.spinner.show();
     this.productosService.actualizarProoducto(this.productoAc).subscribe(
       resp => {
+        this.spinner.hide();
         console.log(resp);
       },
       error => {
+        this.spinner.hide();
         console.log(error);
       }
     );

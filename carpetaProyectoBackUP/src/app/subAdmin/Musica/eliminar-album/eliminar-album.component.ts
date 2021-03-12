@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MusicaServiciosService } from 'src/app/services/admin/musica/musica-servicios.service';
 import { AlbumesMusicaModel } from '../../../Models/model-musica';
 import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-eliminar-album',
   templateUrl: './eliminar-album.component.html',
@@ -11,7 +12,7 @@ export class EliminarAlbumComponent implements OnInit {
 
   public listaAl: Array<AlbumesMusicaModel>;
 
-  constructor(private albumesServices: MusicaServiciosService) { 
+  constructor(private albumesServices: MusicaServiciosService, private spinner: NgxSpinnerService) { 
     this.listaAl = new Array<AlbumesMusicaModel>();
   }
 
@@ -27,8 +28,10 @@ export class EliminarAlbumComponent implements OnInit {
   }
   
   eliminarAlbum(idAlbum): void {
+    this.spinner.show();
     this.albumesServices.eliminarAlbum(idAlbum).subscribe(
       resp => {
+        this.spinner.hide();
         Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -39,6 +42,7 @@ export class EliminarAlbumComponent implements OnInit {
         });
       },
       err => {
+        this.spinner.hide();
         Swal.fire({
           position: 'top-end',
           icon: 'error',

@@ -475,6 +475,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 			resp.setRespuesta("Exitoso");
 			return resp;
 		} catch (Exception e) {
+			System.out.println(e);
 			e.printStackTrace();
 			resp.setCodigo("002");
 			resp.setRespuesta("Se ha presentado un error");
@@ -484,8 +485,9 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 	@Override
 	public Path upload(MultipartFile file) throws IOException {
-		Path path = Paths.get("Archivos");
-		String url = path.toFile().getAbsolutePath();
+		//Path path = Paths.get("Archivos");
+		//String url = path.toFile().getAbsolutePath();
+		String url = "C:/Program Files/Apache Software Foundation/Tomcat 9.0/webapps/ROOT/Archivos";
 		byte[] bytes = file.getBytes();
 		Path ruta = Paths.get(url + "/" + file.getOriginalFilename());
 		this.validarArchivo(ruta);

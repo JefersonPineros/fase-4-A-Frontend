@@ -1,10 +1,12 @@
-import { Component, OnInit, Input, forwardRef} from '@angular/core';
+import { Component, OnInit, Input, forwardRef } from '@angular/core';
 import { Form, FormBuilder, FormGroup, FormArray, Validators, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AlbumesMusicaModel } from 'src/app/Models/model-musica';
 import { MusicaServiciosService } from 'src/app/services/admin/musica/musica-servicios.service';
 import { CreateAlbumModel } from '../../../Models/model-create-album';
 import { CancionesModel } from '../../../Models/model-musica-canciones';
 import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
 }
@@ -24,69 +26,72 @@ interface HtmlInputEvent extends Event {
 export class CrearAlbumComponent implements OnInit {
   public createAlbum: AlbumesMusicaModel;
   public canciones: Array<CancionesModel>;
-  public generos:any[];
+  public generos: any[];
   public imagen: File;
   public nombreImg: string;
-  createAlbumForm:FormGroup;
-  constructor(private fb: FormBuilder, private musicaService: MusicaServiciosService) { 
+  createAlbumForm: FormGroup;
+  constructor(private fb: FormBuilder, private musicaService: MusicaServiciosService, private spinner: NgxSpinnerService) {
     this.nombreImg = 'Seleccione una imagen';
     this.createAlbum = new AlbumesMusicaModel();
+
     this.generos = [
-      {id:"1",genero:"Metal"},
-      {id:"2",genero:"Rock"},
-      {id:"3",genero:"Rock en español"},
-      {id:"4",genero:"Heavy metal"}
+      { id: "1", genero: "Metal" },
+      { id: "2", genero: "Rock" },
+      { id: "3", genero: "Rock en español" },
+      { id: "4", genero: "Heavy metal" }
     ];
   }
-  
+
   ngOnInit(): void {
     this.createAlbumForm = this.fb.group({
-      cancion_group:this.fb.array([this.fb.group({id: null,nombreCancion:'',duracion:''})],Validators.required)
+      cancion_group: this.fb.array([this.fb.group({ id: null, nombreCancion: '', duracion: '' })], Validators.required)
     })
   }
-  
+
   get canciongroup() {
     return this.createAlbumForm.get('cancion_group') as FormArray;
   }
 
-  addCancionGroup(){
-    this.canciongroup.push(this.fb.group({id: null,nombreCancion:'',duracion:''}));
+  addCancionGroup() {
+    this.canciongroup.push(this.fb.group({ id: null, nombreCancion: '', duracion: '' }));
   }
 
-  deleteCancionGroup(index:any){
-    if(index == 0){
+  deleteCancionGroup(index: any) {
+    if (index == 0) {
       console.log("No puede eliminar mas");
-    }else{
+    } else {
       this.canciongroup.removeAt(index);
     }
-    
+
   }
 
-  
-  filesChangeEvent(fileInput: HtmlInputEvent): void{
+
+  filesChangeEvent(fileInput: HtmlInputEvent): void {
     this.imagen = fileInput.target.files[0];
     if (
       this.imagen.type === 'image/jpeg' ||
       this.imagen.type === 'image/png' ||
       this.imagen.type === 'image/jpg'
-      ) {
-        
-        if (fileInput.target.files && fileInput.target.files[0]) {
-          this.imagen = fileInput.target.files[0];
-          this.nombreImg = this.imagen.name;
-          const reader = new FileReader();
-          reader.readAsDataURL(this.imagen);
-          reader.onload = (): void => {
-            const base64String: string = (reader.result as string).match(/.+;base64,(.+)/)[1];
-            this.createAlbum.urlImagen = 'data:' + this.imagen.type + ';base64,' + base64String;          
-            this.createAlbum.nombreImagen = this.nombreImg;
-          }
+    ) {
+
+      if (fileInput.target.files && fileInput.target.files[0]) {
+        this.imagen = fileInput.target.files[0];
+        this.nombreImg = this.imagen.name;
+        const reader = new FileReader();
+        reader.readAsDataURL(this.imagen);
+        reader.onload = (): void => {
+          const base64String: string = (reader.result as string).match(/.+;base64,(.+)/)[1];
+          this.createAlbum.urlImagen = 'data:' + this.imagen.type + ';base64,' + base64String;
+          this.createAlbum.nombreImagen = this.nombreImg;
         }
       }
+    }
   }
 
-  onSubmit(){
-    
+  onSubmit() {
+
+    this.spinner.show();
+
     this.createAlbum.canciones = new Array<CancionesModel>();
     this.canciones = new Array<CancionesModel>();
     this.canciongroup.value.forEach(element => {
@@ -95,9 +100,10 @@ export class CrearAlbumComponent implements OnInit {
     let idUsuario = sessionStorage.getItem('idUsuario');
     this.createAlbum.canciones = this.canciones;
     this.createAlbum.usuarioId = parseInt(idUsuario);
-    
+
     this.musicaService.crearAlbum(this.createAlbum).subscribe(
       resp => {
+        this.spinner.hide();
         console.log(resp)
         Swal.fire({
           position: 'top-end',
@@ -109,8 +115,8 @@ export class CrearAlbumComponent implements OnInit {
         });
       },
       err => {
+        this.spinner.hide();
         console.log(err);
-        
       }
     );
   }

@@ -92,7 +92,7 @@ export class SesionComponent extends LoginController implements OnInit {
     this.loginState.solicitarAcceso(this.sesion.getEmail(), this.sesion.getPass()).subscribe(
       (res) => {
         this.userLogin = res;
-        if (this.userLogin.tipoUsuario === 1 || this.userLogin.tipoUsuario === 3) {
+        if (this.userLogin.tipoUsuario === 1 || this.userLogin.tipoUsuario === 2) {
           this.location.replaceState('/admin');
           window.location.reload();
         }

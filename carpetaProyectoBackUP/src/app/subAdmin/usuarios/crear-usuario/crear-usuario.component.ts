@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import * as Cookie from 'js-cookie';
 import { IdiomaServiceService } from 'src/app/services/idioma-service.service';
 import { Subscription } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -31,12 +32,12 @@ export class CrearUsuarioComponent implements OnInit, OnDestroy {
   public archivoSelecionado: File;
   suscripcionUsuario: Subscription;
 
-  constructor( private userService: UsuarioService, private idiomaService: IdiomaServiceService ) {
+  constructor( private userService: UsuarioService, private idiomaService: IdiomaServiceService ,private spinner: NgxSpinnerService) {
     this.crearUsuarioAdmin = new UserModel();
     this.tipo = [
       { id: 1, tipo: 'Administrador' },
-      { id: 2, tipo: 'Cliente' },
-      { id: 3, tipo: 'Bartender' }
+      { id: 2, tipo: 'Bartender' },
+      { id: 3, tipo: 'Cliente' }
     ];
     this.error = ['Correcto', 'Ingrese una contraseña valida', 'Las contraseñas no coinciden'];
   }
@@ -73,10 +74,11 @@ export class CrearUsuarioComponent implements OnInit, OnDestroy {
     }
   }
   onSubmit() {
+    this.spinner.show()
     const fechaCreacion = new Date(Date.now());
     this.crearUsuarioAdmin.creacionUsuario = fechaCreacion;
     this.crearUsuarioAdmin.inventario = 1;
-    if (this.crearUsuarioAdmin.tipoUsuario === 2){
+    if (this.crearUsuarioAdmin.tipoUsuario === 3){
       this.crearUsuarioAdmin.tienda = '';
       this.crearUsuarioAdmin.turnosLaborales = '';
     }
@@ -98,6 +100,7 @@ export class CrearUsuarioComponent implements OnInit, OnDestroy {
       resp => {
         this.responseS = resp;
         if (this.responseS.codigo === '001'){
+          this.spinner.hide();
           Swal.fire({
             icon: 'success',
             title: 'Usuario almacenado correctamente',
@@ -107,6 +110,7 @@ export class CrearUsuarioComponent implements OnInit, OnDestroy {
             }
           });
         } else {
+          this.spinner.hide();
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -132,8 +136,10 @@ export class CrearUsuarioComponent implements OnInit, OnDestroy {
         confirmButtonText: 'Confirmar'
       }).then((result) => {
         if (result.isConfirmed) {
+          this.spinner.show();
           this.userService.cargueMasivo(this.archivoSelecionado).subscribe(
             resp => {
+              this.spinner.hide();
               if (resp.codigo === '001') {
                 Swal.fire(
                   'Exito!',
@@ -143,6 +149,7 @@ export class CrearUsuarioComponent implements OnInit, OnDestroy {
               }
             },
             err => {
+              this.spinner.hide();
               console.log(err);
               Swal.fire({
                 icon: 'error',

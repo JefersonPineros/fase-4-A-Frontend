@@ -1,6 +1,6 @@
 export class costantes {
     public static API_URL = {
         DEV: 'http://localhost:8080',
-        PROD: 'https://power-riff-metal-bar.herokuapp.com'
+        PROD: 'http://52.15.221.156:8080/SkillexBackendDemo-1.0.0-SNAPSHOT'
     }
 }

@@ -4,6 +4,10 @@ import { SendCorreoServiceService } from '../services/correos/send-correo-servic
 import { IdiomaServiceService } from '../services/idioma-service.service';
 import { LoginService } from '../services/login.service';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { Location } from '@angular/common';
+import { NgxSpinnerService } from 'ngx-spinner';
 declare let alertify: any;
 declare var $: any;
 @Component({
@@ -17,11 +21,15 @@ export class AdministradorComponent implements OnInit,  OnDestroy {
   public idiomaSelected: string;
   public asunto: string;
   public mensaje: string;
+  public tipoUser: number;
   mensajeSuscripcion: Subscription;
 
   constructor( private loginState: LoginService,
                private idiomaService: IdiomaServiceService,
-               private mensajesService: SendCorreoServiceService
+               private mensajesService: SendCorreoServiceService,
+               private route: ActivatedRoute,
+               private location: Location,
+               private spinner: NgxSpinnerService
   ) {
     this.rutasAdmin = '1';
     $('.collapse').collapse()
@@ -31,10 +39,19 @@ export class AdministradorComponent implements OnInit,  OnDestroy {
     let uG = sessionStorage.getItem('usuario');
     let access = sessionStorage.getItem('acceso');
     let tipoAC = sessionStorage.getItem('tipo');
+    this.tipoUser = Number.parseInt(tipoAC);
     if (uG !== undefined) {
       let accessConfirm;
       if (access === 'true') {
-        accessConfirm = true;
+        if (this.tipoUser === 1 || this.tipoUser === 2) {
+          accessConfirm = true;
+        } else {
+          this.location.replaceState('/home');
+          window.location.reload();
+        }
+      } else {
+        this.location.replaceState('/home');
+        window.location.reload();
       }
       let tipoParce = parseInt(tipoAC);
       this.loginState.sendLogin([{ tipo: tipoParce, acceso: accessConfirm, user: uG }]);
@@ -65,10 +82,10 @@ export class AdministradorComponent implements OnInit,  OnDestroy {
     this.rutasAdmin = indi;
   }
   enviarCorreoMasivo(asunto: string, mensaje: string): void{
-    console.log(asunto);
-    console.log(mensaje);
+    this.spinner.show();
     this.mensajeSuscripcion = this.mensajesService.correoMasivo(asunto, mensaje).subscribe(
       resp => {
+        this.spinner.hide();
         if (resp.codigo === '001') {
           alertify.success('Mensaje enviado correctamente');
         } else {
@@ -76,6 +93,7 @@ export class AdministradorComponent implements OnInit,  OnDestroy {
         }
       },
       error => {
+        this.spinner.hide();
         console.log(error);
         alertify.error('Se ha presentado un error');
       }

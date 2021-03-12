@@ -7,6 +7,7 @@ import { RespuestasServices } from 'src/app/Models/respuestasServices';
 import { IdiomaServiceService } from 'src/app/services/idioma-service.service';
 import * as Cookie from 'js-cookie';
 import { Subscription } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-update-usuario',
   templateUrl: './update-usuario.component.html',
@@ -23,7 +24,8 @@ export class UpdateUsuarioComponent implements OnInit, OnDestroy {
   constructor(
     private updateUserService: UpdateServiceService,
     private userServices: UsuarioService,
-    private idiomaService: IdiomaServiceService) {
+    private idiomaService: IdiomaServiceService,
+    private spinner: NgxSpinnerService) {
     this.selected = false;
     this.userType = [
       { id: '1', tipo: 'Administrador' },
@@ -74,8 +76,10 @@ export class UpdateUsuarioComponent implements OnInit, OnDestroy {
     }
   }
   onSubmit() {
+    this.spinner.show();
     this.suscripcionUsuario = this.userServices.updateUsuario(this.usuarioUpdate).subscribe(
       resp => {
+        this.spinner.hide();
         this.responseS = resp;
         if (this.responseS.codigo === '001') {
           Swal.fire({

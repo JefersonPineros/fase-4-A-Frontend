@@ -22,12 +22,12 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="102" splitType="Stretch">
+		<band height="122" splitType="Stretch">
 			<frame>
 				<reportElement mode="Opaque" x="0" y="0" width="721" height="66" backcolor="#000000" uuid="d8d9e644-3a32-491d-97cb-a277aff17133"/>
 				<image>
 					<reportElement x="30" y="-17" width="400" height="100" uuid="f0cf130c-c5b6-462a-81e4-577c464e1e20"/>
-					<imageExpression><![CDATA["C:/Users/jefer/Downloads/powerletter.png"]]></imageExpression>
+					<imageExpression><![CDATA["C:/Users/Administrator/Downloads/powerletter.png"]]></imageExpression>
 				</image>
 				<staticText>
 					<reportElement x="280" y="21" width="252" height="39" forecolor="#FFFAFA" backcolor="#FFFFFF" uuid="c7d77ec8-8581-4609-85f5-b31e80e4c8d9"/>
@@ -49,7 +49,7 @@
 			</frame>
 			<image>
 				<reportElement x="721" y="0" width="81" height="70" uuid="0271869a-321d-4fd7-bc9c-33a88098eb35"/>
-				<imageExpression><![CDATA["C:/Users/jefer/Downloads/Logopower2.png"]]></imageExpression>
+				<imageExpression><![CDATA["C:/Users/Administrator/Downloads/Logopower2.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -124,7 +124,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="18" splitType="Stretch">
+		<band height="19" splitType="Stretch">
 			<frame>
 				<reportElement style="Row" mode="Opaque" x="0" y="0" width="797" height="18" uuid="34a2ae4b-4055-476b-8676-d499f6af510b"/>
 				<textField textAdjust="StretchHeight">
@@ -194,19 +194,12 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="7" splitType="Stretch">
-			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="501ac6c4-e9d4-43cb-ba6b-7f2f44394cf3"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineColor="#999999"/>
-				</graphicElement>
-			</line>
-		</band>
+		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="25" splitType="Stretch">
+		<band height="348" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="0" y="0" width="802" height="25" forecolor="#D0B48E" backcolor="#000000" uuid="ffb10ec8-0371-4545-8eaa-96d62ad3cec0"/>
+				<reportElement mode="Opaque" x="0" y="320" width="802" height="25" forecolor="#D0B48E" backcolor="#000000" uuid="ffb10ec8-0371-4545-8eaa-96d62ad3cec0"/>
 				<textField evaluationTime="Report">
 					<reportElement style="Column header" x="757" y="3" width="40" height="20" forecolor="#FFFFFF" uuid="b5521ea6-5f36-4864-856f-58d0bcd011f2"/>
 					<textElement verticalAlignment="Middle">
@@ -222,6 +215,33 @@
 					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 				</textField>
 			</frame>
+			<bar3DChart>
+				<chart evaluationTime="Report">
+					<reportElement x="50" y="20" width="722" height="274" uuid="a12af538-7473-426e-a5c4-c5b3b309a596"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset resetType="Report"/>
+					<categorySeries>
+						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{nombreProducto}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{cantidadProducto}]]></valueExpression>
+						<labelExpression><![CDATA[$F{estadoProducto}]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</bar3DPlot>
+			</bar3DChart>
 		</band>
 	</pageFooter>
 	<summary>

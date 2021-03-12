@@ -15,12 +15,12 @@ public class Controllers {
 	
 	public String convertirImagen(String imagen, String nombre, Integer tipo) {
 		String url;
-		Path pathImagenes = Paths.get("images");
-		String urlFinalImagenes = pathImagenes.toUri().getRawPath();
-		Path pathEventos = Paths.get("images/eventos");
-		String urlFinalEventos = pathEventos.toUri().getRawPath();
-		Path pathAlbumes = Paths.get("images/albumes");
-		String urlFinalAlbumes = pathAlbumes.toUri().getRawPath();
+		//Path pathImagenes = Paths.get("images");
+		String urlFinalImagenes = "C:/Program Files/Apache Software Foundation/Tomcat 9.0/webapps/ROOT/images";
+		//Path pathEventos = Paths.get("images/eventos");
+		String urlFinalEventos = "C:/Program Files/Apache Software Foundation/Tomcat 9.0/webapps/ROOT/images/eventos";
+		//Path pathAlbumes = Paths.get("images/albumes");
+		String urlFinalAlbumes = "C:/Program Files/Apache Software Foundation/Tomcat 9.0/webapps/ROOT/images/albumes";
 		String nombres = nombre;
 		try { 
 			String base64String = imagen.split(",")[1];
@@ -31,19 +31,19 @@ public class Controllers {
 			BufferedImage img = ImageIO.read(new ByteArrayInputStream(imagesBytes));
 			
 			if ( tipo == 1) {
-				ImageIO.write( img, tipoImagen3.toLowerCase(), new File(urlFinalImagenes + nombres));
+				ImageIO.write( img, tipoImagen3.toLowerCase(), new File(urlFinalImagenes + "/" + nombres));
 				//http://localhost:8080/images/
-				url = "https://power-riff-metal-bar.herokuapp.com/images/" + nombres;
+				url = "http://52.15.221.156:8080/images/" + nombres;
 				return url;
 			} else if (tipo == 2) {
-				ImageIO.write( img, tipoImagen3.toLowerCase(), new File(urlFinalEventos + nombres));
+				ImageIO.write( img, tipoImagen3.toLowerCase(), new File(urlFinalEventos + "/" + nombres));
 				//http://localhost:8080/images/eventos/
-				url = "https://power-riff-metal-bar.herokuapp.com/images/eventos/" + nombres;
+				url = "http://52.15.221.156:8080/images/eventos/" + nombres;
 				return url;
 			} else if (tipo == 3) {
-				ImageIO.write( img, tipoImagen3.toLowerCase(), new File(urlFinalAlbumes + nombres));
+				ImageIO.write( img, tipoImagen3.toLowerCase(), new File(urlFinalAlbumes + "/" + nombres));
 				//http://localhost:8080/images/albumes/
-				url = "https://power-riff-metal-bar.herokuapp.com/images/albumes/" + nombres;
+				url = "http://52.15.221.156:8080/images/albumes/" + nombres;
 				return url;
 			} else {
 				return "";

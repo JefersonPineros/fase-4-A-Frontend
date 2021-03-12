@@ -12,6 +12,7 @@ declare let alertify: any;
 export class MusicaComponent implements OnInit {
   public visible: boolean;
   public album: Array<AlbumesMusicaModel>;
+  public albumBackUp: Array<AlbumesMusicaModel>;
   public buscarAlbum: any;
   constructor(private albumesServices: MusicaServiciosService) {
 
@@ -22,7 +23,8 @@ export class MusicaComponent implements OnInit {
   consultarAlbumes(): void {
     this.albumesServices.listarAlbumes().subscribe(
       resp => {
-        this.album = resp;       
+        this.album = resp;
+        this.albumBackUp = resp;       
       }
     );
   }
@@ -55,13 +57,20 @@ export class MusicaComponent implements OnInit {
 
   buscarAlbumes(): void {
     if (this.buscarAlbum === null || this.buscarAlbum === '' || this.buscarAlbum === undefined) {
-      this.consultarAlbumes();
+      //this.consultarAlbumes();
+      this.album = this.albumBackUp;
     } else {
-      this.album = this.album.filter(
-        item => {
-          return item.nombreAlbum.toLowerCase().indexOf(this.buscarAlbum.toLowerCase()) > -1;
-        }
-      );
+      if (this.album?.length > 0) {
+        this.album = this.album.filter(
+          item => {
+            return item.nombreAlbum.toLowerCase().indexOf(this.buscarAlbum.toLowerCase()) > -1;
+          }
+        );
+      } else {
+        this.album = this.albumBackUp.filter(
+          item => item.nombreAlbum.toLowerCase().indexOf(this.buscarAlbum.toLowerCase()) > -1
+        );
+      }
     }
   }
 }

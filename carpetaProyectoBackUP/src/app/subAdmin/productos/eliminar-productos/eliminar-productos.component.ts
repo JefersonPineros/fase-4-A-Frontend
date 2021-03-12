@@ -6,7 +6,7 @@ import { ReporteProductosService } from '../../../services/reportes/reporte-prod
 import Swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
 import { descargarPDF } from 'src/app/Controller/descargaPDF-controller';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-eliminar-productos',
   templateUrl: './eliminar-productos.component.html',
@@ -23,7 +23,8 @@ export class EliminarProductosComponent extends descargarPDF implements OnInit, 
   constructor(
     private updateProductos: UpdateProductosService,
     private productosService: ProductosService,
-    private reportesServices: ReporteProductosService) {
+    private reportesServices: ReporteProductosService,
+    private spinner: NgxSpinnerService) {
     super();
     this.listaProductos = new Array<ProductosModel>();
   }
@@ -50,8 +51,10 @@ export class EliminarProductosComponent extends descargarPDF implements OnInit, 
     }
   }
   eliminarProducto(item: number) {
+    this.spinner.show();
     this.suscripcionProductos = this.productosService.eliminarProducto(item).subscribe(
       resp => {
+        this.spinner.hide();
         Swal.fire({
           icon: 'success',
           title: 'Transacción exitosa',
@@ -62,6 +65,7 @@ export class EliminarProductosComponent extends descargarPDF implements OnInit, 
         });
       },
       error => {
+        this.spinner.hide();
         console.log(error);
       }
     );
@@ -77,8 +81,10 @@ export class EliminarProductosComponent extends descargarPDF implements OnInit, 
     }
   }
   reporte(): void {
+    this.spinner.show();
     this.suscripcionReportes = this.reportesServices.reporteProducto('pdf').subscribe(
       resp => {
+        this.spinner.hide();
         this.descargar(resp);
         Swal.fire({
           icon: 'success',
@@ -90,6 +96,7 @@ export class EliminarProductosComponent extends descargarPDF implements OnInit, 
         });
       },
       error => {
+        this.spinner.hide();
         Swal.fire({
           icon: 'error',
           title: 'Oops...',

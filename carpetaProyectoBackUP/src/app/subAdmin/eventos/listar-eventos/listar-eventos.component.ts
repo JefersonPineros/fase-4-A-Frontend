@@ -6,6 +6,7 @@ import { ReporteProductosService } from '../../../services/reportes/reporte-prod
 import Swal from 'sweetalert2';
 import { UpdateServiceService } from 'src/app/services/update-service.service';
 import { descargarPDF } from 'src/app/Controller/descargaPDF-controller';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-listar-eventos',
@@ -16,7 +17,9 @@ export class ListarEventosComponent extends descargarPDF implements OnInit {
   public listaEventos: Array<Evento>;
   constructor(private eventosService: EventosService,
     private reportesServices: ReporteProductosService,
-    private updateService: UpdateServiceService) {
+    private updateService: UpdateServiceService,
+    private spinner: NgxSpinnerService
+    ) {
     super();
     this.listaEventos = new Array<Evento>();
   }
@@ -32,8 +35,10 @@ export class ListarEventosComponent extends descargarPDF implements OnInit {
     );
   }
   reporte(): void {
+    this.spinner.show();
     this.reportesServices.reporteEventos('pdf').subscribe(
       resp => {
+        this.spinner.hide();
         this.descargar(resp);
         Swal.fire({
           icon: 'success',
@@ -45,6 +50,7 @@ export class ListarEventosComponent extends descargarPDF implements OnInit {
         });
       },
       error => {
+        this.spinner.hide();
         Swal.fire({
           icon: 'success',
           title: 'Se ha presentado un error',
@@ -73,8 +79,10 @@ export class ListarEventosComponent extends descargarPDF implements OnInit {
       confirmButtonText: 'Confirmar'
     }).then((result) => {
       if (result.isConfirmed) {
+        this.spinner.show();
         this.eventosService.eliminarEvento(id).subscribe(
           resp => {
+            this.spinner.hide();
             if (resp.codigo === '001') {
               Swal.fire(
                 'Eliminado!',
@@ -84,6 +92,7 @@ export class ListarEventosComponent extends descargarPDF implements OnInit {
             }
           },
           err => {
+            this.spinner.hide();
             Swal.fire({
               position: 'top-end',
               icon: 'error',

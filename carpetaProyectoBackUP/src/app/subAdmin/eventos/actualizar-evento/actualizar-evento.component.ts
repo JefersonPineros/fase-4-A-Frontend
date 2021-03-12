@@ -4,6 +4,7 @@ import { Evento } from 'src/app/Models/EventoModel';
 import { UpdateServiceService } from 'src/app/services/update-service.service';
 import { EventosService } from '../../../services/admin/eventos/eventos.service';
 import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-actualizar-evento',
@@ -15,7 +16,11 @@ export class ActualizarEventoComponent implements OnInit {
   public fechaEvent: Date;
   public formEvent2: FormGroup;
   public tipoEvento: any[];
-  constructor(private updateService: UpdateServiceService, private eventService: EventosService) {
+  constructor(
+    private updateService: UpdateServiceService,
+    private eventService: EventosService,
+    private spinner: NgxSpinnerService
+    ) {
     this.evento = new Evento();
     this.tipoEvento = [
       { id: '1', tipo: 'Promoción' },
@@ -48,9 +53,11 @@ export class ActualizarEventoComponent implements OnInit {
   get f(){ return this.formEvent2.controls; }
 
   onSubmit(): void {
+    this.spinner.show();
     console.log(this.evento);
     this.eventService.actualizarEvento(this.evento).subscribe(
       resp => {
+        this.spinner.hide();
         if (resp.codigo === '001') {
           Swal.fire({
             icon: 'success',
@@ -62,6 +69,7 @@ export class ActualizarEventoComponent implements OnInit {
         }
       },
       err => {
+        this.spinner.hide();
         console.log(err);
       }
     );

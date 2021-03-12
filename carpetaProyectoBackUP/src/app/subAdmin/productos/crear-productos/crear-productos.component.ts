@@ -6,6 +6,7 @@ import { FileUploader } from 'ng2-file-upload';
 import { event } from 'jquery';
 import Swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -23,7 +24,7 @@ export class CrearProductosComponent implements OnInit, OnDestroy {
   public imagen: File;
   suscripcionProductos: Subscription;
 
-  constructor(private productosService: ProductosService) {
+  constructor(private productosService: ProductosService, private spinner: NgxSpinnerService) {
     this.createProduct = new CreateProduct(null, '', '', '', '', null, null, null, null, null, null, null, '', '', '', '');
     this.tipoProduct = [
       { id: '1', tipo: 'Cerveza' },
@@ -40,12 +41,14 @@ export class CrearProductosComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
   onSubmit() {
+    this.spinner.show();
     this.createProduct.estadoProducto = 'Activo';
     const fechaIngreso: Date = new Date(Date.now());
     this.createProduct.fechaIngreso = fechaIngreso;
     this.createProduct.inventario_id_inventario = 1;
     this.suscripcionProductos = this.productosService.crearProducto(this.createProduct).subscribe(
       resp => {
+        this.spinner.hide();
         Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -56,6 +59,7 @@ export class CrearProductosComponent implements OnInit, OnDestroy {
         });
       },
       error => {
+        this.spinner.hide();
         Swal.fire({
           position: 'top-end',
           icon: 'error',

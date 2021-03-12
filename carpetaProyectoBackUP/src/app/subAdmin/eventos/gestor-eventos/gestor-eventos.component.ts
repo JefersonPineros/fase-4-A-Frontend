@@ -5,6 +5,7 @@ import { EventosService } from '../../../services/admin/eventos/eventos.service'
 import { Evento } from '../../../Models/EventoModel';
 import * as Cookie from 'js-cookie';
 import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
 }
@@ -25,7 +26,8 @@ export class GestorEventosComponent implements OnInit {
 
   public nameImg = 'No ha seleccionado una imagen';
   constructor(
-    private fb: FormBuilder, private eventoService: EventosService
+    private fb: FormBuilder, private eventoService: EventosService,
+    private spinner: NgxSpinnerService
   ) {
     this.newEvent = new Evento();
     this.evento = [
@@ -63,10 +65,12 @@ export class GestorEventosComponent implements OnInit {
     }
   }
   onSubmit() {
+    this.spinner.show();
     // tslint:disable-next-line: radix
     this.newEvent.usuario_idUsuarios = parseInt(sessionStorage.getItem('idUsuario'));
     this.eventoService.crearEvento(this.newEvent).subscribe(
       resp => {
+        this.spinner.hide();
         if (resp.codigo === '001'){
           Swal.fire({
             icon: 'success',
@@ -78,6 +82,7 @@ export class GestorEventosComponent implements OnInit {
         }
       },
       error => {
+        this.spinner.hide();
         console.log(error);
       }
     );

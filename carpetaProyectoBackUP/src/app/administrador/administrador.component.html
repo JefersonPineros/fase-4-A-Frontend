@@ -1,100 +1,144 @@
 <div class="col-lg-12">
   <div class="row">
     <div class="col-lg-2">
-      <div [ngSwitch]="idiomaSelected">
-        <ng-container *ngSwitchCase="'ingles'">
-          <div class="list-group botonesLista">
-            <button
-              type="button"
-              class="list-group-item actionb"
-              (click)="modulo('1')"
-            >
-              User management
-            </button>
-            <button
-              type="button"
-              class="list-group-item actionb"
-              (click)="modulo('2')"
-            >
-              Product management
-            </button>
-            <button
-              type="button"
-              class="list-group-item actionb"
-              (click)="modulo('3')"
-            >
-              Order Management
-            </button>
-            <button
-              type="button"
-              class="list-group-item actionb"
-              (click)="modulo('4')"
-            >
-              Music management
-            </button>
-            <button
-              type="button"
-              class="list-group-item actionb"
-              (click)="modulo('5')"
-            >
-              Event management
-            </button>
-            <button
-              type="button"
-              class="list-group-item actionb"
-              (click)="modulo('6')"
-            >
-              Reports
-            </button>
-          </div>
-        </ng-container>
-        <ng-container *ngSwitchCase="'espanol'">
-          <div class="list-group botonesLista">
-            <button
-              type="button"
-              class="list-group-item actionb"
-              (click)="modulo('1')"
-            >
-              Gestión Usuarios
-            </button>
-            <button
-              type="button"
-              class="list-group-item actionb"
-              (click)="modulo('2')"
-            >
-              Gestión Productos
-            </button>
-            <button
-              type="button"
-              class="list-group-item actionb"
-              (click)="modulo('3')"
-            >
-              Gestión Pedidos
-            </button>
-            <button
-              type="button"
-              class="list-group-item actionb"
-              (click)="modulo('4')"
-            >
-              Gestion de musica
-            </button>
-            <button
-              type="button"
-              class="list-group-item actionb"
-              (click)="modulo('5')"
-            >
-              Gestión Eventos
-            </button>
-            <button
-              type="button"
-              class="list-group-item actionb"
-              (click)="modulo('6')"
-            >
-              Reportes
-            </button>
-          </div>
-        </ng-container>
+      <div *ngIf="tipoUser === 1; else bartender">
+        <div [ngSwitch]="idiomaSelected">
+          <ng-container *ngSwitchCase="'ingles'">
+            <div class="list-group botonesLista">
+              <button
+                type="button"
+                class="list-group-item actionb"
+                (click)="modulo('1')"
+              >
+                User management
+              </button>
+              <button
+                type="button"
+                class="list-group-item actionb"
+                (click)="modulo('2')"
+              >
+                Product management
+              </button>
+              <button
+                type="button"
+                class="list-group-item actionb"
+                (click)="modulo('3')"
+              >
+                Order Management
+              </button>
+              <button
+                type="button"
+                class="list-group-item actionb"
+                (click)="modulo('4')"
+              >
+                Music management
+              </button>
+              <button
+                type="button"
+                class="list-group-item actionb"
+                (click)="modulo('5')"
+              >
+                Event management
+              </button>
+              <button
+                type="button"
+                class="list-group-item actionb"
+                (click)="modulo('6')"
+              >
+                Reports
+              </button>
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchCase="'espanol'">
+            <div class="list-group botonesLista">
+              <button
+                type="button"
+                class="list-group-item actionb"
+                (click)="modulo('1')"
+              >
+                Gestión Usuarios
+              </button>
+              <button
+                type="button"
+                class="list-group-item actionb"
+                (click)="modulo('2')"
+              >
+                Gestión Productos
+              </button>
+              <button
+                type="button"
+                class="list-group-item actionb"
+                (click)="modulo('3')"
+              >
+                Gestión Pedidos
+              </button>
+              <button
+                type="button"
+                class="list-group-item actionb"
+                (click)="modulo('4')"
+              >
+                Gestion de musica
+              </button>
+              <button
+                type="button"
+                class="list-group-item actionb"
+                (click)="modulo('5')"
+              >
+                Gestión Eventos
+              </button>
+              <button
+                type="button"
+                class="list-group-item actionb"
+                (click)="modulo('6')"
+              >
+                Reportes
+              </button>
+            </div>
+          </ng-container>
+        </div>
       </div>
+      <ng-template #bartender>
+        <div [ngSwitch]="idiomaSelected">
+          <ng-container *ngSwitchCase="'ingles'">
+            <div class="list-group botonesLista">
+              <button
+                type="button"
+                class="list-group-item actionb"
+                (click)="modulo('3')"
+              >
+                Order Management
+              </button>
+              <button
+                type="button"
+                class="list-group-item actionb"
+                (click)="modulo('4')"
+              >
+                Music management
+              </button>
+             
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchCase="'espanol'">
+            <div class="list-group botonesLista">
+              <button
+                type="button"
+                class="list-group-item actionb"
+                (click)="modulo('3')"
+              >
+                Gestión Pedidos
+              </button>
+              <button
+                type="button"
+                class="list-group-item actionb"
+                (click)="modulo('4')"
+              >
+                Gestion de musica
+              </button>
+              
+            </div>
+          </ng-container>
+        </div>
+      </ng-template>
     </div>
     <div class="col-lg-10">
       <div [ngSwitch]="rutasAdmin">
@@ -296,3 +340,4 @@
     </div>
   </div>
 </div>
+<ngx-spinner bdColor= "rgba(66,0,0,0.5)" size = "medium" color = "#000000" type = "square-jelly-box" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>
