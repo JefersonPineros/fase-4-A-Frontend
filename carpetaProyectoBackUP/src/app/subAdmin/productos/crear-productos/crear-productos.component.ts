@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NgForm, FormGroup, FormControl } from '@angular/forms';
+import { NgForm, FormGroup, FormControl, NgModel } from '@angular/forms';
 import { ProductosService } from 'src/app/services/admin/productos.service';
 import { CreateProduct } from '../../../Models/model-create-productos';
 import { FileUploader } from 'ng2-file-upload';
 import { event } from 'jquery';
 import Swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -20,9 +21,10 @@ export class CrearProductosComponent implements OnInit, OnDestroy {
   public tipoProduct: any[];
   public nameImg = 'No ha seleccionado una imagen';
   public selectedFile: File;
+  public imagen: File;
   suscripcionProductos: Subscription;
 
-  constructor(private productosService: ProductosService) {
+  constructor(private productosService: ProductosService, private spinner: NgxSpinnerService) {
     this.createProduct = new CreateProduct(null, '', '', '', '', null, null, null, null, null, null, null, '', '', '', '');
     this.tipoProduct = [
       { id: '1', tipo: 'Cerveza' },
@@ -33,18 +35,20 @@ export class CrearProductosComponent implements OnInit, OnDestroy {
     ];
   }
   ngOnDestroy(): void {
-    this.suscripcionProductos.unsubscribe();
+    // this.suscripcionProductos.unsubscribe();
   }
 
   ngOnInit(): void {
   }
   onSubmit() {
+    this.spinner.show();
     this.createProduct.estadoProducto = 'Activo';
     const fechaIngreso: Date = new Date(Date.now());
     this.createProduct.fechaIngreso = fechaIngreso;
     this.createProduct.inventario_id_inventario = 1;
     this.suscripcionProductos = this.productosService.crearProducto(this.createProduct).subscribe(
       resp => {
+        this.spinner.hide();
         Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -55,6 +59,7 @@ export class CrearProductosComponent implements OnInit, OnDestroy {
         });
       },
       error => {
+        this.spinner.hide();
         Swal.fire({
           position: 'top-end',
           icon: 'error',
@@ -68,17 +73,33 @@ export class CrearProductosComponent implements OnInit, OnDestroy {
     console.log(this.createProduct);
   }
   uploadFile(event: HtmlInputEvent): void {
-    if (event.target.files && event.target.files[0]) {
-      this.selectedFile = event.target.files[0];
-      this.nameImg = this.selectedFile.name;
-      const reader = new FileReader();
-      reader.readAsDataURL(this.selectedFile);
-      reader.onload = (): void => {
-        const base64String: string = (reader.result as string).match(/.+;base64,(.+)/)[1];
-        this.createProduct.url_imagen = 'data:' + this.selectedFile.type + ';base64,' + base64String;
-        console.log(this.nameImg);
-        this.createProduct.nombre_imagen = this.nameImg;
-      };
+    this.imagen = event.target.files[0];
+    if (
+      this.imagen.type === 'image/jpeg' ||
+      this.imagen.type === 'image/png' ||
+      this.imagen.type === 'image/jpg'
+    ) {
+      if (event.target.files && event.target.files[0]) {
+        this.selectedFile = event.target.files[0];
+        this.nameImg = this.selectedFile.name;
+        const reader = new FileReader();
+        reader.readAsDataURL(this.selectedFile);
+        reader.onload = (): void => {
+          const base64String: string = (reader.result as string).match(/.+;base64,(.+)/)[1];
+          this.createProduct.url_imagen = 'data:' + this.selectedFile.type + ';base64,' + base64String;
+          console.log(this.nameImg);
+          this.createProduct.nombre_imagen = this.nameImg;
+        };
+      }
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Se ha presentado un error',
+        text: 'El formato del archivo no es el correcto (jpeg, png o png) ',
+        onClose: () => {
+          this.nameImg = "Seleccione una imagen";
+        }
+      });
     }
   }
 }

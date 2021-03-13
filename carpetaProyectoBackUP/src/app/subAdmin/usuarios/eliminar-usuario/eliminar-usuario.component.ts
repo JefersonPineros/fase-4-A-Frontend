@@ -8,12 +8,14 @@ import { RespuestasServices } from 'src/app/Models/respuestasServices';
 import { IdiomaServiceService } from 'src/app/services/idioma-service.service';
 import { ReporteProductosService } from '../../../services/reportes/reporte-productos.service';
 import { Subscription } from 'rxjs';
+import { descargarPDF } from '../../../Controller/descargaPDF-controller';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-eliminar-usuario',
   templateUrl: './eliminar-usuario.component.html',
   styleUrls: ['./eliminar-usuario.component.css']
 })
-export class EliminarUsuarioComponent implements OnInit, OnDestroy {
+export class EliminarUsuarioComponent extends descargarPDF implements OnInit, OnDestroy{
   public listUsuarios: Array<UserModel>;
   public seletedUser: any;
   public responseS: RespuestasServices;
@@ -24,7 +26,9 @@ export class EliminarUsuarioComponent implements OnInit, OnDestroy {
     private updateUserService: UpdateServiceService,
     private usuarioService: UsuarioService,
     private idiomaService: IdiomaServiceService,
-    private reporteService: ReporteProductosService) {
+    private reporteService: ReporteProductosService,
+    private spinner: NgxSpinnerService) {
+    super();
     this.listUsuarios = new Array<UserModel>();
   }
   ngOnInit(): void {
@@ -37,9 +41,9 @@ export class EliminarUsuarioComponent implements OnInit, OnDestroy {
       }
     );
 
-    let uG = Cookie.get('usuario');
-    let access = Cookie.get('acceso');
-    let tipoAC = Cookie.get('tipo');
+    let uG = sessionStorage.getItem('usuario');
+    let access = sessionStorage.getItem('acceso');
+    let tipoAC = sessionStorage.getItem('tipo');
     if (uG !== undefined) {
       let accessConfirm;
       if (access === 'true') {
@@ -54,7 +58,7 @@ export class EliminarUsuarioComponent implements OnInit, OnDestroy {
         }
       }
     )
-    let getIdiomaCookye = Cookie.get('idioma');
+    let getIdiomaCookye = sessionStorage.getItem('idioma');
     if (getIdiomaCookye != null) {
       if (getIdiomaCookye === 'espanol') {
         this.idiomaSelected = getIdiomaCookye;
@@ -66,8 +70,8 @@ export class EliminarUsuarioComponent implements OnInit, OnDestroy {
     }
   }
   ngOnDestroy() {
-    this.suscriptionUsuario.unsubscribe();
-    this.suscriptionResporte.unsubscribe();
+    // this.suscriptionUsuario.unsubscribe();
+    // this.suscriptionResporte.unsubscribe();
   }
   actualizarTabla(index: number) {
     const selected = index;
@@ -79,6 +83,7 @@ export class EliminarUsuarioComponent implements OnInit, OnDestroy {
     }
   }
   eliminarUsuario(id: number): void {
+    
     for (let i = 0; i <= this.listUsuarios.length; i++) {
       if (id === i) {
         Swal.fire({
@@ -91,9 +96,10 @@ export class EliminarUsuarioComponent implements OnInit, OnDestroy {
           confirmButtonText: 'Confirmar'
         }).then((result) => {
           if (result.isConfirmed) {
-            console.log(this.listUsuarios[i].idUsuarios);
+            this.spinner.show();
             this.usuarioService.eliminarUsuario(this.listUsuarios[i].idUsuarios).subscribe(
               resp => {
+                this.spinner.hide()
                 this.responseS = resp;
                 if (this.responseS.codigo === '001') {
                   console.log(this.responseS);
@@ -119,8 +125,12 @@ export class EliminarUsuarioComponent implements OnInit, OnDestroy {
     }
   }
   reporte(): void {
+    this.spinner.show();
     this.suscriptionResporte = this.reporteService.reporteUsuarios('pdf').subscribe(
       resp => {
+        this.descargar(resp);
+        
+        this.spinner.hide();
         Swal.fire({
           icon: 'success',
           title: 'Se ha descargado el documento',
@@ -131,6 +141,7 @@ export class EliminarUsuarioComponent implements OnInit, OnDestroy {
         });
       },
       error => {
+        this.spinner.hide();
         Swal.fire({
           icon: 'error',
           title: 'Se ha presentado un error',

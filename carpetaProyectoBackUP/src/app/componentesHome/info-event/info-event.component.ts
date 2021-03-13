@@ -39,14 +39,14 @@ export class InfoEventComponent implements OnInit, OnChanges, OnDestroy {
     );
   }
   ngOnDestroy(): void {
-    this.suscripcionEvento.unsubscribe();
+    // this.suscripcionEvento.unsubscribe();
   }
   ngOnChanges(): void {
     this.consultarEvento(this.idEvento);
   }
 
   ngOnInit(): void {
-    let getIdiomaCookye = Cookie.get('idioma');
+    let getIdiomaCookye = sessionStorage.getItem('idioma');
     if (getIdiomaCookye != null) {
       if (getIdiomaCookye === 'espanol') {
         this.idiomaSelected = getIdiomaCookye;
@@ -59,18 +59,17 @@ export class InfoEventComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   consultarEvento(id: number) {
-    console.log(id);
-    this.spinner.show();
-    this.suscripcionEvento = this.eventosService.getEvento(id).subscribe(
-      resp => {
-        this.lastEvento = resp;
-        this.spinner.hide();
-        console.log(resp);
-      },
-      error => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+    if (id !== undefined) {
+      this.spinner.show();
+      this.suscripcionEvento = this.eventosService.getEvento(id).subscribe(
+        resp => {
+          this.lastEvento = resp;
+          this.spinner.hide();
+        },
+        error => {
+          this.spinner.hide();
+        }
+      );
+    }
   }
 }

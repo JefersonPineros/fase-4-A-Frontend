@@ -5,13 +5,14 @@ import { ProductosModel } from 'src/app/Models/admin/productosModel';
 import { ReporteProductosService } from '../../../services/reportes/reporte-productos.service';
 import Swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
-
+import { descargarPDF } from 'src/app/Controller/descargaPDF-controller';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-eliminar-productos',
   templateUrl: './eliminar-productos.component.html',
   styleUrls: ['./eliminar-productos.component.css']
 })
-export class EliminarProductosComponent implements OnInit, OnDestroy {
+export class EliminarProductosComponent extends descargarPDF implements OnInit, OnDestroy {
   public listaProductos: Array<ProductosModel>;
   public actPro: ProductosModel;
   cantidadPro = false;
@@ -22,12 +23,12 @@ export class EliminarProductosComponent implements OnInit, OnDestroy {
   constructor(
     private updateProductos: UpdateProductosService,
     private productosService: ProductosService,
-    private reportesServices: ReporteProductosService) {
+    private reportesServices: ReporteProductosService,
+    private spinner: NgxSpinnerService) {
+    super();
     this.listaProductos = new Array<ProductosModel>();
   }
   ngOnDestroy(): void {
-    this.suscripcionProductos.unsubscribe();
-    this.suscripcionReportes.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -50,8 +51,10 @@ export class EliminarProductosComponent implements OnInit, OnDestroy {
     }
   }
   eliminarProducto(item: number) {
+    this.spinner.show();
     this.suscripcionProductos = this.productosService.eliminarProducto(item).subscribe(
       resp => {
+        this.spinner.hide();
         Swal.fire({
           icon: 'success',
           title: 'Transacción exitosa',
@@ -61,7 +64,8 @@ export class EliminarProductosComponent implements OnInit, OnDestroy {
           }
         });
       },
-      error =>{
+      error => {
+        this.spinner.hide();
         console.log(error);
       }
     );
@@ -77,8 +81,11 @@ export class EliminarProductosComponent implements OnInit, OnDestroy {
     }
   }
   reporte(): void {
+    this.spinner.show();
     this.suscripcionReportes = this.reportesServices.reporteProducto('pdf').subscribe(
       resp => {
+        this.spinner.hide();
+        this.descargar(resp);
         Swal.fire({
           icon: 'success',
           title: 'Descarga exitosa',
@@ -89,6 +96,7 @@ export class EliminarProductosComponent implements OnInit, OnDestroy {
         });
       },
       error => {
+        this.spinner.hide();
         Swal.fire({
           icon: 'error',
           title: 'Oops...',

@@ -1,24 +1,26 @@
 package com.SkillexBackend.SkillexBackendDemo.controllers;
 
-import java.awt.PageAttributes.MediaType;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.nio.file.Paths;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.UUID;
+import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
-
 import org.springframework.web.multipart.MultipartFile;
-import com.SkillexBackend.SkillexBackendDemo.utilidades.MultipartImage;
 
 public class Controllers {
 	
 	public String convertirImagen(String imagen, String nombre, Integer tipo) {
 		String url;
+		//Path pathImagenes = Paths.get("images");
+		String urlFinalImagenes = "C:/Program Files/Apache Software Foundation/Tomcat 9.0/webapps/ROOT/images";
+		//Path pathEventos = Paths.get("images/eventos");
+		String urlFinalEventos = "C:/Program Files/Apache Software Foundation/Tomcat 9.0/webapps/ROOT/images/eventos";
+		//Path pathAlbumes = Paths.get("images/albumes");
+		String urlFinalAlbumes = "C:/Program Files/Apache Software Foundation/Tomcat 9.0/webapps/ROOT/images/albumes";
 		String nombres = nombre;
 		try { 
 			String base64String = imagen.split(",")[1];
@@ -29,13 +31,22 @@ public class Controllers {
 			BufferedImage img = ImageIO.read(new ByteArrayInputStream(imagesBytes));
 			
 			if ( tipo == 1) {
-				ImageIO.write( img, tipoImagen3, new File("C:\\Users\\jefer\\Documents\\NetBeansProjects\\SkillexBackendDemo\\images\\" + nombres));
-				url = "http://localhost:8080/images/" + nombres;
+				ImageIO.write( img, tipoImagen3.toLowerCase(), new File(urlFinalImagenes + "/" + nombres));
+				//http://localhost:8080/images/
+				url = "http://52.15.221.156:8080/images/" + nombres;
+				return url;
+			} else if (tipo == 2) {
+				ImageIO.write( img, tipoImagen3.toLowerCase(), new File(urlFinalEventos + "/" + nombres));
+				//http://localhost:8080/images/eventos/
+				url = "http://52.15.221.156:8080/images/eventos/" + nombres;
+				return url;
+			} else if (tipo == 3) {
+				ImageIO.write( img, tipoImagen3.toLowerCase(), new File(urlFinalAlbumes + "/" + nombres));
+				//http://localhost:8080/images/albumes/
+				url = "http://52.15.221.156:8080/images/albumes/" + nombres;
 				return url;
 			} else {
-				ImageIO.write( img, tipoImagen3.toLowerCase(), new File("C:\\Users\\jefer\\Documents\\NetBeansProjects\\SkillexBackendDemo\\images\\eventos\\" + nombres));
-				url = "http://localhost:8080/images/eventos/" + nombres;
-				return url;
+				return "";
 			}
 			
 		} catch (Exception e) {

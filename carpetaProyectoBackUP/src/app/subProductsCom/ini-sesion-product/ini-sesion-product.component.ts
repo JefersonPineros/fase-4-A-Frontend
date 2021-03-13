@@ -71,9 +71,9 @@ export class IniSesionProductComponent extends LoginController implements OnInit
       });
       // guardar cookies
       //localStorage.setItem()
-      Cookie.set('acceso', access);
-      Cookie.set('usuario', user);
-      Cookie.set('tipo', tipoAc);
+      sessionStorage.setItem('acceso', access);
+      sessionStorage.setItem('usuario', user);
+      sessionStorage.setItem('tipo', tipoAc);
     }
   }
 

@@ -52,7 +52,7 @@ export class GestorPedidoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.componenteActivo = false;
-    this.suscripcionPedidos.unsubscribe();
+    // this.suscripcionPedidos.unsubscribe();
     console.log(this.componenteActivo);
   }
 

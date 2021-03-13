@@ -14,7 +14,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema skillexBD
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `skillexBD` DEFAULT CHARACTER SET utf8 ;
+CREATE database IF NOT EXISTS `skillexBD` DEFAULT CHARACTER SET utf8 ;
 USE `skillexBD` ;
 
 -- -----------------------------------------------------
@@ -200,6 +200,7 @@ CREATE TABLE IF NOT EXISTS `skillexBD`.`album_musical` (
   `genero_id_genero` INT NOT NULL,
   nombre_imagen varchar(100),
   url_imagen varchar(300),
+  activo int,
   PRIMARY KEY (`id_album_musical`),
   FOREIGN KEY (Usuario_idUsuarios) REFERENCES Usuario (idUsuarios),
   FOREIGN KEY (genero_id_genero) REFERENCES genero (id_genero)
@@ -316,7 +317,8 @@ DROP TABLE IF EXISTS `skillexBD`.`usuarioMusica` ;
 
 CREATE TABLE IF NOT EXISTS `skillexBD`.`usuarioMusica` (
   `idusuarioMusica` INT NOT NULL AUTO_INCREMENT,
-  `mesa_cancion` VARCHAR(45) NULL,
+  `mesa_cancion` VARCHAR(45) not NULL,
+  `estado` INT not null,
   PRIMARY KEY (`idusuarioMusica`))
 ENGINE = InnoDB;
 
@@ -366,6 +368,7 @@ CREATE TABLE IF NOT EXISTS `skillexBD`.`cancion_has_usuarioMusica` (
 DROP TABLE IF EXISTS `skillexBD`.`pedidos_has_productos` ;
 
 CREATE TABLE IF NOT EXISTS `skillexBD`.`pedidos_has_productos` (
+  `id` INT primary key auto_increment not null,
   `pedidos_idPedidos` INT NOT NULL,
   `productos_id_productos` INT NOT NULL,
 	cantidad_producto_pedido INT NULL,

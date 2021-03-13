@@ -22,8 +22,7 @@ export class LoginController {
             values.cedulaCiudadania,
             values.tipoUsuario,
             values.inventario);
-        console.log(this.userLogin.tipoUsuario);
-
+        
         if (this.userLogin !== null) {
             console.log(this.userLogin);
             this.acceso = [{ tipo: this.userLogin.tipoUsuario, acceso: true, user: this.userLogin.emailUsuario }];

@@ -36,7 +36,7 @@
                                         item.cantidadProducto >= 10 ? 'white': 'white',
                                           'color' :
                                         item.cantidadProducto <= 10 ? 'red': 'red'}"
-                  (click)="eliminarProducto(itemSelected)">X</button><button type="button"
+                  (click)="eliminarProducto(item.idProductos)">X</button><button type="button"
                   class="btn btn-outline-success buttonMar" (click)="actualizarProducto(itemSelected)">A</button></td>
             </tr>
           </ng-container>
@@ -52,3 +52,4 @@
     </ng-template>
   </div>
 </div>
+<ngx-spinner bdColor= "rgba(66,0,0,0.5)" size = "medium" color = "#000000" type = "square-jelly-box" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

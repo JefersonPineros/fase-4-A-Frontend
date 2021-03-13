@@ -78,16 +78,21 @@ public class Usuario implements Serializable {
     private String turnosLaborales;
     @Column(name = "cedula_ciudadania")
     private String cedulaCiudadania;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioidUsuarios", fetch = FetchType.LAZY)
     private List<Eventos> eventosList;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioidUsuarios", fetch = FetchType.LAZY)
     private List<Pedidos> pedidosList;
+    
     @JoinColumn(name = "tipoUsuario_idTipoUsuario", referencedColumnName = "idTipoUsuario")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Tipousuario tipoUsuarioidTipoUsuario;
+    
     @JoinColumn(name = "inventario_idInventario", referencedColumnName = "id_inventario")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Inventario inventarioidInventario;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioidUsuarios", fetch = FetchType.LAZY)
     private List<AlbumMusical> albumMusicalList;
 

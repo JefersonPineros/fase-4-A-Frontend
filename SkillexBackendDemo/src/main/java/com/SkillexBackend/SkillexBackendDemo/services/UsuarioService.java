@@ -43,7 +43,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestScope
-//@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT,RequestMethod.OPTIONS})
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT,RequestMethod.OPTIONS})
 @RequestMapping("/api/usuario")
 public class UsuarioService {
     

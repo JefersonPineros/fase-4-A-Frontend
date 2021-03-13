@@ -5,24 +5,28 @@ import { EventosService } from '../../../services/admin/eventos/eventos.service'
 import { ReporteProductosService } from '../../../services/reportes/reporte-productos.service';
 import Swal from 'sweetalert2';
 import { UpdateServiceService } from 'src/app/services/update-service.service';
+import { descargarPDF } from 'src/app/Controller/descargaPDF-controller';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-listar-eventos',
   templateUrl: './listar-eventos.component.html',
   styleUrls: ['./listar-eventos.component.css']
 })
-export class ListarEventosComponent implements OnInit {
+export class ListarEventosComponent extends descargarPDF implements OnInit {
   public listaEventos: Array<Evento>;
   constructor(private eventosService: EventosService,
-              private reportesServices: ReporteProductosService,
-              private updateService: UpdateServiceService) {
+    private reportesServices: ReporteProductosService,
+    private updateService: UpdateServiceService,
+    private spinner: NgxSpinnerService
+    ) {
+    super();
     this.listaEventos = new Array<Evento>();
   }
 
   ngOnInit(): void {
     this.eventosService.listarEventos().subscribe(
       resp => {
-        console.log(resp);
         this.listaEventos = resp;
       },
       error => {
@@ -31,8 +35,11 @@ export class ListarEventosComponent implements OnInit {
     );
   }
   reporte(): void {
+    this.spinner.show();
     this.reportesServices.reporteEventos('pdf').subscribe(
       resp => {
+        this.spinner.hide();
+        this.descargar(resp);
         Swal.fire({
           icon: 'success',
           title: 'Se ha descargado el documento',
@@ -43,6 +50,7 @@ export class ListarEventosComponent implements OnInit {
         });
       },
       error => {
+        this.spinner.hide();
         Swal.fire({
           icon: 'success',
           title: 'Se ha presentado un error',
@@ -55,8 +63,7 @@ export class ListarEventosComponent implements OnInit {
   }
   actualizarEvento(idEvento: number): void {
     for (let item of this.listaEventos) {
-      if  (item.idEventos === idEvento ) {
-        console.log(item);
+      if (item.idEventos === idEvento) {
         this.updateService.sendEvent(item);
       }
     }
@@ -72,9 +79,10 @@ export class ListarEventosComponent implements OnInit {
       confirmButtonText: 'Confirmar'
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log(id);
+        this.spinner.show();
         this.eventosService.eliminarEvento(id).subscribe(
           resp => {
+            this.spinner.hide();
             if (resp.codigo === '001') {
               Swal.fire(
                 'Eliminado!',
@@ -84,13 +92,14 @@ export class ListarEventosComponent implements OnInit {
             }
           },
           err => {
+            this.spinner.hide();
             Swal.fire({
-                position: 'top-end',
-                icon: 'error',
-                title: 'No se pudo eliminar el usuario',
-                showConfirmButton: false,
-                timer: 3000
-              });
+              position: 'top-end',
+              icon: 'error',
+              title: 'No se pudo eliminar el usuario',
+              showConfirmButton: false,
+              timer: 3000
+            });
           }
         );
       }

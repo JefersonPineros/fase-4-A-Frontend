@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
         }
       }
     );
-    let getIdiomaCookye: string = Cookie.get('idioma');
+    let getIdiomaCookye: string = sessionStorage.getItem('idioma');
     if (getIdiomaCookye !== null) {
       if (getIdiomaCookye === 'espanol') {
         this.idiomaSelected = getIdiomaCookye;
@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
     } else {
       this.idiomaSelected = 'espanol';
     }
-    let accessCookie: string = Cookie.get('acceso');
+    let accessCookie: string = sessionStorage.getItem('acceso');
     if (accessCookie !== undefined) {
       if (accessCookie === 'true') {
         this.accesoValidado = true;

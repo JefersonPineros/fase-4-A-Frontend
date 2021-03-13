@@ -44,14 +44,14 @@ export class SesionComponent extends LoginController implements OnInit {
   }
 
   ngOnInit(): void {
+
     // validacion de cookies guardadas
-    let uG = Cookie.get('usuario');
-    let access = Cookie.get('acceso');
-    let tipoAC = Cookie.get('tipo');
+    const uG = sessionStorage.getItem('usuario');
+    const access = sessionStorage.getItem('acceso');
+    const tipoAC = sessionStorage.getItem('tipo');
     if (uG !== undefined) {
       let accessConfirm;
       if (access === 'true') {
-        console.log(access)
         this.accessSession = true;
         accessConfirm = true;
       } else {
@@ -67,7 +67,7 @@ export class SesionComponent extends LoginController implements OnInit {
         }
       }
     )
-    let getIdiomaCookye = Cookie.get('idioma');
+    let getIdiomaCookye = sessionStorage.getItem('idioma');
     if (getIdiomaCookye != null) {
       if (getIdiomaCookye === 'espanol') {
         this.idiomaSelected = getIdiomaCookye;
@@ -92,7 +92,7 @@ export class SesionComponent extends LoginController implements OnInit {
     this.loginState.solicitarAcceso(this.sesion.getEmail(), this.sesion.getPass()).subscribe(
       (res) => {
         this.userLogin = res;
-        if (this.userLogin.tipoUsuario === 1 || this.userLogin.tipoUsuario === 3) {
+        if (this.userLogin.tipoUsuario === 1 || this.userLogin.tipoUsuario === 2) {
           this.location.replaceState('/admin');
           window.location.reload();
         }
@@ -125,7 +125,8 @@ export class SesionComponent extends LoginController implements OnInit {
         access = item.acceso;
         tipoAc = item.tipo;
       });
-      Cookie.set('idUsuario', idUsuario);
+      sessionStorage.setItem('idUsuario', idUsuario);
+      // Cookie.set('idUsuario', idUsuario);
       this.usuarioService.actualizaFechalogin(this.userLogin.idUsuarios).subscribe(
         res => {
           this.resp = res;
@@ -137,11 +138,14 @@ export class SesionComponent extends LoginController implements OnInit {
           console.log(error);
         }
       );
-      Cookie.set('acceso', access);
-      Cookie.set('usuario', user);
-      Cookie.set('tipo', tipoAc);
+      sessionStorage.setItem('acceso', access);
+      sessionStorage.setItem('usuario', user);
+      sessionStorage.setItem('tipo', tipoAc);
+      // Cookie.set('acceso', access);
+      // Cookie.set('usuario', user);
+      // Cookie.set('tipo', tipoAc);
       alertify.success('Bienvenido');
-      if (Cookie.get('acceso') === 'true') {
+      if (sessionStorage.getItem('acceso') === 'true') {
         this.accessSession = true;
       } else {
         this.accessSession = false;
@@ -151,7 +155,7 @@ export class SesionComponent extends LoginController implements OnInit {
 
   newUserSubmit() {
     this.newUser.inventarioIdInventario = 1;
-    let fecha = new Date(Date.now());
+    const fecha = new Date(Date.now());
     this.newUser.creacionUsuario = fecha;
     this.newUser.tipoUsuario = 2;
     this.usuarioService.crearUsuario(this.newUser).subscribe(
@@ -176,7 +180,6 @@ export class SesionComponent extends LoginController implements OnInit {
         }
       }
     );
-    console.log(this.newUser);
   }
   recuperarPass(email: string): void {
     this.recuperarP.recuperar(email).subscribe(

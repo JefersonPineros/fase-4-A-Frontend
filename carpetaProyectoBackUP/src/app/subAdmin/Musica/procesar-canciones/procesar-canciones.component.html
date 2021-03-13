@@ -1,0 +1,28 @@
+<div class="col-12 mt-5">
+    <div *ngIf="listaSolicitudes?.length > 0; else noData">
+        <table datatable class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nombre cancion</th>
+                    <th>Mesa</th>
+                    <th>Duración</th>
+                    <th>Procesar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let solicitud of listaSolicitudes; let item = index">
+                    <tr>
+                        <td>{{solicitud.nombreCancion}}</td>
+                        <td>{{solicitud.mesa}}</td>
+                        <td>{{solicitud.duracion}}</td>
+                        <td><button class="btn btn-outline-danger" type="button" (click)="procesar(solicitud.idSolicitud)">Procesar</button></td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+    <ng-template #noData>
+        <h2>No hay data disponible</h2>
+    </ng-template>
+</div>
+<ngx-spinner bdColor= "rgba(66,0,0,0.5)" size = "medium" color = "#000000" type = "square-jelly-box" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

@@ -7,6 +7,7 @@ import { RespuestasServices } from 'src/app/Models/respuestasServices';
 import { IdiomaServiceService } from 'src/app/services/idioma-service.service';
 import * as Cookie from 'js-cookie';
 import { Subscription } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-update-usuario',
   templateUrl: './update-usuario.component.html',
@@ -23,16 +24,18 @@ export class UpdateUsuarioComponent implements OnInit, OnDestroy {
   constructor(
     private updateUserService: UpdateServiceService,
     private userServices: UsuarioService,
-    private idiomaService: IdiomaServiceService) {
+    private idiomaService: IdiomaServiceService,
+    private spinner: NgxSpinnerService) {
     this.selected = false;
     this.userType = [
       { id: '1', tipo: 'Administrador' },
       { id: '2', tipo: 'Bartender' }
     ];
   }
+  
   ngOnDestroy(): void {
-    this.suscripcionUsuario.unsubscribe();
-    this.SuscripcionActualizar.unsubscribe();
+    // this.suscripcionUsuario.unsubscribe();
+    // this.SuscripcionActualizar.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -45,9 +48,9 @@ export class UpdateUsuarioComponent implements OnInit, OnDestroy {
       }
     );
 
-    let uG = Cookie.get('usuario');
-    let access = Cookie.get('acceso');
-    let tipoAC = Cookie.get('tipo');
+    let uG = sessionStorage.getItem('usuario');
+    let access = sessionStorage.getItem('acceso');
+    let tipoAC = sessionStorage.getItem('tipo');
     if (uG !== undefined) {
       let accessConfirm;
       if (access === 'true') {
@@ -61,7 +64,7 @@ export class UpdateUsuarioComponent implements OnInit, OnDestroy {
         }
       }
     )
-    let getIdiomaCookye = Cookie.get('idioma');
+    let getIdiomaCookye = sessionStorage.getItem('idioma');
     if (getIdiomaCookye != null) {
       if (getIdiomaCookye === 'espanol') {
         this.idiomaSelected = getIdiomaCookye;
@@ -73,8 +76,10 @@ export class UpdateUsuarioComponent implements OnInit, OnDestroy {
     }
   }
   onSubmit() {
+    this.spinner.show();
     this.suscripcionUsuario = this.userServices.updateUsuario(this.usuarioUpdate).subscribe(
       resp => {
+        this.spinner.hide();
         this.responseS = resp;
         if (this.responseS.codigo === '001') {
           Swal.fire({

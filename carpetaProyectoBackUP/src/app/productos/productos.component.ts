@@ -53,7 +53,7 @@ export class ProductosComponent implements OnInit , OnDestroy {
     );
   }
   ngOnDestroy(): void {
-    this.suscripcionProductos.unsubscribe();
+    // this.suscripcionProductos.unsubscribe();
   }
   ngOnInit(): void {
     this.idiomaService.getIdioma().subscribe(
@@ -62,7 +62,7 @@ export class ProductosComponent implements OnInit , OnDestroy {
         this.idiomaSelected = idm;
       }
     );
-    const getIdiomaCookie = Cookie.get('idioma');
+    const getIdiomaCookie = sessionStorage.getItem('idioma');
     if (getIdiomaCookie != null) {
       if (getIdiomaCookie === 'espanol') {
         this.idiomaSelected = getIdiomaCookie;
