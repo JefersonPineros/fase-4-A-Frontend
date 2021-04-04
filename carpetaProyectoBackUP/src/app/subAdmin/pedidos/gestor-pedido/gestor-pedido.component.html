@@ -36,7 +36,7 @@
         <div class="col-lg-6">
           <div class="desProduct">
             <h5 class="titulodes">Pedido seleccionado</h5>
-            <div *ngIf="pedidoAProcesar.idPedidos != null">
+            <div *ngIf="pedidoAProcesar.idPedidos != null || listadoPedidos.length > 0; else noPedidos">
               <p class="desPedi">Numero de pedido: <span> {{pedidoAProcesar.idPedidos}} </span> </p>
               <p class="desPedi">Fecha pedido: <span>{{pedidoAProcesar.fechaPedido}}</span></p>
               <p class="desPedi">Mesa: <span>{{pedidoAProcesar.mesa}}</span> </p>
@@ -49,6 +49,9 @@
                 <button class="btn btn-danger" (click)="aceptarPedido(4)">Rechazar</button>
               </div>
             </div>
+            <ng-template #noPedidos>
+              <h4>No ha seleccionado un pedido</h4>
+            </ng-template>
           </div>
         </div>
         <div class="col-lg-6">

@@ -8,9 +8,9 @@
                 <div class="form-row">
                     <div class="form-group col-md-12">
                         <label for="nombrePro">Nombre producto</label>
-                        <input type="text" class="form-control"
+                        <input type="text" class="form-control" maxlength="30"
                         name="productName" #productName="ngModel" [(ngModel)]="createProduct.nombreProducto"
-                        pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"
+                        pattern="[a-zA-Z0-9àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-!#$%&’*+/=?^_`{|}~-]{2,48}"
                         [style.border]="productName.touched && !productName.valid?'solid red 1px':productName.touched && productName.valid?'solid green 1px':!productName.touched?'solid grey 1px':''"
                         id="nombrePro" placeholder="Nombre producto" required>
                         <span class="validForm" *ngIf="productName.touched && !productName.errors?.required">Correcto</span>
@@ -47,8 +47,9 @@
                     <div class="form-group col-12">
                         <label for="exampleFormControlTextarea1">Descripción producto</label>
                         <textarea class="form-control"
+                        maxlength="115"
                         name="descriptionProduct" #descriptionProduct="ngModel" [(ngModel)]="createProduct.descripcion_producto"
-                        pattern="[a-zA-Z0-9àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+"
+                        pattern="[a-zA-Z0-9àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-!#$%&’*+/=?^_`{|}~-]+"
                         [style.border]="descriptionProduct.touched && !descriptionProduct.valid?'solid red 1px':descriptionProduct.touched && !descriptionProduct.errors?.required?'solid green 1px':!descriptionProduct.touched?'solid grey 1px':''"
                         id="exampleFormControlTextarea1" placeholder="Ingrese una descripción del producto"
                             rows="3" required></textarea>

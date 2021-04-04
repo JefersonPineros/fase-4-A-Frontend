@@ -31,7 +31,11 @@ export class AdministradorComponent implements OnInit,  OnDestroy {
                private location: Location,
                private spinner: NgxSpinnerService
   ) {
-    this.rutasAdmin = '1';
+    if (this.tipoUser === 1) {
+      this.rutasAdmin = '1';
+    } else  {
+      this.rutasAdmin = '2';
+    }
     $('.collapse').collapse()
   }
 

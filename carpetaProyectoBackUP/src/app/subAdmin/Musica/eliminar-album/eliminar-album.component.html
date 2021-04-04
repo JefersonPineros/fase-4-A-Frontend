@@ -17,7 +17,7 @@
                         <td>{{album.id}}</td>
                         <td>{{album.nombreAlbum}}</td>
                         <td>{{album.autorAlbum}}</td>
-                        <td>{{album.generoId}}</td>
+                        <td>{{album.generoId === 1 ? 'Metal': album.generoId === 2 ? 'Rock': album.generoId === 3 ? 'Rock en español': 'Heavy Metal'}}</td>
                         <td>{{album.canciones.length}}</td>
                         <td> <button class="btn btn-outline-danger" (click)="eliminarAlbum(album.id)">Eliminar</button> </td>
                     </tr>

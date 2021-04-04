@@ -1,70 +1,77 @@
-.information{
-    /* margin-top: 15px; */
-    background-color: rgba(180, 179, 179, 0.85);
-    padding: 15px;
-    align-items: center;
+.information {
+  /* margin-top: 15px; */
+  background-color: rgba(180, 179, 179, 0.85);
+  padding: 15px;
+  align-items: center;
 }
-.card{
-    height: 450px;
-    padding: 10px;  
+.card {
+  height: 450px;
+  padding: 10px;
 }
-.card img{
-    border-radius: 15px;
+.card img {
+  border-radius: 15px;
 }
-.infoProductos{
-    margin-top: 10px;
+
+.card-text {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 6 !important; 
+  -webkit-box-orient: vertical !important;
 }
-.filtroM{
-    margin-top: 10px;
+.infoProductos {
+  margin-top: 10px;
 }
-.card-footer a{
-    margin-left: 10%;
-    font-size: 20px;
-    color: red;
+.filtroM {
+  margin-top: 10px;
 }
-.card-footer a:hover{
-    transition: 0.2s;
-    color:rgb(255, 72, 0);
-    font-size:22px;
+.card-footer a {
+  margin-left: 10%;
+  font-size: 20px;
+  color: red;
 }
-.carritoCo{
-    color:rgb(65, 0, 0)
+.card-footer a:hover {
+  transition: 0.2s;
+  color: rgb(255, 72, 0);
+  font-size: 22px;
 }
-.carritoCo:hover{
-    transition: 0.5s;
-    color:rgb(177, 1, 1)
+.carritoCo {
+  color: rgb(65, 0, 0);
 }
-.productStyle{
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    background-image: url("../../assets/imagenes/fondoPrincipal2.jpg");
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+.carritoCo:hover {
+  transition: 0.5s;
+  color: rgb(177, 1, 1);
 }
-.filtros button .fa-glass-martini{
-    color: orange;
+.productStyle {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  background-image: url("../../assets/imagenes/fondoPrincipal2.jpg");
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.filtros button .fa-glass-martini {
+  color: orange;
 }
 /* .productStyle aside{
     background-color: white; 
 } */
-.iniciar-sesion .rsP{
-    color: red;
+.iniciar-sesion .rsP {
+  color: red;
 }
-.iniciar-sesion .rsP:hover{
-    transition: 0.2s;
-    color: rgb(192, 32, 3);
+.iniciar-sesion .rsP:hover {
+  transition: 0.2s;
+  color: rgb(192, 32, 3);
 }
-.card{
-    background-color: rgba(153, 151, 151,0.8);
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
+.card {
+  background-color: rgba(153, 151, 151, 0.8);
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
 }
-.text-muted{
-    color: white !important;
+.text-muted {
+  color: white !important;
 }
 
-
-.card-title{
-    font-size: 22px;
+.card-title {
+  font-size: 22px;
 }

@@ -34,15 +34,18 @@ export class GestorPedidoComponent implements OnInit, OnDestroy {
   updatePedidos() {
     this.suscripcionPedidos = this.listarPedidos.listarPedidos().subscribe(
       resp => {
-        this.listadoPedidos = resp;
+        if (resp.length > 0) {
+          this.listadoPedidos = resp;
+        } else {
+          this.listadoPedidos = [];
+        }
         if (this.componenteActivo) {
-          console.log('Hola mundo');
           this.timer();
         }
       },
       error => {
+        this.listadoPedidos = [];
         if (this.componenteActivo) {
-          console.log('Hola mundo');
           this.timer();
         }
         alertify.error('Se ha presentado un error');
@@ -52,8 +55,6 @@ export class GestorPedidoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.componenteActivo = false;
-    // this.suscripcionPedidos.unsubscribe();
-    console.log(this.componenteActivo);
   }
 
   procesarPedido(id: number): void{
